@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reconocimientos — Daniel Serra Font</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .approval-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 4rem;
+    }
+    .approval-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .approval-card:hover { border-color: var(--text); box-shadow: var(--shadow); }
+    .approval-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .approval-status {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      border-radius: 2px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .approval-status.approved { background: #111; color: #fff; }
+    .approval-status.favorable { background: var(--tag-bg); color: var(--text-2); border: 1px solid var(--border); }
+    .approval-status.pending { background: transparent; color: var(--text-3); border: 1px solid var(--border); }
+    .approval-card h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; line-height: 1.3; }
+    .approval-card .ac-meta { display: flex; flex-direction: column; gap: 0.2rem; }
+    .approval-card .ac-meta-row { display: flex; gap: 0.5rem; align-items: baseline; }
+    .approval-label { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); min-width: 70px; }
+    .approval-value { font-size: 0.82rem; color: var(--text-2); }
+    .approval-card p { font-size: 0.83rem; color: var(--text-2); line-height: 1.6; margin-top: 0.25rem; }
+
+    /* Timeline for chronological view */
+    .recog-timeline { position: relative; padding-left: 1.75rem; margin-bottom: 4rem; }
+    .recog-timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 0; width: 1px; background: var(--border); }
+    .recog-item { position: relative; padding: 0 0 2.5rem 1.75rem; }
+    .recog-item::before { content: ''; position: absolute; left: -5px; top: 7px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); }
+    .recog-item.key::before { background: var(--text); border-color: var(--text); }
+    .recog-year { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.3rem; }
+    .recog-item h3 { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; margin-bottom: 0.2rem; }
+    .recog-org { font-size: 0.82rem; color: var(--text-2); margin-bottom: 0.65rem; }
+    .recog-item p { font-size: 0.875rem; color: var(--text-2); line-height: 1.65; max-width: 620px; }
+
+    .section-label-lg { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+
+    @media (max-width: 768px) {
+      .approval-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
+    <div class="nav-links">
+      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+      <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+      <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
+      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+      <a href="premios.html"       class="active" data-i18n="nav_awards">Reconocimientos</a>
+      <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+      <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" id="lang-toggle">EN</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <main class="inner-page">
+
+      <header class="page-header">
+        <div class="page-number">05 — Reconocimientos</div>
+        <h1>Reconocimientos <em>&amp; Aprobaciones</em></h1>
+        <p>Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados.</p>
+      </header>
+
+      <!-- ══ PLANES APROBADOS / HITOS ══ -->
+      <div class="section-label-lg">Planes aprobados e instrumentos en tramitación avanzada</div>
+      <div class="approval-grid">
+
+        <div class="approval-card">
+          <div class="approval-card-header">
+            <h3>Plan General Estructural de Llocnou de Sant Jeroni</h3>
+            <span class="approval-status approved">Aprobado</span>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-meta-row"><span class="approval-label">Municipio</span><span class="approval-value">Llocnou de Sant Jeroni (Valencia)</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Año</span><span class="approval-value">2021 – 2024</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Órgano</span><span class="approval-value">Conselleria de Territori i Habitatge — GVA</span></div>
+          </div>
+          <p>Plan General Estructural redactado íntegramente y aprobado definitivamente por la Generalitat Valenciana, adaptado a la LOTUP. Incluye Catálogo de Protecciones aprobado simultáneamente.</p>
+        </div>
+
+        <div class="approval-card">
+          <div class="approval-card-header">
+            <h3>Catálogo de Protecciones de Llocnou de Sant Jeroni</h3>
+            <span class="approval-status approved">Aprobado</span>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-meta-row"><span class="approval-label">Municipio</span><span class="approval-value">Llocnou de Sant Jeroni (Valencia)</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Año</span><span class="approval-value">2024</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Contenido</span><span class="approval-value">Patrimonio arquitectónico, etnológico y paisajístico</span></div>
+          </div>
+          <p>Catálogo de Protecciones redactado íntegramente con fichas individualizadas para cada elemento catalogado. Aprobado junto con el Plan General Estructural del municipio.</p>
+        </div>
+
+        <div class="approval-card">
+          <div class="approval-card-header">
+            <h3>Ampliación del Parque Empresarial de Elche · Sector E-49</h3>
+            <span class="approval-status approved">Tramitación completa</span>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-meta-row"><span class="approval-label">Municipio</span><span class="approval-value">Elche (Alicante)</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Años</span><span class="approval-value">2019 – 2025</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Superficie</span><span class="approval-value">~600.000 m² · Incremento 25%</span></div>
+          </div>
+          <p>Modificación Estructural del PGOU aprobada por la Comisión Territorial de Urbanismo (2021), Plan Parcial y Plan de Ordenación Pormenorizada aprobados. Tramitación administrativa íntegra concluida en 2025. Obras previstas para 2026.</p>
+        </div>
+
+        <div class="approval-card">
+          <div class="approval-card-header">
+            <h3>Modificación Estructural PGOU Elche · Suelo Productivo</h3>
+            <span class="approval-status approved">Aprobada CTU 2021</span>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-meta-row"><span class="approval-label">Municipio</span><span class="approval-value">Elche (Alicante)</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Año</span><span class="approval-value">2021</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Órgano</span><span class="approval-value">Comisión Territorial de Urbanismo — GVA</span></div>
+          </div>
+          <p>Aprobación de la transformación de suelo no urbanizable común en suelo urbanizable sectorizado para actividades económicas, en el marco estratégico de la Estrategia Territorial de la Comunitat Valenciana.</p>
+        </div>
+
+        <div class="approval-card">
+          <div class="approval-card-header">
+            <h3>Plan General Estructural de Segart</h3>
+            <span class="approval-status pending">En tramitación</span>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-meta-row"><span class="approval-label">Municipio</span><span class="approval-value">Segart (Valencia)</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Años</span><span class="approval-value">2020 – 2023</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Normativa</span><span class="approval-value">LOTUP · Plan General Estructural</span></div>
+          </div>
+          <p>Redacción íntegra del Plan General Estructural adaptado a la LOTUP para el municipio de Segart (Camp de Morvedre). Tramitación en curso ante la Conselleria de Territori.</p>
+        </div>
+
+        <div class="approval-card">
+          <div class="approval-card-header">
+            <h3>Plan General Estructural de Gilet</h3>
+            <span class="approval-status pending">En tramitación</span>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-meta-row"><span class="approval-label">Municipio</span><span class="approval-value">Gilet (Valencia)</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Años</span><span class="approval-value">2020 – 2023</span></div>
+            <div class="ac-meta-row"><span class="approval-label">Normativa</span><span class="approval-value">LOTUP · Plan General Estructural</span></div>
+          </div>
+          <p>Redacción íntegra del Plan General Estructural para el municipio de Gilet (Camp de Morvedre), con análisis ambiental, paisajístico y propuesta de ordenación estructural del suelo.</p>
+        </div>
+
+      </div>
+
+      <!-- ══ INFORMES FAVORABLES ══ -->
+      <div class="section-label-lg">Informes técnicos favorables destacados</div>
+      <div class="recog-timeline">
+
+        <div class="recog-item key">
+          <div class="recog-year">2021</div>
+          <h3>144 informes sectoriales favorables — PGE Jávea</h3>
+          <div class="recog-org">Comisión Territorial de Urbanismo · Conselleria GVA</div>
+          <p>El plan general estructural de Jávea incorporó 144 informes sectoriales favorables de organismos autonómicos y estatales, paso previo a la emisión de la Declaración Ambiental Territorial Estratégica (DATE) por parte de la Conselleria de Territori i Habitatge.</p>
+        </div>
+
+        <div class="recog-item">
+          <div class="recog-year">2021</div>
+          <h3>Informe favorable CTU — Modificación Estructural PGOU Elche</h3>
+          <div class="recog-org">Comisión Territorial de Urbanismo — Generalitat Valenciana</div>
+          <p>Aprobación de la modificación estructural del Plan General de Ordenación Urbana de Elche para la creación del sector industrial E-49, con informe técnico y jurídico favorable que permitió avanzar en la redacción del Plan Parcial y la Ordenación Pormenorizada.</p>
+        </div>
+
+        <div class="recog-item">
+          <div class="recog-year">2025</div>
+          <h3>Finalización de tramitación administrativa — Parque Empresarial Elche</h3>
+          <div class="recog-org">Ayuntamiento de Elche / PIMESA</div>
+          <p>Conclusión satisfactoria de la totalidad del expediente urbanístico del sector E-49: Modificación Estructural PGOU, Plan Parcial, Plan de Ordenación Pormenorizada y gestiones ambientales. Hito que habilita el inicio de las obras de urbanización previstas para 2026.</p>
+        </div>
+
+        <div class="recog-item">
+          <div class="recog-year">2024</div>
+          <h3>Aprobación definitiva del PGE y Catálogo — Llocnou de Sant Jeroni</h3>
+          <div class="recog-org">Conselleria de Territori i Habitatge — Generalitat Valenciana</div>
+          <p>Aprobación definitiva del Plan General Estructural y del Catálogo de Protecciones, siendo uno de los pocos municipios de la comarca de la Safor en completar su adaptación al nuevo marco LOTUP con ambos documentos aprobados simultáneamente.</p>
+        </div>
+
+      </div>
+
+      <div style="padding: 1.75rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); max-width: 600px;">
+        <p class="section-label" style="margin-bottom: 0.65rem;">Actualización</p>
+        <p style="font-size: 0.85rem; color: var(--text-2); line-height: 1.65;">
+          Esta sección se actualiza a medida que se obtienen nuevas aprobaciones y se avanzan los trámites en curso. <strong>Añade aquí los informes favorables o aprobaciones de Náquera, Tibi, Massalfassar y Mislata</strong> cuando estén disponibles.
+        </p>
+      </div>
+
+    </main>
+
+    <footer>
+      <span class="foot-name">Daniel Serra Font</span>
+      <span class="foot-meta">Arquitecto · Urbanista · Director de Velat Studio</span>
+      <div class="foot-links">
+        <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="index.html">Proyectos</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

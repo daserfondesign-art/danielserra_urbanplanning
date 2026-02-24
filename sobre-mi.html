@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre mí — Daniel Serra Font</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .timeline { position: relative; padding-left: 1.75rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 0; width: 1px; background: var(--border); }
+    .timeline-item { position: relative; padding: 0 0 2.5rem 1.75rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -5px; top: 7px; width: 10px; height: 10px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border); transition: border-color 0.2s; }
+    .timeline-item.current::before { background: var(--text); border-color: var(--text); }
+    .timeline-item:hover::before { border-color: var(--text); }
+    .tl-period { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 0.3rem; }
+    .tl-role { font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 0.15rem; }
+    .tl-org { font-family: var(--serif); font-size: 1rem; font-style: italic; color: var(--text-2); margin-bottom: 0.65rem; }
+    .tl-org a:hover { color: var(--text); text-decoration: underline; }
+    .tl-desc { font-size: 0.85rem; color: var(--text-2); line-height: 1.65; }
+    .tl-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.75rem; }
+
+    .edu-list { display: flex; flex-direction: column; gap: 0; }
+    .edu-item { display: grid; grid-template-columns: 90px 1fr; gap: 0.5rem 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); align-items: start; }
+    .edu-year { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--text-3); padding-top: 0.25rem; }
+    .edu-body h3 { font-size: 0.92rem; font-weight: 600; margin-bottom: 0.15rem; line-height: 1.35; }
+    .edu-body p { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--text-2); }
+
+    .about-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .about-three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2rem; }
+
+    .skill-group { margin-bottom: 2rem; }
+    .skill-group h3 { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text); margin-bottom: 0.85rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+
+    .section-title { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; margin-bottom: 1.75rem; line-height: 1.2; }
+    .section-title em { font-style: italic; }
+
+    /* Highlighted projects */
+    .highlight-projects { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; margin-bottom: 4rem; }
+    .highlight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+    .highlight-card:hover { border-color: var(--text); box-shadow: var(--shadow); }
+    .highlight-card .hc-label { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+    .highlight-card h3 { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; line-height: 1.3; }
+    .highlight-card .hc-meta { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.04em; color: var(--text-2); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+
+    /* Other works */
+    .other-work-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); display: grid; grid-template-columns: 80px 1fr auto; gap: 0.5rem 1.5rem; align-items: start; }
+    .ow-year { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--text-3); padding-top: 0.2rem; }
+    .ow-body h3 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.25rem; }
+    .ow-body p { font-size: 0.82rem; color: var(--text-2); line-height: 1.55; }
+
+    /* Clients */
+    .clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.85rem; }
+    .client-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.65rem;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+    .client-card:hover { border-color: var(--text); }
+    .client-logo {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: var(--tag-bg);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .client-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+    .client-logo .logo-fallback {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: var(--text-2);
+    }
+    .client-name { font-size: 0.75rem; font-weight: 600; line-height: 1.3; }
+    .client-type { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); }
+
+    /* Velat banner (at bottom) */
+    .velat-banner {
+      background: var(--text); color: white;
+      border-radius: var(--radius);
+      padding: 2rem 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1.5rem;
+      align-items: center;
+      margin-top: 4rem;
+    }
+    .velat-banner h2 { font-family: var(--serif); font-size: 1.65rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.5rem; }
+    .velat-banner h2 strong { font-weight: 500; }
+    .velat-banner p { font-size: 0.875rem; color: rgba(255,255,255,0.6); line-height: 1.65; max-width: 560px; }
+    .velat-link {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: white; border: 1px solid rgba(255,255,255,0.3);
+      padding: 0.75rem 1.25rem; border-radius: var(--radius);
+      transition: all 0.2s; white-space: nowrap; align-self: flex-start;
+    }
+    .velat-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
+
+    @media (max-width: 1024px) {
+      .about-two-col { grid-template-columns: 1fr; gap: 3rem; }
+      .about-three-col { grid-template-columns: 1fr 1fr; }
+      .highlight-projects { grid-template-columns: 1fr; }
+      .velat-banner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .about-three-col { grid-template-columns: 1fr; }
+      .clients-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
+    <div class="nav-links">
+      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+      <a href="sobre-mi.html"      class="active" data-i18n="nav_about">Sobre mí</a>
+      <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
+      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+      <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
+      <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+      <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" id="lang-toggle">EN</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <main class="inner-page">
+
+      <!-- Header -->
+      <header class="page-header">
+        <div class="page-number">02 — Sobre mí</div>
+        <h1>Daniel Serra<br><em>Font</em></h1>
+        <p>Arquitecto, Urbanista y Planificador Territorial. Director de <strong>Velat Studio</strong>. Más de 8 años de experiencia en planeamiento urbanístico, ordenación territorial y diseño de interiores en la Comunitat Valenciana.</p>
+      </header>
+
+      <!-- ══ PROYECTOS DESTACADOS ══ -->
+      <h2 class="section-title">Proyectos <em>destacados</em></h2>
+      <div class="highlight-projects">
+
+        <a href="index.html" class="highlight-card" onclick="setTimeout(()=>window.main_selectProject&&window.main_selectProject('parque-elche'),200)">
+          <span class="hc-label">Suelo Productivo · Aprobado</span>
+          <h3>Ampliación del Parque Empresarial de Elche · Sector E-49</h3>
+          <span class="hc-meta">2019–2025 · Ayto. de Elche / PIMESA · ~600.000 m²</span>
+        </a>
+
+        <a href="index.html" class="highlight-card">
+          <span class="hc-label">Planeamiento General · En tramitación</span>
+          <h3>Plan General Estructural de Jávea / Xàbia</h3>
+          <span class="hc-meta">2017–2021 · Ayto. de Jávea · 144 informes favorables</span>
+        </a>
+
+        <a href="index.html" class="highlight-card">
+          <span class="hc-label">Planeamiento General · En tramitación</span>
+          <h3>Plan General de Torrent</h3>
+          <span class="hc-meta">2017–2022 · Ayto. de Torrent · Área metropolitana Valencia</span>
+        </a>
+
+      </div>
+
+      <!-- ══ BIO + EDUCATION ══ -->
+      <div class="about-two-col" style="margin-bottom: 5rem;">
+
+        <!-- LEFT: Experience timeline -->
+        <div>
+          <h2 class="section-title">Trayectoria <em>profesional</em></h2>
+          <div class="timeline">
+
+            <div class="timeline-item current">
+              <div class="tl-period">2021 — Actualidad</div>
+              <div class="tl-role">Director &amp; Apoyo integral en Planificación Territorial</div>
+              <div class="tl-org"><a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio</a> · Autónomo</div>
+              <p class="tl-desc">Director del estudio de interiorismo y arquitectura Velat Studio y técnico urbanista freelance especializado en apoyo integral a proyectos de planificación territorial y urbanismo. Redacción de Planes Generales Estructurales, Planes Parciales, Estudios de Paisaje con simulaciones visuales, Catálogos de Protecciones y tramitación ante la Conselleria de Territori de la Generalitat Valenciana.</p>
+              <div class="tl-tags">
+                <span class="tag">Planeamiento LOTUP</span>
+                <span class="tag">Planes Estructurales</span>
+                <span class="tag">Interiorismo</span>
+                <span class="tag">Simulaciones visuales</span>
+                <span class="tag">Catálogos de protección</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="tl-period">2017 — 2021 · 5 años</div>
+              <div class="tl-role">Urbanista, Planificador Territorial &amp; Arquitecto de Concursos</div>
+              <div class="tl-org">IDOM</div>
+              <p class="tl-desc">Integrado en el equipo de urbanismo y planificación territorial de IDOM, participando en planes generales, planes parciales y proyectos de desarrollo territorial a distintas escalas. Igualmente implicado en la elaboración de propuestas para concursos de arquitectura y urbanismo.</p>
+              <div class="tl-tags">
+                <span class="tag">Planeamiento general</span>
+                <span class="tag">Planificación territorial</span>
+                <span class="tag">Concursos arquitectura</span>
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="tl-period">2016 — 2017</div>
+              <div class="tl-role">Colaborador en I+D de Aplicaciones Urbanísticas</div>
+              <div class="tl-org">Universitat Politècnica de València · Institut Cartogràfic Valencià</div>
+              <p class="tl-desc">Colaboración en el desarrollo de aplicaciones territoriales y urbanísticas en el marco de la alianza entre la UPV y el Institut Cartogràfic Valencià (ICV), con foco en la integración de datos geoespaciales con herramientas digitales para la gestión y análisis del territorio.</p>
+              <div class="tl-tags">
+                <span class="tag">SIG / GIS</span>
+                <span class="tag">Cartografía digital</span>
+                <span class="tag">Desarrollo de aplicaciones</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT: Education + Languages -->
+        <div>
+          <h2 class="section-title"><em>Formación</em> académica</h2>
+          <div class="edu-list">
+            <div class="edu-item">
+              <span class="edu-year">2020 – 2021</span>
+              <div class="edu-body">
+                <h3>Máster en Interiorismo, Creatividad e Innovación</h3>
+                <p>Escola d'Art i Superior de Disseny Barreira · Valencia</p>
+              </div>
+            </div>
+            <div class="edu-item">
+              <span class="edu-year">2020</span>
+              <div class="edu-body">
+                <h3>Curso en Infraestructura Verde y Paisaje</h3>
+                <p>Formación especializada · Comunitat Valenciana</p>
+              </div>
+            </div>
+            <div class="edu-item">
+              <span class="edu-year">2018</span>
+              <div class="edu-body">
+                <h3>Máster en Arquitectura</h3>
+                <p>ETSA · Universitat Politècnica de València</p>
+              </div>
+            </div>
+            <div class="edu-item">
+              <span class="edu-year">2017</span>
+              <div class="edu-body">
+                <h3>Grado en Fundamentos de la Arquitectura</h3>
+                <p>ETSA · Universitat Politècnica de València</p>
+              </div>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <h2 class="section-title" style="margin-bottom: 1.25rem;"><em>Idiomas</em></h2>
+          <div class="lang-grid">
+            <div class="lang-item">
+              <span class="lang-name">Español</span>
+              <span class="lang-level">Nativo</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-name">Catalán</span>
+              <span class="lang-level">Nativo</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-name">Inglés</span>
+              <span class="lang-level">B2 — Alto</span>
+            </div>
+            <div class="lang-item">
+              <span class="lang-name">Japonés</span>
+              <span class="lang-level">Básico (A2)</span>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <a href="#" onclick="alert('Añade aquí el link a tu CV en PDF')" class="cv-download-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Descargar CV completo
+          </a>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <!-- ══ SKILLS ══ -->
+      <h2 class="section-title" style="margin-bottom: 2rem;">Software <em>&amp; Herramientas</em></h2>
+      <div class="about-three-col" style="margin-bottom: 4rem;">
+
+        <!-- Col 1 -->
+        <div>
+          <div class="skill-group">
+            <h3>SIG &amp; Cartografía</h3>
+            <div class="skill-bars">
+              <div class="skill-bar">
+                <span class="skill-bar-name">QGIS</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="90%" style="--w:90%"></div></div>
+                <span class="skill-bar-pct">90%</span>
+              </div>
+              <div class="skill-bar">
+                <span class="skill-bar-name">ArcGIS</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80%" style="--w:80%"></div></div>
+                <span class="skill-bar-pct">80%</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>CAD</h3>
+            <div class="skill-bars">
+              <div class="skill-bar">
+                <span class="skill-bar-name">AutoCAD</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="98%" style="--w:98%"></div></div>
+                <span class="skill-bar-pct">98%</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Programación &amp; IA</h3>
+            <div class="tags-cloud">
+              <span class="tag">Python</span>
+              <span class="tag">HTML / CSS</span>
+              <span class="tag">Claude (Anthropic)</span>
+              <span class="tag">Gemini</span>
+              <span class="tag">ChatGPT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 2 -->
+        <div>
+          <div class="skill-group">
+            <h3>Adobe Suite</h3>
+            <div class="skill-bars">
+              <div class="skill-bar">
+                <span class="skill-bar-name">InDesign</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="88%" style="--w:88%"></div></div>
+                <span class="skill-bar-pct">88%</span>
+              </div>
+              <div class="skill-bar">
+                <span class="skill-bar-name">Photoshop</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="78%" style="--w:78%"></div></div>
+                <span class="skill-bar-pct">78%</span>
+              </div>
+              <div class="skill-bar">
+                <span class="skill-bar-name">Lightroom</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="75%" style="--w:75%"></div></div>
+                <span class="skill-bar-pct">75%</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>3D &amp; Visualización</h3>
+            <div class="skill-bars">
+              <div class="skill-bar">
+                <span class="skill-bar-name">SketchUp</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="85%" style="--w:85%"></div></div>
+                <span class="skill-bar-pct">85%</span>
+              </div>
+              <div class="skill-bar">
+                <span class="skill-bar-name">Cinema 4D</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="80%" style="--w:80%"></div></div>
+                <span class="skill-bar-pct">80%</span>
+              </div>
+              <div class="skill-bar">
+                <span class="skill-bar-name">Corona Render</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="76%" style="--w:76%"></div></div>
+                <span class="skill-bar-pct">76%</span>
+              </div>
+              <div class="skill-bar">
+                <span class="skill-bar-name">3ds Max</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="70%" style="--w:70%"></div></div>
+                <span class="skill-bar-pct">70%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Col 3 -->
+        <div>
+          <div class="skill-group">
+            <h3>Edición de Vídeo</h3>
+            <div class="skill-bars">
+              <div class="skill-bar">
+                <span class="skill-bar-name">Premiere Pro</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="78%" style="--w:78%"></div></div>
+                <span class="skill-bar-pct">78%</span>
+              </div>
+              <div class="skill-bar">
+                <span class="skill-bar-name">After Effects</span>
+                <div class="skill-bar-track"><div class="skill-bar-fill" data-w="72%" style="--w:72%"></div></div>
+                <span class="skill-bar-pct">72%</span>
+              </div>
+            </div>
+          </div>
+          <div class="skill-group">
+            <h3>Especialización</h3>
+            <div class="tags-cloud">
+              <span class="tag">Planes Estructurales LOTUP</span>
+              <span class="tag">Estudios de Paisaje</span>
+              <span class="tag">Simulaciones visuales</span>
+              <span class="tag">Catálogos de protección</span>
+              <span class="tag">Urbanismo sostenible</span>
+              <span class="tag">Renders 3D</span>
+              <span class="tag">Interiorismo</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr class="divider">
+
+      <!-- ══ OTROS TRABAJOS ══ -->
+      <h2 class="section-title" style="margin-bottom: 1.5rem;">Otros <em>trabajos</em></h2>
+      <div style="max-width: 820px; margin-bottom: 4rem;">
+
+        <div class="other-work-item">
+          <span class="ow-year">2022 – 2023</span>
+          <div class="ow-body">
+            <h3>Vídeo presentación · Fondos Next Generation EU — Universidad de Murcia</h3>
+            <p>Producción y edición del vídeo presentado a través de la Región de Murcia para la solicitud de fondos Next Generation, sobre la renovación de la antigua universidad. Combinó visualización arquitectónica 3D, motion graphics y edición de vídeo.</p>
+          </div>
+          <span class="tag">Audiovisual</span>
+        </div>
+
+        <div class="other-work-item">
+          <span class="ow-year">2021 – 2024</span>
+          <div class="ow-body">
+            <h3>Catálogo de Protecciones de Llocnou de Sant Jeroni</h3>
+            <p>Redacción íntegra del Catálogo de Protecciones del municipio, aprobado junto con el Plan General Estructural. Incluyó identificación, clasificación y fichas individualizadas del patrimonio arquitectónico, etnológico y paisajístico.</p>
+          </div>
+          <span class="tag">Aprobado</span>
+        </div>
+
+        <div class="other-work-item">
+          <span class="ow-year">Varios</span>
+          <div class="ow-body">
+            <h3>Estudios de Paisaje con simulaciones visuales</h3>
+            <p>Elaboración de Estudios de Paisaje para municipios valencianos, con realización de simulaciones visuales de integración paisajística mediante SketchUp, 3ds Max y Corona Render, en cumplimiento de la normativa de paisaje de la Comunitat Valenciana.</p>
+          </div>
+          <span class="tag">Paisaje</span>
+        </div>
+
+      </div>
+
+      <hr class="divider">
+
+      <!-- ══ CLIENTS ══ -->
+      <h2 class="section-title" style="margin-bottom: 1.75rem;">Clientes <em>&amp; Administraciones</em></h2>
+      <div class="clients-grid" style="margin-bottom: 4rem;">
+
+        <!-- logos via Google's favicon service as placeholder — replace with real logos in assets/img/ -->
+        <div class="client-card">
+          <div class="client-logo">
+            <img src="https://www.elche.es/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Elche">
+            <div class="logo-fallback" style="display:none">El</div>
+          </div>
+          <span class="client-name">Ayuntamiento de Elche</span>
+          <span class="client-type">Alicante</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo">
+            <img src="https://www.ajxabia.com/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Jávea">
+            <div class="logo-fallback" style="display:none">Jv</div>
+          </div>
+          <span class="client-name">Ayto. de Jávea / Xàbia</span>
+          <span class="client-type">Alicante</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo">
+            <img src="https://torrent.es/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Torrent">
+            <div class="logo-fallback" style="display:none">To</div>
+          </div>
+          <span class="client-name">Ayuntamiento de Torrent</span>
+          <span class="client-type">Valencia</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo"><div class="logo-fallback">Sg</div></div>
+          <span class="client-name">Ayuntamiento de Segart</span>
+          <span class="client-type">Valencia</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo"><div class="logo-fallback">Gi</div></div>
+          <span class="client-name">Ayuntamiento de Gilet</span>
+          <span class="client-type">Valencia</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo"><div class="logo-fallback">Ll</div></div>
+          <span class="client-name">Ayto. Llocnou de S. Jeroni</span>
+          <span class="client-type">Valencia</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo"><div class="logo-fallback">Nq</div></div>
+          <span class="client-name">Ayuntamiento de Náquera</span>
+          <span class="client-type">Valencia</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo"><div class="logo-fallback">Ti</div></div>
+          <span class="client-name">Ayuntamiento de Tibi</span>
+          <span class="client-type">Alicante</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo"><div class="logo-fallback">Ms</div></div>
+          <span class="client-name">Ayuntamiento de Massalfassar</span>
+          <span class="client-type">Valencia</span>
+        </div>
+
+        <div class="client-card">
+          <div class="client-logo">
+            <img src="https://www.mislata.es/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Mislata">
+            <div class="logo-fallback" style="display:none">Mi</div>
+          </div>
+          <span class="client-name">Ayuntamiento de Mislata</span>
+          <span class="client-type">Valencia</span>
+        </div>
+
+      </div>
+
+      <!-- ══ VELAT STUDIO BANNER (bottom) ══ -->
+      <div class="velat-banner">
+        <div>
+          <h2>También dirijo <strong>Velat Studio</strong></h2>
+          <p>Velat Studio es un estudio de interiorismo y arquitectura con sede en Valencia. Aunamos arquitectura, interiorismo y diseño para dar respuesta integral a proyectos de reforma, interiorismo comercial y residencial, y branding espacial.</p>
+        </div>
+        <a href="https://www.velatstudio.com" target="_blank" rel="noopener" class="velat-link">
+          velatstudio.com
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+
+    </main>
+
+    <footer>
+      <span class="foot-name">Daniel Serra Font</span>
+      <span class="foot-meta">Arquitecto · Urbanista · Director de Velat Studio</span>
+      <div class="foot-links">
+        <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="index.html">Proyectos</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const fills = document.querySelectorAll('.skill-bar-fill');
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.setProperty('--w', entry.target.dataset.w);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      fills.forEach(f => obs.observe(f));
+    });
+  </script>
+</body>
+</html>

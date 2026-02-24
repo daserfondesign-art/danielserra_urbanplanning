@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — Daniel Serra Font</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
+    <div class="nav-links">
+      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+      <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+      <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
+      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+      <a href="premios.html"       data-i18n="nav_awards">Premios</a>
+      <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+      <a href="contacto.html"      class="active" data-i18n="nav_contact">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" id="lang-toggle">EN</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <main class="inner-page">
+
+      <header class="page-header">
+        <div class="page-number">07 — Contacto</div>
+        <h1>Ponerse <em>en contacto</em></h1>
+        <p>¿Tienes un proyecto urbanístico en mente o necesitas asesoramiento técnico? Escríbeme y hablamos.</p>
+      </header>
+
+      <div class="contact-grid">
+
+        <!-- Left: Info -->
+        <div class="contact-info">
+          <h2>Hablemos de <em>tu proyecto</em></h2>
+          <p>Estoy disponible para nuevos proyectos de planeamiento, consultoría urbanística, colaboraciones técnicas y ponencias o formación. No dudes en contactarme por cualquiera de estas vías:</p>
+
+          <div class="contact-data">
+            <div class="contact-data-item">
+              <span class="contact-data-label">Email estudio</span>
+              <span class="contact-data-value">
+                <a href="mailto:info@velatstudio.com">info@velatstudio.com</a>
+              </span>
+            </div>
+            <div class="contact-data-item">
+              <span class="contact-data-label">Email personal</span>
+              <span class="contact-data-value">
+                <a href="mailto:daserfon.design@gmail.com">daserfon.design@gmail.com</a>
+              </span>
+            </div>
+            <div class="contact-data-item">
+              <span class="contact-data-label">Estudio</span>
+              <span class="contact-data-value">
+                <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+              </span>
+            </div>
+            <div class="contact-data-item">
+              <span class="contact-data-label">Ubicación</span>
+              <span class="contact-data-value">Comunitat Valenciana, España</span>
+            </div>
+          </div>
+
+          <hr class="divider" style="margin: 2rem 0;">
+
+          <!-- Available for -->
+          <p class="section-label">Disponible para</p>
+          <div class="tags-cloud" style="margin-top: 0.85rem;">
+            <span class="tag">Redacción de planes generales</span>
+            <span class="tag">Consultoría urbanística</span>
+            <span class="tag">Estudios de paisaje</span>
+            <span class="tag">Tramitación administrativa</span>
+            <span class="tag">Colaboraciones técnicas</span>
+            <span class="tag">Formación y ponencias</span>
+          </div>
+        </div>
+
+        <!-- Right: Form -->
+        <div>
+          <!-- Success message -->
+          <div class="form-success" id="form-success">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Mensaje enviado correctamente. Te responderé en breve.
+          </div>
+
+          <form id="contact-form" class="contact-form" action="#" method="POST">
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nombre *</label>
+                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="organization">Organización / Municipio</label>
+              <input type="text" id="organization" name="organization" placeholder="Ayuntamiento de..., empresa, etc.">
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Tipo de consulta</label>
+              <select id="subject" name="subject">
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="plan-general">Plan General / Estructural</option>
+                <option value="plan-desarrollo">Planeamiento de desarrollo (PAI, PRI...)</option>
+                <option value="paisaje">Estudio de Paisaje</option>
+                <option value="consultoria">Consultoría urbanística</option>
+                <option value="tramitacion">Tramitación administrativa</option>
+                <option value="colaboracion">Colaboración técnica</option>
+                <option value="formacion">Formación / Ponencia</option>
+                <option value="otro">Otro</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Mensaje *</label>
+              <textarea id="message" name="message" placeholder="Cuéntame en qué consiste tu proyecto o consulta..." required></textarea>
+            </div>
+
+            <div class="form-group" style="flex-direction: row; align-items: flex-start; gap: 0.75rem;">
+              <input type="checkbox" id="privacy" name="privacy" required style="width: auto; margin-top: 3px; flex-shrink: 0;">
+              <label for="privacy" style="font-size: 0.8rem; color: var(--text-2); line-height: 1.5; letter-spacing: 0; text-transform: none;">
+                Acepto la política de privacidad y el tratamiento de mis datos para gestionar esta consulta.
+              </label>
+            </div>
+
+            <button type="submit" class="form-submit">
+              Enviar mensaje
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+
+            <p style="font-size: 0.75rem; color: var(--text-3); margin-top: 0.75rem; line-height: 1.5;">
+              ⚡ Nota: Este formulario es una plantilla estática. Para recibir los mensajes, necesitas conectarlo a un servicio como <strong>Formspree</strong>, <strong>EmailJS</strong> o configurar un backend propio.
+            </p>
+
+          </form>
+        </div>
+
+      </div>
+
+    </main>
+
+    <footer>
+      <span class="foot-name">Daniel Serra Font</span>
+      <span class="foot-meta">Urbanista y Planificador Territorial</span>
+      <div class="foot-links">
+        <a href="contacto.html">Contacto</a>
+        <a href="index.html">Proyectos</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

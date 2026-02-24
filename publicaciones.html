@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prensa — Daniel Serra Font</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .press-stats {
+      display: flex;
+      gap: 3rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 3rem;
+    }
+    .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
+    .stat-number { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; line-height: 1; }
+    .stat-label { font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+
+    .press-project-header {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      margin: 3rem 0 0;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--text);
+    }
+    .press-project-header h2 { font-family: var(--serif); font-size: 1.35rem; font-weight: 400; }
+    .press-project-header .proj-count { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: white; background: var(--text); padding: 0.2rem 0.55rem; border-radius: 2px; }
+    .press-project-header .proj-year { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em; color: var(--text-3); margin-left: auto; }
+
+    .press-grid { display: flex; flex-direction: column; gap: 0; }
+
+    a.press-item {
+      display: grid;
+      grid-template-columns: 76px 1fr 28px;
+      align-items: start;
+      gap: 1.25rem 1.75rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+    }
+    a.press-item:hover {
+      background: var(--surface);
+      margin: 0 -1.5rem;
+      padding: 1.75rem 1.5rem;
+      border-radius: var(--radius);
+    }
+    .press-item.placeholder { opacity: 0.38; cursor: default; pointer-events: none; }
+
+    .press-date { display: flex; flex-direction: column; gap: 0.1rem; padding-top: 0.25rem; }
+    .press-date-day { font-family: var(--serif); font-size: 1.65rem; font-weight: 300; line-height: 1; color: var(--text); }
+    .press-date-month { font-family: var(--mono); font-size: 0.57rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-3); }
+
+    .press-body { display: flex; flex-direction: column; gap: 0.4rem; }
+    .press-meta { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; }
+    .press-source { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-2); font-weight: 500; }
+    .press-project-tag { font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.04em; text-transform: uppercase; background: var(--tag-bg); color: var(--text-2); padding: 0.15rem 0.5rem; border-radius: 2px; }
+    .press-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 400; line-height: 1.3; color: var(--text); }
+    a.press-item:hover .press-title { text-decoration: underline; text-decoration-color: var(--border); }
+    .press-excerpt { font-size: 0.84rem; color: var(--text-2); line-height: 1.6; max-width: 680px; }
+
+    .press-icon { flex-shrink: 0; color: var(--text-3); transition: color 0.2s, transform 0.2s; padding-top: 0.3rem; }
+    a.press-item:hover .press-icon { color: var(--text); transform: translate(2px, -2px); }
+
+    .press-add-note { margin-top: 3.5rem; padding: 1.75rem 2rem; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); max-width: 600px; display: flex; gap: 1.25rem; align-items: flex-start; }
+    .press-add-note h3 { font-size: 0.875rem; font-weight: 600; margin-bottom: 0.35rem; }
+    .press-add-note p { font-size: 0.8rem; color: var(--text-2); line-height: 1.65; }
+    .press-add-note code { font-family: var(--mono); font-size: 0.7rem; background: var(--tag-bg); padding: 0.15rem 0.4rem; border-radius: 2px; }
+
+    @media (max-width: 768px) {
+      a.press-item { grid-template-columns: 60px 1fr; }
+      .press-icon { display: none; }
+      .press-stats { gap: 1.5rem; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
+    <div class="nav-links">
+      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+      <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+      <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
+      <a href="publicaciones.html" class="active" data-i18n="nav_publications">Publicaciones</a>
+      <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
+      <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+      <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" id="lang-toggle">EN</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <main class="inner-page">
+
+      <header class="page-header">
+        <div class="page-number">04 — Prensa &amp; Cobertura mediática</div>
+        <h1>Proyectos en <em>la prensa</em></h1>
+        <p>Artículos, noticias y coberturas mediáticas sobre los proyectos urbanísticos en los que he participado como técnico redactor responsable de la tramitación.</p>
+      </header>
+
+      <!-- Stats -->
+      <div class="press-stats">
+        <div class="stat-item">
+          <span class="stat-number">6</span>
+          <span class="stat-label">Proyectos</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">4+</span>
+          <span class="stat-label">Artículos Elche</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">600.000</span>
+          <span class="stat-label">m² Parque Empresarial</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">41,5M€</span>
+          <span class="stat-label">Inversión en urbanización</span>
+        </div>
+      </div>
+
+      <!-- ══════════ PARQUE EMPRESARIAL ELCHE ══════════ -->
+      <div class="press-project-header">
+        <h2>Ampliación del Parque Empresarial de Elche · Sector E-49</h2>
+        <span class="proj-count">4 artículos</span>
+        <span class="proj-year">2019 – 2025</span>
+      </div>
+
+      <div class="press-grid">
+
+        <a href="https://www.elche.es/2025/06/elche-impulsa-la-ampliacion-del-parque-empresarial-con-415-millones-de-euros-de-inversion/" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date">
+            <span class="press-date-day">Jun</span>
+            <span class="press-date-month">2025</span>
+          </div>
+          <div class="press-body">
+            <div class="press-meta">
+              <span class="press-source">elche.es</span>
+              <span class="press-project-tag">Parque Empresarial</span>
+            </div>
+            <h3 class="press-title">Elche impulsa la ampliación del Parque Empresarial con 41,5 millones de euros de inversión</h3>
+            <p class="press-excerpt">El Ayuntamiento de Elche anuncia la inversión comprometida para la urbanización del sector E-49, que generará casi 600.000 m² de nuevo suelo para actividades económicas, tras la finalización de la tramitación urbanística completa.</p>
+          </div>
+          <div class="press-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+        </a>
+
+        <a href="https://www.elche.es/2025/06/el-ayuntamiento-finaliza-el-ultimo-tramite-administrativo-para-la-ampliacion-del-parque-empresarial/" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date">
+            <span class="press-date-day">Jun</span>
+            <span class="press-date-month">2025</span>
+          </div>
+          <div class="press-body">
+            <div class="press-meta">
+              <span class="press-source">elche.es</span>
+              <span class="press-project-tag">Parque Empresarial</span>
+            </div>
+            <h3 class="press-title">El Ayuntamiento finaliza el último trámite administrativo para la ampliación del Parque Empresarial</h3>
+            <p class="press-excerpt">Comunicado oficial sobre la conclusión de la tramitación administrativa del expediente urbanístico completo: modificación del PGOU, Plan Parcial, Plan de Ordenación Pormenorizada y gestiones ambientales.</p>
+          </div>
+          <div class="press-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+        </a>
+
+        <a href="https://alicanteplaza.es/alicanteplaza/elcheplaza/elche-no-espera-iniciar-la-ampliacion-del-parque-empresarial-hasta-septiembre-de-2026" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date">
+            <span class="press-date-day">12</span>
+            <span class="press-date-month">Nov 2025</span>
+          </div>
+          <div class="press-body">
+            <div class="press-meta">
+              <span class="press-source">Alicante Plaza</span>
+              <span class="press-project-tag">Parque Empresarial</span>
+            </div>
+            <h3 class="press-title">Elche no espera iniciar la ampliación del Parque Empresarial hasta septiembre de 2026</h3>
+            <p class="press-excerpt">Análisis del estado actual del proyecto: el equipo redactor del PAI entregará el proyecto de reparcelación a finales de 2025. Las obras de urbanización se licitarán en 2026, con un plazo estimado de 2 a 3 años para su finalización.</p>
+          </div>
+          <div class="press-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+        </a>
+
+        <a href="https://gestorespublicos.org/noticias/ver/el-parque-empresarial-de-elche-contar%C3%A1-con-una-ampliaci%C3%B3n-de-600-000-metros-cuadrados" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date">
+            <span class="press-date-day">26</span>
+            <span class="press-date-month">Jul 2021</span>
+          </div>
+          <div class="press-body">
+            <div class="press-meta">
+              <span class="press-source">Gestores Públicos · AVS</span>
+              <span class="press-project-tag">Parque Empresarial</span>
+            </div>
+            <h3 class="press-title">El Parque Empresarial de Elche contará con una ampliación de 600.000 metros cuadrados</h3>
+            <p class="press-excerpt">La Comisión Territorial de Urbanismo aprueba la modificación estructural del PGOU, transformando suelo no urbanizable en urbanizable. La ampliación supone un incremento del 25% sobre la superficie actual, con una inversión estimada de 40 millones de euros en urbanización.</p>
+          </div>
+          <div class="press-icon">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </div>
+        </a>
+
+      </div>
+
+      <!-- ══════════ PGE JÁVEA ══════════ -->
+      <div class="press-project-header">
+        <h2>Plan General Estructural de Jávea / Xàbia</h2>
+        <span class="proj-count">4 artículos</span>
+        <span class="proj-year">2017 – 2021</span>
+      </div>
+      <div class="press-grid">
+
+        <a href="https://www.javea.com/el-urbanismo-de-xabia-da-un-paso-y-se-pone-a-las-puertas-de-aprobar-el-plan-general-estructural/" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date"><span class="press-date-day">25</span><span class="press-date-month">May 2023</span></div>
+          <div class="press-body">
+            <div class="press-meta"><span class="press-source">Javea.com</span><span class="press-project-tag">PGE Jávea</span></div>
+            <h3 class="press-title">El urbanismo de Xàbia da un paso y se pone a las puertas de aprobar el Plan General Estructural</h3>
+            <p class="press-excerpt">El pleno aprueba la documentación adicional a incorporar al expediente del PGE para que Conselleria emita la DATE. El expediente acumula 144 informes sectoriales favorables y protege 10 millones de m² de suelo que hasta ahora era urbanizable.</p>
+          </div>
+          <div class="press-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+        </a>
+
+        <a href="https://www.ajxabia.com/ver/7741/la-version-preliminar-del-plan-general-de-xabia-protege-otros-201-220-metros-cuadrados-tras-estudiar-informes-y-alegaciones--.html/" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date"><span class="press-date-day">Ene</span><span class="press-date-month">2019</span></div>
+          <div class="press-body">
+            <div class="press-meta"><span class="press-source">Ajxabia.com — web oficial</span><span class="press-project-tag">PGE Jávea</span></div>
+            <h3 class="press-title">La versión preliminar del PGE protege otros 201.220 m² tras estudiar informes y alegaciones</h3>
+            <p class="press-excerpt">El Ayuntamiento expone las modificaciones incorporadas al PGE, con 201.220 m² adicionales protegidos en el Montgó y Cansalades, y cambios de clasificación en el Rebaldí, fruto del análisis de alegaciones e informes sectoriales.</p>
+          </div>
+          <div class="press-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+        </a>
+
+        <a href="https://en.javea.com/xabia-aprueba-el-plan-general-estructural-para-los-proximos-20-anos/" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date"><span class="press-date-day">30</span><span class="press-date-month">Abr 2019</span></div>
+          <div class="press-body">
+            <div class="press-meta"><span class="press-source">Javea.com</span><span class="press-project-tag">PGE Jávea</span></div>
+            <h3 class="press-title">Xàbia aprueba el Plan General Estructural para los próximos 20 años</h3>
+            <p class="press-excerpt">Pleno extraordinario en el que se aprueba provisionalmente el PGE para su elevación a Conselleria. El plan protege los valores paisajísticos del municipio y cierra la especulación urbanística de los años 90, fijando el modelo territorial para las próximas dos décadas.</p>
+          </div>
+          <div class="press-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+        </a>
+
+        <a href="https://www.javea.com/el-consell-acuerda-la-suspension-parcial-del-pgou-de-xabia/" target="_blank" rel="noopener" class="press-item">
+          <div class="press-date"><span class="press-date-day">05</span><span class="press-date-month">Mar 2021</span></div>
+          <div class="press-body">
+            <div class="press-meta"><span class="press-source">Javea.com</span><span class="press-project-tag">PGE Jávea</span></div>
+            <h3 class="press-title">El Consell acuerda la suspensión parcial del PGOU de Xàbia</h3>
+            <p class="press-excerpt">La Generalitat apoya la tramitación del nuevo PGE suspendiendo el planeamiento anterior en los ámbitos incompatibles con la nueva ordenación, como paso previo a la aprobación definitiva del nuevo instrumento.</p>
+          </div>
+          <div class="press-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></div>
+        </a>
+
+      </div>
+
+      <!-- ══════════ PGM TORRENT ══════════ -->
+      <div class="press-project-header">
+        <h2>Plan General de Torrent</h2>
+        <span class="proj-count">pendiente</span>
+        <span class="proj-year">2017 – 2022</span>
+      </div>
+      <div class="press-grid">
+        <a class="press-item placeholder">
+          <div class="press-date"><span class="press-date-day">—</span><span class="press-date-month">——</span></div>
+          <div class="press-body">
+            <div class="press-meta"><span class="press-source">Por añadir</span><span class="press-project-tag">PGM Torrent</span></div>
+            <h3 class="press-title">Añade aquí los artículos de prensa sobre el Plan General de Torrent</h3>
+            <p class="press-excerpt">Busca noticias en la web del Ayuntamiento de Torrent, Levante EMV, Las Provincias o medios comarcales del área metropolitana de Valencia.</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- ══════════ PLANES ESTRUCTURALES ══════════ -->
+      <div class="press-project-header">
+        <h2>Planes Generales Estructurales · Segart, Gilet, Llocnou</h2>
+        <span class="proj-count">pendiente</span>
+        <span class="proj-year">2020 – 2024</span>
+      </div>
+      <div class="press-grid">
+        <a class="press-item placeholder">
+          <div class="press-date"><span class="press-date-day">—</span><span class="press-date-month">——</span></div>
+          <div class="press-body">
+            <div class="press-meta"><span class="press-source">Por añadir</span><span class="press-project-tag">Planes Estructurales</span></div>
+            <h3 class="press-title">Añade aquí los artículos sobre los Planes Generales Estructurales</h3>
+            <p class="press-excerpt">Notas de prensa de los ayuntamientos, medios del Camp de Morvedre o de la Safor, webs municipales…</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Note -->
+      <div class="press-add-note">
+        <span style="font-size:1.25rem; flex-shrink:0; margin-top:0.1rem;">📎</span>
+        <div>
+          <h3>¿Tienes más artículos?</h3>
+          <p>Para añadir un nuevo artículo, copia cualquier bloque <code>&lt;a class="press-item"&gt;</code> de los que aparecen arriba, pégalo dentro del grupo de proyecto correspondiente y actualiza el enlace <code>href</code>, la fuente, el título y el extracto. Los bloques marcados como <em>"pendiente"</em> sirven como guía de estructura.</p>
+        </div>
+      </div>
+
+    </main>
+
+    <footer>
+      <span class="foot-name">Daniel Serra Font</span>
+      <span class="foot-meta">Urbanista y Planificador Territorial</span>
+      <div class="foot-links">
+        <a href="contacto.html">Contacto</a>
+        <a href="index.html">Proyectos</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

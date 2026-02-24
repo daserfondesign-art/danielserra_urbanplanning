@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Servicios — Daniel Serra Font</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    .clients-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 4rem;
+    }
+    .client-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      transition: border-color 0.2s;
+    }
+    .client-pill:hover { border-color: var(--text); }
+    .client-pill .pill-region {
+      font-family: var(--mono);
+      font-size: 0.55rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .client-pill .pill-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
+    <div class="nav-links">
+      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+      <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+      <a href="servicios.html"     class="active" data-i18n="nav_services">Servicios</a>
+      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+      <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
+      <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+      <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" id="lang-toggle">EN</button>
+    </div>
+  </nav>
+
+  <div class="page-content">
+    <main class="inner-page">
+
+      <header class="page-header">
+        <div class="page-number">03 — Servicios</div>
+        <h1>Servicios <em>&amp; Consultoría</em></h1>
+        <p>Apoyo integral en proyectos de planificación territorial y urbanismo para administraciones locales y estudios de arquitectura en la Comunitat Valenciana.</p>
+      </header>
+
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-icon">📐</div>
+          <h3>Planeamiento General (LOTUP)</h3>
+          <p>Redacción de Planes Generales Estructurales y Planes de Ordenación Detallada adaptados a la Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🏗️</div>
+          <h3>Planeamiento de Desarrollo</h3>
+          <p>Redacción de Planes Parciales, Planes de Actuación Integrada (PAI), Planes de Reforma Interior (PRI), Planes Especiales y demás instrumentos de desarrollo del planeamiento general.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🌄</div>
+          <h3>Estudios de Paisaje y Simulaciones Visuales</h3>
+          <p>Elaboración de Estudios de Paisaje según la normativa valenciana, con especial énfasis en la producción de simulaciones visuales de integración paisajística mediante herramientas 3D avanzadas (SketchUp, 3ds Max, Corona Render) para evaluar el impacto visual de las actuaciones previstas.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📋</div>
+          <h3>Catálogos de Protecciones</h3>
+          <p>Redacción de Catálogos de Protecciones del patrimonio arquitectónico, arqueológico, etnológico y paisajístico para su incorporación a los instrumentos de planeamiento.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🗺️</div>
+          <h3>Cartografía y SIG</h3>
+          <p>Elaboración de cartografía urbanística, análisis territorial mediante sistemas de información geográfica (QGIS / ArcGIS) y producción de documentación gráfica técnica para planes e informes.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">🤝</div>
+          <h3>Consultoría Urbanística</h3>
+          <p>Asesoramiento técnico a particulares, promotores y administraciones locales sobre viabilidad urbanística de actuaciones, interpretación de normativa LOTUP y gestión de suelo.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">♻️</div>
+          <h3>Urbanismo Sostenible</h3>
+          <p>Integración de criterios de sostenibilidad, resiliencia climática, infraestructura verde y biodiversidad en la redacción de instrumentos de planeamiento y proyectos de transformación urbana.</p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3>Análisis e Informes Técnicos</h3>
+          <p>Redacción de informes urbanísticos, memorias técnicas, estudios de viabilidad territorial y análisis de impacto ambiental para instrumentos de planeamiento urbanístico.</p>
+        </div>
+
+      </div>
+
+      <hr class="divider">
+
+      <!-- ══ CLIENTS ══ -->
+      <p class="section-label" style="margin-bottom: 1.25rem;">Administraciones con las que he colaborado</p>
+
+      <div class="clients-row">
+        <div class="client-pill">Ayuntamiento de Elche <span class="pill-dot"></span><span class="pill-region">Alicante</span></div>
+        <div class="client-pill">Ayto. de Jávea / Xàbia <span class="pill-dot"></span><span class="pill-region">Alicante</span></div>
+        <div class="client-pill">Ayuntamiento de Tibi <span class="pill-dot"></span><span class="pill-region">Alicante</span></div>
+        <div class="client-pill">Ayuntamiento de Torrent <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Segart <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Gilet <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayto. Llocnou de Sant Jeroni <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Náquera <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Massalfassar <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Mislata <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+      </div>
+
+      <hr class="divider">
+
+      <div style="max-width: 640px;">
+        <p class="section-label">¿Hablamos de tu proyecto?</p>
+        <h2 style="font-family: var(--serif); font-size: 2rem; font-weight: 400; margin-bottom: 1rem; line-height: 1.3;">
+          Cada municipio tiene sus propias necesidades urbanísticas.<br>
+          <em>Trabajemos juntos en las tuyas.</em>
+        </h2>
+        <a href="contacto.html" style="display: inline-flex; align-items: center; gap: 0.65rem; margin-top: 1.5rem; background: var(--text); color: white; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.9rem 1.75rem; border-radius: var(--radius);">
+          Contactar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
+      </div>
+
+    </main>
+
+    <footer>
+      <span class="foot-name">Daniel Serra Font</span>
+      <span class="foot-meta">Arquitecto · Urbanista · Director de Velat Studio</span>
+      <div class="foot-links">
+        <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="index.html">Proyectos</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

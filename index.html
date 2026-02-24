@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Daniel Serra Font — Urbanista y Planificador Territorial. Portfolio de proyectos de planeamiento urbanístico en la Comunitat Valenciana.">
+  <title>Daniel Serra Font — Urbanista y Planificador Territorial</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ══ NAVIGATION ══ -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
+    <div class="nav-links">
+      <a href="index.html"         class="active" data-i18n="nav_projects">Proyectos</a>
+      <a href="sobre-mi.html"                     data-i18n="nav_about">Sobre mí</a>
+      <a href="servicios.html"                    data-i18n="nav_services">Servicios</a>
+      <a href="publicaciones.html"                data-i18n="nav_publications">Publicaciones</a>
+      <a href="premios.html"                      data-i18n="nav_awards">Premios</a>
+      <a href="blog.html"                         data-i18n="nav_blog">Blog</a>
+      <a href="contacto.html"                     data-i18n="nav_contact">Contacto</a>
+    </div>
+    <div class="nav-right">
+      <button class="lang-toggle" id="lang-toggle">EN</button>
+    </div>
+  </nav>
+
+  <!-- ══ MAIN LAYOUT ══ -->
+  <div class="page-content">
+    <div class="projects-layout">
+
+      <!-- ── Left Sidebar: Project List ── -->
+      <aside class="project-sidebar">
+        <div class="sidebar-header">
+          <h2 data-i18n="sidebar_title">Proyectos</h2>
+          <div class="sidebar-filter">
+            <button class="filter-btn active" data-filter="all" data-filter-label="filter_all">Todos</button>
+            <button class="filter-btn" data-filter="pgm" data-filter-label="filter_pgm">Planeamiento</button>
+            <button class="filter-btn" data-filter="urban" data-filter-label="filter_urban">Urbanismo</button>
+          </div>
+        </div>
+        <!-- Populated by JS -->
+        <div id="project-list"></div>
+      </aside>
+
+      <!-- ── Right: Project Detail ── -->
+      <section id="project-detail">
+        <div class="detail-empty">
+          <div class="big-letter">DSF</div>
+          <p data-i18n="click_hint">Selecciona un proyecto para ver los detalles</p>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
