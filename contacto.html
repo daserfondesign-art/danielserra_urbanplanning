@@ -4,95 +4,538 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contacto — Daniel Serra Font</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #f5f4f0;
+      --bg2:      #edecea;
+      --surf:     #ffffff;
+      --border:   #0d0d0d;
+      --border-l: rgba(13,13,13,0.1);
+      --text:     #0d0d0d;
+      --text2:    rgba(13,13,13,0.5);
+      --text3:    rgba(13,13,13,0.28);
+      --red:      #c44b2b;
+      --serif:    'Spectral', Georgia, serif;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+      --mono:     'DM Mono', monospace;
+      --sidebar:  280px;
+      --topbar:   52px;
+    }
+    html, body { width: 100%; min-height: 100%; background: var(--bg); }
+    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-l); }
+
+    /* ══ TOP NAV ══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--topbar); z-index: 500;
+      display: flex; align-items: stretch;
+      background: var(--bg); border-bottom: 2px solid var(--border);
+    }
+    .nav-identity {
+      width: var(--sidebar); flex-shrink: 0;
+      display: flex; align-items: center;
+      padding: 0 1.5rem; border-right: 2px solid var(--border); gap: 0.75rem;
+    }
+    .nav-id-mark {
+      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; color: var(--red);
+      border: 1.5px solid var(--red); border-radius: 2px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
+    .nav-id-name {
+      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.02em; line-height: 1; color: var(--text); white-space: nowrap;
+    }
+    .nav-id-name em { font-style: italic; }
+    .nav-id-role {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red); line-height: 1;
+    }
+    .nav-links-slot {
+      flex: 1; display: flex; align-items: center; justify-content: flex-end;
+      padding: 0 1.25rem;
+    }
+    .nav-links { display: flex; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--text3);
+      padding: 0 0.65rem; height: var(--topbar);
+      display: flex; align-items: center;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      transition: color 0.18s, border-color 0.18s; white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); border-bottom-color: var(--red); }
+    .lang-toggle {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3);
+      background: none; border: 1.5px solid var(--border-l);
+      padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.18s; margin-left: 1rem;
+    }
+    .lang-toggle:hover { border-color: var(--border); color: var(--text); }
+
+    /* ══ LEFT SIDEBAR ══ */
+    .sidebar {
+      position: fixed; top: var(--topbar); left: 0; bottom: 0;
+      width: var(--sidebar); z-index: 400;
+      background: var(--surf); border-right: 2px solid var(--border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sb-identity {
+      padding: 1.75rem 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--border-l); flex-shrink: 0;
+    }
+    .sb-label {
+      font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 0.85rem;
+    }
+    .sb-big-num {
+      font-family: var(--serif); font-size: 5rem; font-weight: 300;
+      line-height: 0.9; color: rgba(13,13,13,0.04);
+      letter-spacing: -0.04em; margin-bottom: -1.4rem; user-select: none;
+    }
+    .sb-name {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
+      line-height: 1.1; color: var(--text); margin-bottom: 0.2rem;
+      position: relative; z-index: 2;
+    }
+    .sb-name em { font-style: italic; }
+    .sb-rule { width: 100%; height: 2px; background: var(--border); margin: 0.75rem 0; }
+    .sb-role {
+      font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
+    }
+    .sb-scroll {
+      flex: 1; overflow-y: auto;
+      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
+    }
+    .sb-section {
+      padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border-l);
+    }
+    .sb-section-title {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text3);
+      border-bottom: 2px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 0.85rem;
+    }
+    .sb-row { margin-bottom: 0.9rem; }
+    .sb-row:last-child { margin-bottom: 0; }
+    .sb-row-lbl {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 0.2rem;
+    }
+    .sb-row-val { font-size: 0.82rem; color: var(--text); line-height: 1.45; font-weight: 500; }
+    .sb-row-val a { transition: color 0.18s; }
+    .sb-row-val a:hover { color: var(--red); }
+    .sb-row-val.muted { font-weight: 400; color: var(--text2); font-size: 0.78rem; }
+    /* Availability dots */
+    .sb-avail { display: flex; flex-direction: column; gap: 0.45rem; }
+    .sb-avail-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-size: 0.77rem; color: var(--text2);
+    }
+    .sb-avail-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--red); flex-shrink: 0;
+    }
+    /* Status indicator */
+    .sb-status {
+      display: flex; align-items: center; gap: 0.55rem;
+      padding: 0.85rem 1.5rem; border-bottom: 1px solid var(--border-l);
+      background: var(--bg);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #3a9e5f; flex-shrink: 0;
+      animation: pulse 2.5s ease infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+    .status-text {
+      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text2);
+    }
+    .sb-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .sb-tag {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.05em;
+      text-transform: uppercase; padding: 0.18rem 0.5rem;
+      border: 1px solid var(--border-l); color: var(--text3); background: var(--bg);
+    }
+    .sb-footer {
+      padding: 0.85rem 1.5rem; border-top: 1px solid var(--border-l);
+      flex-shrink: 0; display: flex; gap: 1.25rem;
+    }
+    .sb-footer a {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3); transition: color 0.18s;
+    }
+    .sb-footer a:hover { color: var(--red); }
+
+    /* ══ MAIN CONTENT ══ */
+    .main-wrap { margin-left: var(--sidebar); padding-top: var(--topbar); min-height: 100vh; }
+    .main-content { max-width: 900px; margin: 0 auto; padding: 3.5rem 2.5rem 6rem; }
+
+    .page-header { margin-bottom: 3.5rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
+    .page-num {
+      font-family: var(--mono); font-size: 0.55rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
+      letter-spacing: -0.02em; line-height: 1.05;
+    }
+    .page-header h1 em { font-style: italic; font-weight: 300; color: var(--text2); }
+    .page-header p { margin-top: 1rem; max-width: 520px; font-size: 0.9rem; color: var(--text2); line-height: 1.75; }
+
+    .section-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; margin-bottom: 1.75rem; line-height: 1.2; }
+    .section-title em { font-style: italic; color: var(--text2); }
+    .divider { border: none; border-top: 1px solid var(--border-l); margin: 3rem 0; }
+
+    /* ══ CONTACT GRID — info left + form right ══ */
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.45fr;
+      gap: 0;
+      border-top: 2px solid var(--border);
+      border-left: 2px solid var(--border);
+      margin-bottom: 3.5rem;
+    }
+
+    /* Left info panel */
+    .contact-info-panel {
+      border-right: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+      padding: 2rem;
+      background: var(--surf);
+      display: flex; flex-direction: column; gap: 2rem;
+    }
+    .info-block {}
+    .info-block-label {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text3);
+      border-bottom: 2px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 1rem;
+    }
+    .info-data-item { margin-bottom: 1.1rem; }
+    .info-data-item:last-child { margin-bottom: 0; }
+    .info-data-lbl {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 0.2rem;
+    }
+    .info-data-val {
+      font-size: 0.88rem; font-weight: 500; color: var(--text); line-height: 1.4;
+    }
+    .info-data-val a:hover { color: var(--red); }
+    .info-data-val.muted { font-weight: 400; color: var(--text2); font-size: 0.82rem; }
+    /* Availability tags */
+    .avail-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .avail-tag {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase;
+      background: var(--bg2); color: var(--text2);
+      padding: 0.2rem 0.55rem; border: 1px solid var(--border-l);
+    }
+
+    /* Right form panel */
+    .contact-form-panel {
+      border-right: 2px solid var(--border);
+      border-bottom: 2px solid var(--border);
+      padding: 2rem;
+      background: var(--bg);
+    }
+
+    /* Form styles */
+    .form-success {
+      display: none; align-items: center; gap: 0.75rem;
+      padding: 0.9rem 1.1rem; background: var(--surf);
+      border: 1px solid #c3e6c3; border-left: 3px solid #3a9e5f;
+      font-size: 0.82rem; color: #2d6e2d; margin-bottom: 1.5rem;
+    }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-group label {
+      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text2);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      font-family: var(--sans); font-size: 0.88rem; color: var(--text);
+      background: var(--surf); border: 1.5px solid var(--border-l);
+      padding: 0.7rem 0.9rem; width: 100%; outline: none;
+      transition: border-color 0.18s; -webkit-appearance: none;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { border-color: var(--border); }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text3); }
+    .form-group textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+    .form-group select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 0.9rem center; padding-right: 2.25rem;
+    }
+    .privacy-row {
+      display: flex; flex-direction: row; align-items: flex-start; gap: 0.75rem;
+    }
+    .privacy-row input[type="checkbox"] {
+      width: auto; margin-top: 3px; flex-shrink: 0; accent-color: var(--text);
+    }
+    .privacy-row label {
+      font-family: var(--sans); font-size: 0.78rem; color: var(--text2);
+      line-height: 1.55; text-transform: none; letter-spacing: 0;
+    }
+    .form-submit {
+      display: inline-flex; align-items: center; gap: 0.65rem;
+      background: var(--text); color: white;
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.9rem 1.75rem; border: none; cursor: pointer;
+      transition: background 0.18s; align-self: flex-start;
+    }
+    .form-submit:hover { background: var(--red); }
+    .form-submit:active { transform: scale(0.98); }
+    .form-note {
+      font-size: 0.72rem; color: var(--text3); line-height: 1.55; margin-top: 0.25rem;
+    }
+
+    /* ══ RESPONSE TIME STRIP ══ */
+    .response-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      border-top: 2px solid var(--border); border-left: 2px solid var(--border);
+      margin-bottom: 3.5rem;
+    }
+    .resp-cell {
+      border-right: 2px solid var(--border); border-bottom: 2px solid var(--border);
+      padding: 1.5rem; background: var(--surf); transition: background 0.18s;
+    }
+    .resp-cell:hover { background: var(--bg2); }
+    .resp-num {
+      font-family: var(--serif); font-size: 2.2rem; font-weight: 300;
+      line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.35rem;
+    }
+    .resp-num em { font-style: italic; color: var(--red); }
+    .resp-label {
+      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3); line-height: 1.4;
+    }
+
+    /* ══ FOOTER ══ */
+    footer {
+      border-top: 2px solid var(--border); padding: 1.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surf); margin-left: var(--sidebar);
+    }
+    .foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; }
+    .foot-meta { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+    .foot-links { display: flex; gap: 1.5rem; }
+    .foot-links a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
+    .foot-links a:hover { color: var(--red); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 960px) {
+      :root { --sidebar: 0px; }
+      .sidebar { display: none; }
+      .nav-identity { display: none; }
+      footer { margin-left: 0; }
+      .contact-layout { grid-template-columns: 1fr; }
+      .response-strip { grid-template-columns: 1fr 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .main-content { padding: 2.5rem 1.5rem 4rem; }
+      .page-header h1 { font-size: 2.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .response-strip { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ══ NAV ══ -->
   <nav class="nav">
-    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
-    <div class="nav-links">
-      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
-      <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
-      <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
-      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
-      <a href="premios.html"       data-i18n="nav_awards">Premios</a>
-      <a href="blog.html"          data-i18n="nav_blog">Blog</a>
-      <a href="contacto.html"      class="active" data-i18n="nav_contact">Contacto</a>
+    <div class="nav-identity">
+      <div class="nav-id-mark">D</div>
+      <div class="nav-id-text">
+        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
+        <div class="nav-id-role" data-i18n="nav_role">Urbanista · Planificador Territorial</div>
+      </div>
     </div>
-    <div class="nav-right">
+    <div class="nav-links-slot">
+      <div class="nav-links">
+        <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+        <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+        <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
+        <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+        <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
+        <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+        <a href="contacto.html"      class="active" data-i18n="nav_contact">Contacto</a>
+      </div>
       <button class="lang-toggle" id="lang-toggle">EN</button>
     </div>
   </nav>
 
-  <div class="page-content">
-    <main class="inner-page">
+  <!-- ══ LEFT SIDEBAR ══ -->
+  <aside class="sidebar">
+
+    <div class="sb-identity">
+      <div class="sb-label" data-i18n="sb_label">07 — Contacto</div>
+      <div class="sb-big-num">07</div>
+      <div class="sb-name">Hablemos <em>de tu proyecto</em></div>
+      <div class="sb-rule"></div>
+      <div class="sb-role" data-i18n="sb_role">Consultas · Proyectos · Colaboraciones</div>
+    </div>
+
+    <div class="sb-scroll">
+
+      <!-- Status -->
+      <div class="sb-status">
+        <div class="status-dot"></div>
+        <span class="status-text" data-i18n="sb_status">Disponible para nuevos proyectos</span>
+      </div>
+
+      <!-- Contact data -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_contact_title">Datos de contacto</div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="lbl_email_studio">Email estudio</div>
+          <div class="sb-row-val"><a href="mailto:hello@velatstudio.com">hello@velatstudio.com</a></div>
+        </div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="lbl_email_personal">Email personal</div>
+          <div class="sb-row-val"><a href="mailto:daniel@danielserrafont.com">daniel@danielserrafont.com</a></div>
+        </div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="lbl_studio">Estudio</div>
+          <div class="sb-row-val"><a href="https://www.velatstudio.com" target="_blank" rel="noopener">velatstudio.com ↗</a></div>
+        </div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="lbl_location">Ubicación</div>
+          <div class="sb-row-val muted">Comunitat Valenciana, España</div>
+        </div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="lbl_response">Respuesta</div>
+          <div class="sb-row-val muted" data-i18n="val_response">Normalmente en 24–48 h</div>
+        </div>
+      </div>
+
+      <!-- Available for -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_avail_title">Disponible para</div>
+        <div class="sb-avail">
+          <div class="sb-avail-item"><div class="sb-avail-dot"></div><span data-i18n="av1">Planes Generales Estructurales</span></div>
+          <div class="sb-avail-item"><div class="sb-avail-dot"></div><span data-i18n="av2">Planeamiento de desarrollo</span></div>
+          <div class="sb-avail-item"><div class="sb-avail-dot"></div><span data-i18n="av3">Estudios de Paisaje</span></div>
+          <div class="sb-avail-item"><div class="sb-avail-dot"></div><span data-i18n="av4">Consultoría urbanística</span></div>
+          <div class="sb-avail-item"><div class="sb-avail-dot"></div><span data-i18n="av5">Tramitación administrativa</span></div>
+          <div class="sb-avail-item"><div class="sb-avail-dot"></div><span data-i18n="av6">Formación y ponencias</span></div>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_links_title">Perfiles</div>
+        <div class="sb-tags">
+          <a href="https://www.velatstudio.com" target="_blank" rel="noopener" class="sb-tag">Velat Studio ↗</a>
+          <a href="https://www.linkedin.com/in/danielserrafont" target="_blank" rel="noopener" class="sb-tag">LinkedIn ↗</a>
+          <a href="servicios.html" class="sb-tag" data-i18n="lnk_services">Servicios</a>
+          <a href="premios.html" class="sb-tag" data-i18n="lnk_awards">Reconocimientos</a>
+        </div>
+      </div>
+
+    </div><!-- /sb-scroll -->
+
+    <div class="sb-footer">
+      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
+      <a href="servicios.html" data-i18n="nav_services">Servicios</a>
+      <a href="sobre-mi.html" data-i18n="nav_about">Sobre mí</a>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <div class="main-wrap">
+    <main class="main-content">
 
       <header class="page-header">
-        <div class="page-number">07 — Contacto</div>
-        <h1>Ponerse <em>en contacto</em></h1>
-        <p>¿Tienes un proyecto urbanístico en mente o necesitas asesoramiento técnico? Escríbeme y hablamos.</p>
+        <div class="page-num" data-i18n="pg_num">07 — Contacto</div>
+        <h1>Ponerse<br><em>en contacto</em></h1>
+        <p data-i18n="pg_desc">¿Tienes un proyecto urbanístico en mente o necesitas asesoramiento técnico? Cuéntame en qué puedo ayudarte.</p>
       </header>
 
-      <div class="contact-grid">
+      <!-- ══ CONTACT LAYOUT ══ -->
+      <div class="contact-layout">
 
-        <!-- Left: Info -->
-        <div class="contact-info">
-          <h2>Hablemos de <em>tu proyecto</em></h2>
-          <p>Estoy disponible para nuevos proyectos de planeamiento, consultoría urbanística, colaboraciones técnicas y ponencias o formación. No dudes en contactarme por cualquiera de estas vías:</p>
+        <!-- Info panel -->
+        <div class="contact-info-panel">
 
-          <div class="contact-data">
-            <div class="contact-data-item">
-              <span class="contact-data-label">Email estudio</span>
-              <span class="contact-data-value">
-                <a href="mailto:info@velatstudio.com">info@velatstudio.com</a>
-              </span>
+          <div class="info-block">
+            <div class="info-block-label" data-i18n="ib_contact">Datos de contacto</div>
+            <div class="info-data-item">
+              <div class="info-data-lbl" data-i18n="lbl_email_studio">Email estudio</div>
+              <div class="info-data-val"><a href="mailto:hello@velatstudio.com">hello@velatstudio.com</a></div>
             </div>
-            <div class="contact-data-item">
-              <span class="contact-data-label">Email personal</span>
-              <span class="contact-data-value">
-                <a href="mailto:daserfon.design@gmail.com">daserfon.design@gmail.com</a>
-              </span>
+            <div class="info-data-item">
+              <div class="info-data-lbl" data-i18n="lbl_email_personal">Email personal</div>
+              <div class="info-data-val"><a href="mailto:daniel@danielserrafont.com">daniel@danielserrafont.com</a></div>
             </div>
-            <div class="contact-data-item">
-              <span class="contact-data-label">Estudio</span>
-              <span class="contact-data-value">
-                <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
-              </span>
+            <div class="info-data-item">
+              <div class="info-data-lbl" data-i18n="lbl_studio">Estudio</div>
+              <div class="info-data-val"><a href="https://www.velatstudio.com" target="_blank" rel="noopener">velatstudio.com ↗</a></div>
             </div>
-            <div class="contact-data-item">
-              <span class="contact-data-label">Ubicación</span>
-              <span class="contact-data-value">Comunitat Valenciana, España</span>
+            <div class="info-data-item">
+              <div class="info-data-lbl" data-i18n="lbl_location">Ubicación</div>
+              <div class="info-data-val muted">Comunitat Valenciana, España</div>
             </div>
           </div>
 
-          <hr class="divider" style="margin: 2rem 0;">
-
-          <!-- Available for -->
-          <p class="section-label">Disponible para</p>
-          <div class="tags-cloud" style="margin-top: 0.85rem;">
-            <span class="tag">Redacción de planes generales</span>
-            <span class="tag">Consultoría urbanística</span>
-            <span class="tag">Estudios de paisaje</span>
-            <span class="tag">Tramitación administrativa</span>
-            <span class="tag">Colaboraciones técnicas</span>
-            <span class="tag">Formación y ponencias</span>
+          <div class="info-block">
+            <div class="info-block-label" data-i18n="ib_avail">Disponible para</div>
+            <div class="avail-tags">
+              <span class="avail-tag" data-i18n="av1">Planes Generales Estructurales</span>
+              <span class="avail-tag" data-i18n="av2">Planeamiento de desarrollo</span>
+              <span class="avail-tag" data-i18n="av3">Estudios de Paisaje</span>
+              <span class="avail-tag" data-i18n="av4">Consultoría urbanística</span>
+              <span class="avail-tag" data-i18n="av5">Tramitación administrativa</span>
+              <span class="avail-tag" data-i18n="av6">Formación y ponencias</span>
+            </div>
           </div>
+
+          <div class="info-block" style="margin-top: auto;">
+            <div class="info-block-label" data-i18n="ib_studio">Velat Studio</div>
+            <p style="font-size:0.82rem; color:var(--text2); line-height:1.65;" data-i18n="studio_desc">Estudio de arquitectura, urbanismo e interiorismo con sede en la Comunitat Valenciana. Especializado en planeamiento territorial y diseño de interiores.</p>
+            <a href="https://www.velatstudio.com" target="_blank" rel="noopener"
+               style="display:inline-flex; align-items:center; gap:0.5rem; margin-top:1rem;
+                      font-family:var(--mono); font-size:0.55rem; letter-spacing:0.08em; text-transform:uppercase;
+                      color:var(--text); border:1.5px solid var(--border-l); padding:0.6rem 1rem; transition:all 0.18s;">
+              <span data-i18n="lnk_velat">Visitar Velat Studio</span>
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+          </div>
+
         </div>
 
-        <!-- Right: Form -->
-        <div>
-          <!-- Success message -->
+        <!-- Form panel -->
+        <div class="contact-form-panel">
+
           <div class="form-success" id="form-success">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
-            Mensaje enviado correctamente. Te responderé en breve.
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span data-i18n="form_success">Mensaje enviado correctamente. Te responderé en breve.</span>
           </div>
 
-          <form id="contact-form" class="contact-form" action="#" method="POST">
+          <form id="contact-form" class="contact-form" novalidate>
 
             <div class="form-row">
               <div class="form-group">
-                <label for="name">Nombre *</label>
-                <input type="text" id="name" name="name" placeholder="Tu nombre" required>
+                <label for="name" data-i18n="lbl_name">Nombre *</label>
+                <input type="text" id="name" name="name" data-i18n-ph="ph_name" placeholder="Tu nombre" required>
               </div>
               <div class="form-group">
                 <label for="email">Email *</label>
@@ -101,63 +544,202 @@
             </div>
 
             <div class="form-group">
-              <label for="organization">Organización / Municipio</label>
-              <input type="text" id="organization" name="organization" placeholder="Ayuntamiento de..., empresa, etc.">
+              <label for="organization" data-i18n="lbl_org">Organización / Municipio</label>
+              <input type="text" id="organization" name="organization" data-i18n-ph="ph_org" placeholder="Ayuntamiento de..., empresa, etc.">
             </div>
 
             <div class="form-group">
-              <label for="subject">Tipo de consulta</label>
+              <label for="subject" data-i18n="lbl_subject">Tipo de consulta</label>
               <select id="subject" name="subject">
-                <option value="" disabled selected>Selecciona una opción</option>
-                <option value="plan-general">Plan General / Estructural</option>
-                <option value="plan-desarrollo">Planeamiento de desarrollo (PAI, PRI...)</option>
-                <option value="paisaje">Estudio de Paisaje</option>
-                <option value="consultoria">Consultoría urbanística</option>
-                <option value="tramitacion">Tramitación administrativa</option>
-                <option value="colaboracion">Colaboración técnica</option>
-                <option value="formacion">Formación / Ponencia</option>
-                <option value="otro">Otro</option>
+                <option value="" disabled selected data-i18n-opt="opt_select">Selecciona una opción</option>
+                <option value="plan-general"   data-i18n-opt="opt_pgm">Plan General / Estructural</option>
+                <option value="plan-desarrollo" data-i18n-opt="opt_dev">Planeamiento de desarrollo (PAI, PRI…)</option>
+                <option value="paisaje"        data-i18n-opt="opt_land">Estudio de Paisaje</option>
+                <option value="consultoria"    data-i18n-opt="opt_cons">Consultoría urbanística</option>
+                <option value="tramitacion"    data-i18n-opt="opt_proc">Tramitación administrativa</option>
+                <option value="colaboracion"   data-i18n-opt="opt_col">Colaboración técnica</option>
+                <option value="formacion"      data-i18n-opt="opt_form">Formación / Ponencia</option>
+                <option value="otro"           data-i18n-opt="opt_other">Otro</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label for="message">Mensaje *</label>
-              <textarea id="message" name="message" placeholder="Cuéntame en qué consiste tu proyecto o consulta..." required></textarea>
+              <label for="message" data-i18n="lbl_msg">Mensaje *</label>
+              <textarea id="message" name="message" data-i18n-ph="ph_msg" placeholder="Cuéntame en qué consiste tu proyecto o consulta..." required></textarea>
             </div>
 
-            <div class="form-group" style="flex-direction: row; align-items: flex-start; gap: 0.75rem;">
-              <input type="checkbox" id="privacy" name="privacy" required style="width: auto; margin-top: 3px; flex-shrink: 0;">
-              <label for="privacy" style="font-size: 0.8rem; color: var(--text-2); line-height: 1.5; letter-spacing: 0; text-transform: none;">
-                Acepto la política de privacidad y el tratamiento de mis datos para gestionar esta consulta.
-              </label>
+            <div class="privacy-row">
+              <input type="checkbox" id="privacy" name="privacy" required>
+              <label for="privacy" data-i18n="lbl_privacy">Acepto la política de privacidad y el tratamiento de mis datos para gestionar esta consulta.</label>
             </div>
 
             <button type="submit" class="form-submit">
-              Enviar mensaje
+              <span data-i18n="btn_send">Enviar mensaje</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
             </button>
 
-            <p style="font-size: 0.75rem; color: var(--text-3); margin-top: 0.75rem; line-height: 1.5;">
-              ⚡ Nota: Este formulario es una plantilla estática. Para recibir los mensajes, necesitas conectarlo a un servicio como <strong>Formspree</strong>, <strong>EmailJS</strong> o configurar un backend propio.
-            </p>
+            <p class="form-note" data-i18n="form_note">⚡ Este formulario es estático. Conéctalo a Formspree, EmailJS o un backend propio para recibir los mensajes.</p>
 
           </form>
         </div>
 
       </div>
 
-    </main>
-
-    <footer>
-      <span class="foot-name">Daniel Serra Font</span>
-      <span class="foot-meta">Urbanista y Planificador Territorial</span>
-      <div class="foot-links">
-        <a href="contacto.html">Contacto</a>
-        <a href="index.html">Proyectos</a>
+      <!-- ══ RESPONSE STRIP ══ -->
+      <div class="response-strip">
+        <div class="resp-cell">
+          <div class="resp-num">24<em>h</em></div>
+          <div class="resp-label" data-i18n="rs1">Tiempo de respuesta habitual</div>
+        </div>
+        <div class="resp-cell">
+          <div class="resp-num">100<em>%</em></div>
+          <div class="resp-label" data-i18n="rs2">Proyectos respondidos</div>
+        </div>
+        <div class="resp-cell">
+          <div class="resp-num"><em>✓</em></div>
+          <div class="resp-label" data-i18n="rs3">Disponible para nuevos proyectos</div>
+        </div>
       </div>
-    </footer>
+
+    </main>
   </div>
 
-  <script src="js/main.js"></script>
+  <footer>
+    <span class="foot-name">Daniel Serra Font</span>
+    <span class="foot-meta" data-i18n="foot_meta">Arquitecto · Urbanista · Director de Velat Studio</span>
+    <div class="foot-links">
+      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+      <a href="servicios.html" data-i18n="nav_services">Servicios</a>
+      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      es: {
+        nav_role: 'Urbanista · Planificador Territorial',
+        nav_projects: 'Proyectos', nav_about: 'Sobre mí', nav_services: 'Servicios',
+        nav_publications: 'Publicaciones', nav_awards: 'Reconocimientos',
+        nav_blog: 'Blog', nav_contact: 'Contacto',
+        sb_label: '07 — Contacto',
+        sb_role: 'Consultas · Proyectos · Colaboraciones',
+        sb_status: 'Disponible para nuevos proyectos',
+        sb_contact_title: 'Datos de contacto',
+        lbl_email_studio: 'Email estudio', lbl_email_personal: 'Email personal',
+        lbl_studio: 'Estudio', lbl_location: 'Ubicación',
+        lbl_response: 'Respuesta', val_response: 'Normalmente en 24–48 h',
+        sb_avail_title: 'Disponible para',
+        av1: 'Planes Generales Estructurales', av2: 'Planeamiento de desarrollo',
+        av3: 'Estudios de Paisaje', av4: 'Consultoría urbanística',
+        av5: 'Tramitación administrativa', av6: 'Formación y ponencias',
+        sb_links_title: 'Perfiles',
+        lnk_services: 'Servicios', lnk_awards: 'Reconocimientos',
+        pg_num: '07 — Contacto',
+        pg_desc: '¿Tienes un proyecto urbanístico en mente o necesitas asesoramiento técnico? Cuéntame en qué puedo ayudarte.',
+        ib_contact: 'Datos de contacto', ib_avail: 'Disponible para', ib_studio: 'Velat Studio',
+        studio_desc: 'Estudio de arquitectura, urbanismo e interiorismo con sede en la Comunitat Valenciana. Especializado en planeamiento territorial y diseño de interiores.',
+        lnk_velat: 'Visitar Velat Studio',
+        form_success: 'Mensaje enviado correctamente. Te responderé en breve.',
+        lbl_name: 'Nombre *', ph_name: 'Tu nombre',
+        lbl_org: 'Organización / Municipio', ph_org: 'Ayuntamiento de..., empresa, etc.',
+        lbl_subject: 'Tipo de consulta',
+        opt_select: 'Selecciona una opción',
+        opt_pgm: 'Plan General / Estructural',
+        opt_dev: 'Planeamiento de desarrollo (PAI, PRI…)',
+        opt_land: 'Estudio de Paisaje',
+        opt_cons: 'Consultoría urbanística',
+        opt_proc: 'Tramitación administrativa',
+        opt_col: 'Colaboración técnica',
+        opt_form: 'Formación / Ponencia',
+        opt_other: 'Otro',
+        lbl_msg: 'Mensaje *', ph_msg: 'Cuéntame en qué consiste tu proyecto o consulta…',
+        lbl_privacy: 'Acepto la política de privacidad y el tratamiento de mis datos para gestionar esta consulta.',
+        btn_send: 'Enviar mensaje',
+        form_note: '⚡ Este formulario es estático. Conéctalo a Formspree, EmailJS o un backend propio para recibir los mensajes.',
+        rs1: 'Tiempo de respuesta habitual', rs2: 'Proyectos respondidos', rs3: 'Disponible para nuevos proyectos',
+        foot_meta: 'Arquitecto · Urbanista · Director de Velat Studio',
+      },
+      en: {
+        nav_role: 'Architect · Urban Planner',
+        nav_projects: 'Projects', nav_about: 'About', nav_services: 'Services',
+        nav_publications: 'Publications', nav_awards: 'Recognition',
+        nav_blog: 'Blog', nav_contact: 'Contact',
+        sb_label: '07 — Contact',
+        sb_role: 'Enquiries · Projects · Collaborations',
+        sb_status: 'Available for new projects',
+        sb_contact_title: 'Contact details',
+        lbl_email_studio: 'Studio email', lbl_email_personal: 'Personal email',
+        lbl_studio: 'Studio', lbl_location: 'Location',
+        lbl_response: 'Response time', val_response: 'Usually within 24–48 h',
+        sb_avail_title: 'Available for',
+        av1: 'Structural General Plans', av2: 'Development planning',
+        av3: 'Landscape Studies', av4: 'Urban planning consultancy',
+        av5: 'Administrative processing', av6: 'Training and lectures',
+        sb_links_title: 'Profiles',
+        lnk_services: 'Services', lnk_awards: 'Recognition',
+        pg_num: '07 — Contact',
+        pg_desc: 'Do you have an urban planning project in mind or need technical advice? Tell me how I can help.',
+        ib_contact: 'Contact details', ib_avail: 'Available for', ib_studio: 'Velat Studio',
+        studio_desc: 'Architecture, urban planning and interior design practice based in the Valencian Community. Specialised in territorial planning and interior design.',
+        lnk_velat: 'Visit Velat Studio',
+        form_success: 'Message sent successfully. I will get back to you shortly.',
+        lbl_name: 'Name *', ph_name: 'Your name',
+        lbl_org: 'Organisation / Municipality', ph_org: 'City Council, company, etc.',
+        lbl_subject: 'Type of enquiry',
+        opt_select: 'Select an option',
+        opt_pgm: 'General / Structural Plan',
+        opt_dev: 'Development planning (PAI, PRI…)',
+        opt_land: 'Landscape Study',
+        opt_cons: 'Urban planning consultancy',
+        opt_proc: 'Administrative processing',
+        opt_col: 'Technical collaboration',
+        opt_form: 'Training / Lecture',
+        opt_other: 'Other',
+        lbl_msg: 'Message *', ph_msg: 'Tell me about your project or enquiry…',
+        lbl_privacy: 'I accept the privacy policy and the processing of my data to handle this enquiry.',
+        btn_send: 'Send message',
+        form_note: '⚡ This form is static. Connect it to Formspree, EmailJS or your own backend to receive messages.',
+        rs1: 'Typical response time', rs2: 'Projects replied to', rs3: 'Available for new projects',
+        foot_meta: 'Architect · Urban Planner · Director of Velat Studio',
+      }
+    };
+
+    let lang = localStorage.getItem('dsf_lang') || 'es';
+
+    function applyLang(l) {
+      lang = l;
+      localStorage.setItem('dsf_lang', l);
+      const t = T[l];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (t[k] !== undefined) el.textContent = t[k];
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const k = el.getAttribute('data-i18n-ph');
+        if (t[k] !== undefined) el.placeholder = t[k];
+      });
+      document.querySelectorAll('[data-i18n-opt]').forEach(el => {
+        const k = el.getAttribute('data-i18n-opt');
+        if (t[k] !== undefined) el.textContent = t[k];
+      });
+      document.getElementById('lang-toggle').textContent = l === 'es' ? 'EN' : 'ES';
+      document.documentElement.lang = l;
+    }
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      applyLang(lang === 'es' ? 'en' : 'es');
+    });
+
+    // Form submit handler
+    document.getElementById('contact-form').addEventListener('submit', e => {
+      e.preventDefault();
+      const s = document.getElementById('form-success');
+      s.style.display = 'flex';
+      e.target.reset();
+      setTimeout(() => s.style.display = 'none', 6000);
+    });
+
+    applyLang(lang);
+  </script>
 </body>
 </html>

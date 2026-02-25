@@ -4,167 +4,741 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog — Daniel Serra Font</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #f5f4f0;
+      --bg2:      #edecea;
+      --surf:     #ffffff;
+      --border:   #0d0d0d;
+      --border-l: rgba(13,13,13,0.1);
+      --text:     #0d0d0d;
+      --text2:    rgba(13,13,13,0.5);
+      --text3:    rgba(13,13,13,0.28);
+      --red:      #c44b2b;
+      --serif:    'Spectral', Georgia, serif;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+      --mono:     'DM Mono', monospace;
+      --sidebar:  280px;
+      --topbar:   52px;
+    }
+    html, body { width: 100%; min-height: 100%; background: var(--bg); }
+    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-l); }
+
+    /* ══ TOP NAV ══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--topbar); z-index: 500;
+      display: flex; align-items: stretch;
+      background: var(--bg); border-bottom: 2px solid var(--border);
+    }
+    .nav-identity {
+      width: var(--sidebar); flex-shrink: 0;
+      display: flex; align-items: center;
+      padding: 0 1.5rem; border-right: 2px solid var(--border); gap: 0.75rem;
+    }
+    .nav-id-mark {
+      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; color: var(--red);
+      border: 1.5px solid var(--red); border-radius: 2px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
+    .nav-id-name {
+      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.02em; line-height: 1; color: var(--text); white-space: nowrap;
+    }
+    .nav-id-name em { font-style: italic; }
+    .nav-id-role {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red); line-height: 1;
+    }
+    .nav-links-slot {
+      flex: 1; display: flex; align-items: center; justify-content: flex-end;
+      padding: 0 1.25rem;
+    }
+    .nav-links { display: flex; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--text3);
+      padding: 0 0.65rem; height: var(--topbar);
+      display: flex; align-items: center;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      transition: color 0.18s, border-color 0.18s; white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); border-bottom-color: var(--red); }
+    .lang-toggle {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3);
+      background: none; border: 1.5px solid var(--border-l);
+      padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.18s; margin-left: 1rem;
+    }
+    .lang-toggle:hover { border-color: var(--border); color: var(--text); }
+
+    /* ══ LEFT SIDEBAR ══ */
+    .sidebar {
+      position: fixed; top: var(--topbar); left: 0; bottom: 0;
+      width: var(--sidebar); z-index: 400;
+      background: var(--surf); border-right: 2px solid var(--border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sb-identity {
+      padding: 1.75rem 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--border-l); flex-shrink: 0;
+    }
+    .sb-label {
+      font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 0.85rem;
+    }
+    .sb-big-num {
+      font-family: var(--serif); font-size: 5rem; font-weight: 300;
+      line-height: 0.9; color: rgba(13,13,13,0.04);
+      letter-spacing: -0.04em; margin-bottom: -1.4rem; user-select: none;
+    }
+    .sb-name {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
+      line-height: 1.1; color: var(--text); margin-bottom: 0.2rem;
+      position: relative; z-index: 2;
+    }
+    .sb-name em { font-style: italic; }
+    .sb-rule { width: 100%; height: 2px; background: var(--border); margin: 0.75rem 0; }
+    .sb-role {
+      font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
+    }
+    .sb-scroll {
+      flex: 1; overflow-y: auto;
+      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
+    }
+    .sb-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.85rem; padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border-l);
+    }
+    .sb-stat { display: flex; flex-direction: column; gap: 0.12rem; }
+    .sb-stat-num {
+      font-family: var(--serif); font-size: 1.75rem; font-weight: 300;
+      line-height: 1; color: var(--text);
+    }
+    .sb-stat-lbl {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3);
+    }
+    .sb-section {
+      padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border-l);
+    }
+    .sb-section-title {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text3);
+      border-bottom: 2px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 0.85rem;
+    }
+    /* Category list */
+    .sb-cat-list { display: flex; flex-direction: column; }
+    .sb-cat-item {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 0.5rem; align-items: center;
+      padding: 0.6rem 1.5rem;
+      border-bottom: 1px solid var(--border-l);
+      transition: background 0.15s; cursor: default;
+    }
+    .sb-cat-item:hover { background: var(--bg2); }
+    .sb-cat-name { font-size: 0.75rem; color: var(--text2); }
+    .sb-cat-count {
+      font-family: var(--mono); font-size: 0.5rem;
+      color: var(--text3); background: var(--bg);
+      border: 1px solid var(--border-l); padding: 0.1rem 0.4rem;
+    }
+    .sb-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .sb-tag {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.05em;
+      text-transform: uppercase; padding: 0.18rem 0.5rem;
+      border: 1px solid var(--border-l); color: var(--text3); background: var(--bg);
+    }
+    .sb-row { margin-bottom: 0.65rem; }
+    .sb-row:last-child { margin-bottom: 0; }
+    .sb-row-val { font-size: 0.78rem; color: var(--text2); line-height: 1.55; }
+    .sb-cta { padding: 1.1rem 1.5rem; }
+    .sb-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.8rem;
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--text); color: white;
+      text-decoration: none; transition: background 0.18s;
+    }
+    .sb-btn:hover { background: var(--red); }
+    .sb-footer {
+      padding: 0.85rem 1.5rem; border-top: 1px solid var(--border-l);
+      flex-shrink: 0; display: flex; gap: 1.25rem;
+    }
+    .sb-footer a {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3); transition: color 0.18s;
+    }
+    .sb-footer a:hover { color: var(--red); }
+
+    /* ══ MAIN CONTENT ══ */
+    .main-wrap { margin-left: var(--sidebar); padding-top: var(--topbar); min-height: 100vh; }
+    .main-content { max-width: 900px; margin: 0 auto; padding: 3.5rem 2.5rem 6rem; }
+
+    .page-header { margin-bottom: 3.5rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
+    .page-num {
+      font-family: var(--mono); font-size: 0.55rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
+      letter-spacing: -0.02em; line-height: 1.05;
+    }
+    .page-header h1 em { font-style: italic; font-weight: 300; color: var(--text2); }
+    .page-header p { margin-top: 1rem; max-width: 520px; font-size: 0.9rem; color: var(--text2); line-height: 1.75; }
+
+    .section-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; margin-bottom: 1.75rem; line-height: 1.2; }
+    .section-title em { font-style: italic; color: var(--text2); }
+    .divider { border: none; border-top: 1px solid var(--border-l); margin: 3rem 0; }
+
+    /* ══ FEATURED ARTICLE ══ */
+    .featured-article {
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 0; margin-bottom: 0;
+      border: 2px solid var(--border);
+      background: var(--surf);
+      transition: background 0.18s;
+      margin-bottom: 0;
+    }
+    .featured-article:hover { background: var(--bg2); }
+    .featured-placeholder {
+      background: var(--text); min-height: 260px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .featured-placeholder-glyph {
+      font-family: var(--serif); font-size: 8rem; font-weight: 300;
+      color: rgba(255,255,255,0.06); line-height: 1; user-select: none;
+      position: absolute;
+    }
+    .featured-placeholder-label {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      position: relative; z-index: 2;
+    }
+    .featured-body {
+      padding: 2rem; display: flex; flex-direction: column; gap: 0.85rem;
+      border-left: 2px solid var(--border);
+    }
+    .featured-meta {
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .post-date {
+      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3);
+    }
+    .post-cat {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--red);
+      border: 1px solid var(--red); padding: 0.1rem 0.5rem;
+    }
+    .featured-body h2 {
+      font-family: var(--serif); font-size: 1.45rem; font-weight: 400;
+      line-height: 1.25; color: var(--text);
+    }
+    .featured-body p {
+      font-size: 0.85rem; color: var(--text2); line-height: 1.72; flex: 1;
+    }
+    .read-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text); border-bottom: 1px solid var(--border);
+      padding-bottom: 0.2rem; align-self: flex-start;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .read-link:hover { color: var(--red); border-color: var(--red); }
+
+    /* ══ ARTICLES GRID ══ */
+    .articles-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--border); border-left: 2px solid var(--border);
+      margin-bottom: 4rem;
+      margin-top: 0;
+    }
+    /* Merge featured top border with grid */
+    .featured-article + .articles-grid {
+      border-top: none;
+      border-top: 2px solid var(--border);
+    }
+
+    .article-card {
+      border-right: 2px solid var(--border); border-bottom: 2px solid var(--border);
+      background: var(--surf); padding: 1.6rem;
+      display: flex; flex-direction: column; gap: 0.65rem;
+      transition: background 0.18s; position: relative; overflow: hidden;
+    }
+    .article-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--red);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .article-card:hover { background: var(--bg2); }
+    .article-card:hover::after { transform: scaleX(1); }
+    .article-meta {
+      display: flex; align-items: center; gap: 0.65rem;
+    }
+    .article-card h3 {
+      font-family: var(--serif); font-size: 1.02rem; font-weight: 400;
+      line-height: 1.3; color: var(--text);
+    }
+    .article-card p {
+      font-size: 0.79rem; color: var(--text2); line-height: 1.68; flex: 1;
+    }
+    .article-card .read-link { margin-top: auto; }
+
+    /* ══ PLACEHOLDER CARD ══ */
+    .article-card.placeholder {
+      background: var(--bg); border-color: var(--border-l);
+      cursor: default;
+    }
+    .article-card.placeholder::after { display: none; }
+    .placeholder-inner {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      flex: 1; gap: 0.65rem; text-align: center; padding: 1rem 0;
+    }
+    .placeholder-glyph {
+      font-family: var(--serif); font-size: 2.5rem; font-weight: 300;
+      color: var(--text3); line-height: 1;
+    }
+    .placeholder-text {
+      font-size: 0.78rem; color: var(--text3); line-height: 1.55; max-width: 180px;
+    }
+
+    /* ══ NOTE ══ */
+    .editorial-note {
+      padding: 1.5rem 1.75rem; background: var(--surf);
+      border: 1px solid var(--border-l); border-left: 3px solid var(--border);
+      max-width: 600px; margin-bottom: 3.5rem;
+    }
+    .editorial-note-label {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 0.6rem;
+    }
+    .editorial-note p { font-size: 0.82rem; color: var(--text2); line-height: 1.65; }
+    .editorial-note strong { color: var(--text); }
+
+    /* ══ CTA BANNER ══ */
+    .cta-banner {
+      background: var(--text); color: white; padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
+    }
+    .cta-banner h2 {
+      font-family: var(--serif); font-size: 1.8rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.6rem;
+    }
+    .cta-banner h2 em { font-style: italic; }
+    .cta-banner p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 440px; }
+    .cta-link {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: white; border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.85rem 1.5rem; transition: all 0.2s; white-space: nowrap;
+    }
+    .cta-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
+
+    /* ══ FOOTER ══ */
+    footer {
+      border-top: 2px solid var(--border); padding: 1.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surf); margin-left: var(--sidebar);
+    }
+    .foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; }
+    .foot-meta { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+    .foot-links { display: flex; gap: 1.5rem; }
+    .foot-links a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
+    .foot-links a:hover { color: var(--red); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 960px) {
+      :root { --sidebar: 0px; }
+      .sidebar { display: none; }
+      .nav-identity { display: none; }
+      footer { margin-left: 0; }
+      .featured-article { grid-template-columns: 1fr; }
+      .featured-placeholder { min-height: 180px; }
+      .featured-body { border-left: none; border-top: 2px solid var(--border); }
+      .cta-banner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .main-content { padding: 2.5rem 1.5rem 4rem; }
+      .page-header h1 { font-size: 2.5rem; }
+      .articles-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+  </style>
 </head>
 <body>
 
+  <!-- ══ NAV ══ -->
   <nav class="nav">
-    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
-    <div class="nav-links">
-      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
-      <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
-      <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
-      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
-      <a href="premios.html"       data-i18n="nav_awards">Premios</a>
-      <a href="blog.html"          class="active" data-i18n="nav_blog">Blog</a>
-      <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+    <div class="nav-identity">
+      <div class="nav-id-mark">D</div>
+      <div class="nav-id-text">
+        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
+        <div class="nav-id-role" data-i18n="nav_role">Urbanista · Planificador Territorial</div>
+      </div>
     </div>
-    <div class="nav-right">
+    <div class="nav-links-slot">
+      <div class="nav-links">
+        <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+        <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+        <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
+        <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+        <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
+        <a href="blog.html"          class="active" data-i18n="nav_blog">Blog</a>
+        <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+      </div>
       <button class="lang-toggle" id="lang-toggle">EN</button>
     </div>
   </nav>
 
-  <div class="page-content">
-    <main class="inner-page">
+  <!-- ══ LEFT SIDEBAR ══ -->
+  <aside class="sidebar">
+
+    <div class="sb-identity">
+      <div class="sb-label" data-i18n="sb_label">06 — Blog</div>
+      <div class="sb-big-num">06</div>
+      <div class="sb-name">Reflexiones <em>Urbanas</em></div>
+      <div class="sb-rule"></div>
+      <div class="sb-role" data-i18n="sb_role">Ensayos · Notas · Crítica</div>
+    </div>
+
+    <div class="sb-scroll">
+
+      <!-- Stats -->
+      <div class="sb-stats">
+        <div class="sb-stat">
+          <span class="sb-stat-num">6</span>
+          <span class="sb-stat-lbl" data-i18n="st_articles">Artículos</span>
+        </div>
+        <div class="sb-stat">
+          <span class="sb-stat-num">5</span>
+          <span class="sb-stat-lbl" data-i18n="st_cats">Categorías</span>
+        </div>
+        <div class="sb-stat">
+          <span class="sb-stat-num">2024</span>
+          <span class="sb-stat-lbl" data-i18n="st_last">Última entrada</span>
+        </div>
+        <div class="sb-stat">
+          <span class="sb-stat-num">↗</span>
+          <span class="sb-stat-lbl" data-i18n="st_open">Libre acceso</span>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_cats_title">Categorías</div>
+      </div>
+      <div class="sb-cat-list">
+        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat1">Planeamiento</span><span class="sb-cat-count">2</span></div>
+        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat2">Paisaje</span><span class="sb-cat-count">1</span></div>
+        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat3">Tecnología</span><span class="sb-cat-count">1</span></div>
+        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat4">Municipios rurales</span><span class="sb-cat-count">1</span></div>
+        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat5">Participación</span><span class="sb-cat-count">1</span></div>
+      </div>
+
+      <!-- Tags -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_tags_title">Etiquetas</div>
+        <div class="sb-tags">
+          <span class="sb-tag">LOTUP</span>
+          <span class="sb-tag" data-i18n="tag_pgm">Plan. General</span>
+          <span class="sb-tag" data-i18n="tag_land">Paisaje</span>
+          <span class="sb-tag" data-i18n="tag_rur">Rural</span>
+          <span class="sb-tag">SIG / GIS</span>
+          <span class="sb-tag" data-i18n="tag_ai">IA</span>
+          <span class="sb-tag" data-i18n="tag_med">Mediterráneo</span>
+          <span class="sb-tag" data-i18n="tag_par">Participación</span>
+        </div>
+      </div>
+
+      <!-- Note -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_note_title">Sobre el blog</div>
+        <div class="sb-row">
+          <div class="sb-row-val" data-i18n="sb_note_val">Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Sin periodicidad fija — se escribe cuando algo merece ser escrito.</div>
+        </div>
+      </div>
+
+    </div><!-- /sb-scroll -->
+
+    <div class="sb-cta">
+      <a href="contacto.html" class="sb-btn" data-i18n="sb_btn">Contactar</a>
+    </div>
+
+    <div class="sb-footer">
+      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
+      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <div class="main-wrap">
+    <main class="main-content">
 
       <header class="page-header">
-        <div class="page-number">06 — Blog</div>
+        <div class="page-num" data-i18n="pg_num">06 — Blog</div>
         <h1>Reflexiones <em>Urbanas</em></h1>
-        <p>Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Ideas en proceso, observaciones de campo y lecturas críticas sobre la práctica urbanística.</p>
+        <p data-i18n="pg_desc">Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Ideas en proceso, observaciones de campo y lecturas críticas sobre la práctica urbanística.</p>
       </header>
 
-      <!-- ── EXAMPLE: Replace with your real blog posts ── -->
-      <div class="blog-grid">
+      <!-- ══ FEATURED ARTICLE ══ -->
+      <a href="#" class="featured-article">
+        <div class="featured-placeholder">
+          <span class="featured-placeholder-glyph">↗</span>
+          <span class="featured-placeholder-label" data-i18n="img_placeholder">Imagen del artículo</span>
+        </div>
+        <div class="featured-body">
+          <div class="featured-meta">
+            <span class="post-date">12 Nov 2024</span>
+            <span class="post-cat" data-i18n="cat1">Planeamiento</span>
+          </div>
+          <h2 data-i18n="a1_title">¿Para qué sirve un Plan General hoy? Reflexiones desde la práctica valenciana</h2>
+          <p data-i18n="a1_excerpt">Después de años redactando planes generales en municipios grandes y pequeños de la Comunitat Valenciana, me hago una pregunta que parece obvia pero que no lo es tanto: ¿para qué sirve realmente un plan general en el contexto actual?</p>
+          <span class="read-link">
+            <span data-i18n="lnk_read">Leer artículo</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </span>
+        </div>
+      </a>
 
-        <article class="blog-card">
-          <div class="blog-card-img">
-            <div class="blog-card-img-placeholder">↗</div>
-          </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-date">12 Nov 2024</span>
-              <span class="tag">Planeamiento</span>
-            </div>
-            <h3>¿Para qué sirve un Plan General hoy? Reflexiones desde la práctica valenciana</h3>
-            <p>Después de años redactando planes generales en municipios grandes y pequeños de la Comunitat Valenciana, me hago una pregunta que parece obvia pero que no lo es tanto: ¿para qué sirve realmente un plan general en el contexto actual?</p>
-            <a href="#" class="blog-card-link">
-              Leer más
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
-          </div>
-        </article>
+      <!-- ══ ARTICLES GRID ══ -->
+      <div class="articles-grid">
 
-        <article class="blog-card">
-          <div class="blog-card-img">
-            <div class="blog-card-img-placeholder">⬡</div>
+        <a href="#" class="article-card">
+          <div class="article-meta">
+            <span class="post-date">03 Sep 2024</span>
+            <span class="post-cat" data-i18n="cat2">Paisaje</span>
           </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-date">03 Sep 2024</span>
-              <span class="tag">Paisaje</span>
-            </div>
-            <h3>El litoral que nos queda: apuntes sobre la protección del paisaje costero mediterráneo</h3>
-            <p>Trabajar en planes generales de municipios costeros como Jávea me ha dado una perspectiva privilegiada —y a veces angustiante— sobre el estado del paisaje litoral mediterráneo. Este artículo recoge algunas reflexiones sobre lo que está en juego.</p>
-            <a href="#" class="blog-card-link">
-              Leer más
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
-          </div>
-        </article>
+          <h3 data-i18n="a2_title">El litoral que nos queda: apuntes sobre la protección del paisaje costero mediterráneo</h3>
+          <p data-i18n="a2_excerpt">Trabajar en planes generales de municipios costeros como Jávea me ha dado una perspectiva privilegiada —y a veces angustiante— sobre el estado del paisaje litoral mediterráneo.</p>
+          <span class="read-link">
+            <span data-i18n="lnk_read">Leer artículo</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </span>
+        </a>
 
-        <article class="blog-card">
-          <div class="blog-card-img">
-            <div class="blog-card-img-placeholder">◎</div>
+        <a href="#" class="article-card">
+          <div class="article-meta">
+            <span class="post-date">18 Jun 2024</span>
+            <span class="post-cat" data-i18n="cat3">Tecnología</span>
           </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-date">18 Jun 2024</span>
-              <span class="tag">Tecnología</span>
-            </div>
-            <h3>IA y SIG en el urbanismo: herramientas para el planificador del siglo XXI</h3>
-            <p>Las herramientas de inteligencia artificial y los sistemas de información geográfica están cambiando la forma en que los urbanistas analizamos el territorio y redactamos los planes. ¿Hacia dónde vamos y qué implicaciones tiene esto para la profesión?</p>
-            <a href="#" class="blog-card-link">
-              Leer más
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
-          </div>
-        </article>
+          <h3 data-i18n="a3_title">IA y SIG en el urbanismo: herramientas para el planificador del siglo XXI</h3>
+          <p data-i18n="a3_excerpt">Las herramientas de inteligencia artificial y los sistemas de información geográfica están cambiando la forma en que los urbanistas analizamos el territorio y redactamos los planes.</p>
+          <span class="read-link">
+            <span data-i18n="lnk_read">Leer artículo</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </span>
+        </a>
 
-        <article class="blog-card">
-          <div class="blog-card-img">
-            <div class="blog-card-img-placeholder">⬤</div>
+        <a href="#" class="article-card">
+          <div class="article-meta">
+            <span class="post-date">22 Feb 2024</span>
+            <span class="post-cat" data-i18n="cat4">Municipios rurales</span>
           </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-date">22 Feb 2024</span>
-              <span class="tag">Municipios Rurales</span>
-            </div>
-            <h3>Urbanismo rural: cuando el reto no es crecer sino mantenerse</h3>
-            <p>Los pequeños municipios del interior valenciano, como Segart, Gilet o Llocnou, plantean un reto urbanístico muy diferente al de las grandes ciudades: aquí el problema no es cómo ordenar el crecimiento, sino cómo garantizar la cohesión territorial ante la despoblación.</p>
-            <a href="#" class="blog-card-link">
-              Leer más
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
-          </div>
-        </article>
+          <h3 data-i18n="a4_title">Urbanismo rural: cuando el reto no es crecer sino mantenerse</h3>
+          <p data-i18n="a4_excerpt">Los pequeños municipios del interior valenciano plantean un reto urbanístico muy diferente al de las grandes ciudades: aquí el problema no es cómo ordenar el crecimiento, sino cómo garantizar la cohesión territorial ante la despoblación.</p>
+          <span class="read-link">
+            <span data-i18n="lnk_read">Leer artículo</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </span>
+        </a>
 
-        <article class="blog-card">
-          <div class="blog-card-img">
-            <div class="blog-card-img-placeholder">△</div>
+        <a href="#" class="article-card">
+          <div class="article-meta">
+            <span class="post-date">08 Nov 2023</span>
+            <span class="post-cat">LOTUP</span>
           </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-date">08 Nov 2023</span>
-              <span class="tag">LOTUP</span>
-            </div>
-            <h3>Cinco años de LOTUP: balance y asignaturas pendientes</h3>
-            <p>La Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana lleva ya varios años en vigor. Este artículo hace un balance crítico de sus aportaciones, sus dificultades de aplicación y los temas que aún quedan por resolver en su desarrollo reglamentario.</p>
-            <a href="#" class="blog-card-link">
-              Leer más
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
-          </div>
-        </article>
+          <h3 data-i18n="a5_title">Cinco años de LOTUP: balance y asignaturas pendientes</h3>
+          <p data-i18n="a5_excerpt">La Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana lleva ya varios años en vigor. Un balance crítico de sus aportaciones, sus dificultades de aplicación y los temas aún pendientes.</p>
+          <span class="read-link">
+            <span data-i18n="lnk_read">Leer artículo</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </span>
+        </a>
 
-        <article class="blog-card">
-          <div class="blog-card-img">
-            <div class="blog-card-img-placeholder">□</div>
+        <a href="#" class="article-card">
+          <div class="article-meta">
+            <span class="post-date">15 Jul 2023</span>
+            <span class="post-cat" data-i18n="cat5">Participación</span>
           </div>
-          <div class="blog-card-body">
-            <div class="blog-card-meta">
-              <span class="blog-date">15 Jul 2023</span>
-              <span class="tag">Participación</span>
-            </div>
-            <h3>Hacer participar no es solo informar: lecciones de varios procesos de planeamiento</h3>
-            <p>La participación ciudadana en los procesos de planeamiento urbanístico suele quedarse en el mínimo legal: una exposición pública, algunos carteles y un buzón de sugerencias. ¿Puede hacerse algo mejor? La respuesta es sí, y este artículo explica cómo y por qué merece la pena.</p>
-            <a href="#" class="blog-card-link">
-              Leer más
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </a>
+          <h3 data-i18n="a6_title">Hacer participar no es solo informar: lecciones de varios procesos de planeamiento</h3>
+          <p data-i18n="a6_excerpt">La participación ciudadana en los procesos de planeamiento urbanístico suele quedarse en el mínimo legal. ¿Puede hacerse algo mejor? La respuesta es sí, y este artículo explica cómo y por qué merece la pena.</p>
+          <span class="read-link">
+            <span data-i18n="lnk_read">Leer artículo</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </span>
+        </a>
+
+        <!-- Placeholder card -->
+        <div class="article-card placeholder">
+          <div class="placeholder-inner">
+            <div class="placeholder-glyph">+</div>
+            <p class="placeholder-text" data-i18n="ph_text">Añade aquí tu próximo artículo editando el HTML de esta página.</p>
           </div>
-        </article>
+        </div>
 
       </div>
 
-      <div style="margin-top: 4rem; padding: 2rem; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); max-width: 540px;">
-        <p class="section-label" style="margin-bottom: 0.75rem;">Nota</p>
-        <p style="font-size: 0.875rem; color: var(--text-2); line-height: 1.65;">
-          Los artículos listados son ejemplos de plantilla. <strong>Añade aquí tus propias entradas de blog</strong> editando directamente el HTML de esta página o, si prefieres, conecta esta sección con una plataforma como Substack o Medium.
-        </p>
+      <!-- ══ EDITORIAL NOTE ══ -->
+      <div class="editorial-note">
+        <div class="editorial-note-label" data-i18n="note_label">Nota editorial</div>
+        <p data-i18n="note_text">Los artículos listados son ejemplos de plantilla. <strong>Añade aquí tus propias entradas</strong> editando directamente el HTML, o conecta esta sección con Substack, Medium o una plataforma de tu elección.</p>
+      </div>
+
+      <!-- ══ CTA BANNER ══ -->
+      <div class="cta-banner">
+        <div>
+          <h2 data-i18n-html="cta_title">¿Tienes una pregunta sobre <em>urbanismo o planeamiento?</em></h2>
+          <p data-i18n="cta_desc">Si alguno de estos artículos te genera dudas o te gustaría hablar sobre tu proyecto, escríbeme sin compromiso.</p>
+        </div>
+        <a href="contacto.html" class="cta-link">
+          <span data-i18n="cta_btn">Contactar</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+        </a>
       </div>
 
     </main>
-
-    <footer>
-      <span class="foot-name">Daniel Serra Font</span>
-      <span class="foot-meta">Urbanista y Planificador Territorial</span>
-      <div class="foot-links">
-        <a href="contacto.html">Contacto</a>
-        <a href="index.html">Proyectos</a>
-      </div>
-    </footer>
   </div>
 
-  <script src="js/main.js"></script>
+  <footer>
+    <span class="foot-name">Daniel Serra Font</span>
+    <span class="foot-meta" data-i18n="foot_meta">Arquitecto · Urbanista · Director de Velat Studio</span>
+    <div class="foot-links">
+      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+      <a href="contacto.html" data-i18n="nav_contact">Contacto</a>
+      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      es: {
+        nav_role: 'Urbanista · Planificador Territorial',
+        nav_projects: 'Proyectos', nav_about: 'Sobre mí', nav_services: 'Servicios',
+        nav_publications: 'Publicaciones', nav_awards: 'Reconocimientos',
+        nav_blog: 'Blog', nav_contact: 'Contacto',
+        sb_label: '06 — Blog',
+        sb_role: 'Ensayos · Notas · Crítica',
+        st_articles: 'Artículos', st_cats: 'Categorías',
+        st_last: 'Última entrada', st_open: 'Libre acceso',
+        sb_cats_title: 'Categorías',
+        cat1: 'Planeamiento', cat2: 'Paisaje', cat3: 'Tecnología',
+        cat4: 'Municipios rurales', cat5: 'Participación',
+        sb_tags_title: 'Etiquetas',
+        tag_pgm: 'Plan. General', tag_land: 'Paisaje', tag_rur: 'Rural',
+        tag_ai: 'IA / Machine Learning', tag_med: 'Mediterráneo', tag_par: 'Participación',
+        sb_note_title: 'Sobre el blog',
+        sb_note_val: 'Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Sin periodicidad fija — se escribe cuando algo merece ser escrito.',
+        sb_btn: 'Contactar',
+        pg_num: '06 — Blog',
+        pg_desc: 'Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Ideas en proceso, observaciones de campo y lecturas críticas sobre la práctica urbanística.',
+        img_placeholder: 'Imagen del artículo',
+        lnk_read: 'Leer artículo',
+        a1_title: '¿Para qué sirve un Plan General hoy? Reflexiones desde la práctica valenciana',
+        a1_excerpt: 'Después de años redactando planes generales en municipios grandes y pequeños de la Comunitat Valenciana, me hago una pregunta que parece obvia pero que no lo es tanto: ¿para qué sirve realmente un plan general en el contexto actual?',
+        a2_title: 'El litoral que nos queda: apuntes sobre la protección del paisaje costero mediterráneo',
+        a2_excerpt: 'Trabajar en planes generales de municipios costeros como Jávea me ha dado una perspectiva privilegiada —y a veces angustiante— sobre el estado del paisaje litoral mediterráneo.',
+        a3_title: 'IA y SIG en el urbanismo: herramientas para el planificador del siglo XXI',
+        a3_excerpt: 'Las herramientas de inteligencia artificial y los sistemas de información geográfica están cambiando la forma en que los urbanistas analizamos el territorio y redactamos los planes.',
+        a4_title: 'Urbanismo rural: cuando el reto no es crecer sino mantenerse',
+        a4_excerpt: 'Los pequeños municipios del interior valenciano plantean un reto urbanístico muy diferente al de las grandes ciudades: aquí el problema no es cómo ordenar el crecimiento, sino cómo garantizar la cohesión territorial ante la despoblación.',
+        a5_title: 'Cinco años de LOTUP: balance y asignaturas pendientes',
+        a5_excerpt: 'La Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana lleva ya varios años en vigor. Un balance crítico de sus aportaciones, sus dificultades de aplicación y los temas aún pendientes.',
+        a6_title: 'Hacer participar no es solo informar: lecciones de varios procesos de planeamiento',
+        a6_excerpt: 'La participación ciudadana en los procesos de planeamiento urbanístico suele quedarse en el mínimo legal. ¿Puede hacerse algo mejor? La respuesta es sí, y este artículo explica cómo y por qué merece la pena.',
+        ph_text: 'Añade aquí tu próximo artículo editando el HTML de esta página.',
+        note_label: 'Nota editorial',
+        note_text: 'Los artículos listados son ejemplos de plantilla. Añade aquí tus propias entradas editando directamente el HTML, o conecta esta sección con Substack, Medium o una plataforma de tu elección.',
+        cta_title: '¿Tienes una pregunta sobre <em>urbanismo o planeamiento?</em>',
+        cta_desc: 'Si alguno de estos artículos te genera dudas o te gustaría hablar sobre tu proyecto, escríbeme sin compromiso.',
+        cta_btn: 'Contactar',
+        foot_meta: 'Arquitecto · Urbanista · Director de Velat Studio',
+      },
+      en: {
+        nav_role: 'Architect · Urban Planner',
+        nav_projects: 'Projects', nav_about: 'About', nav_services: 'Services',
+        nav_publications: 'Publications', nav_awards: 'Recognition',
+        nav_blog: 'Blog', nav_contact: 'Contact',
+        sb_label: '06 — Blog',
+        sb_role: 'Essays · Notes · Criticism',
+        st_articles: 'Articles', st_cats: 'Categories',
+        st_last: 'Latest entry', st_open: 'Open access',
+        sb_cats_title: 'Categories',
+        cat1: 'Planning', cat2: 'Landscape', cat3: 'Technology',
+        cat4: 'Rural municipalities', cat5: 'Participation',
+        sb_tags_title: 'Tags',
+        tag_pgm: 'General Planning', tag_land: 'Landscape', tag_rur: 'Rural',
+        tag_ai: 'AI / Machine Learning', tag_med: 'Mediterranean', tag_par: 'Participation',
+        sb_note_title: 'About the blog',
+        sb_note_val: 'Notes, essays and reflections on urbanism, territory and the contemporary city. No fixed schedule — written when something deserves to be written.',
+        sb_btn: 'Contact',
+        pg_num: '06 — Blog',
+        pg_desc: 'Notes, essays and reflections on urbanism, territory and the contemporary city. Ideas in progress, field observations and critical readings on urban planning practice.',
+        img_placeholder: 'Article image',
+        lnk_read: 'Read article',
+        a1_title: 'What is a General Plan actually for today? Reflections from Valencian practice',
+        a1_excerpt: 'After years drafting general plans for large and small municipalities in the Valencian Community, I find myself asking a question that seems obvious but isn\'t: what is a general plan really for in the current context?',
+        a2_title: 'The coastline we have left: notes on protecting the Mediterranean coastal landscape',
+        a2_excerpt: 'Working on general plans for coastal municipalities like Jávea has given me a privileged — and sometimes alarming — perspective on the state of the Mediterranean coastal landscape.',
+        a3_title: 'AI and GIS in urbanism: tools for the 21st-century planner',
+        a3_excerpt: 'Artificial intelligence tools and geographic information systems are changing the way urban planners analyse territory and draft plans. Where are we headed and what does this mean for the profession?',
+        a4_title: 'Rural urbanism: when the challenge is not growing but surviving',
+        a4_excerpt: 'Small inland Valencian municipalities pose a very different urban planning challenge to large cities: here the problem is not how to manage growth, but how to ensure territorial cohesion in the face of depopulation.',
+        a5_title: 'Five years of LOTUP: a critical assessment',
+        a5_excerpt: 'The Land Use, Urban Planning and Landscape Act of the Valencian Community has now been in force for several years. A critical assessment of its contributions, implementation challenges and the issues still pending in its regulatory development.',
+        a6_title: 'Participation is more than information: lessons from several planning processes',
+        a6_excerpt: 'Citizen participation in urban planning processes usually stops at the legal minimum. Can something better be done? The answer is yes, and this article explains how and why it is worth the effort.',
+        ph_text: 'Add your next article here by editing the HTML of this page.',
+        note_label: 'Editorial note',
+        note_text: 'The articles listed are template examples. Add your own entries by editing the HTML directly, or connect this section with Substack, Medium or a platform of your choice.',
+        cta_title: 'Have a question about <em>urbanism or planning?</em>',
+        cta_desc: 'If any of these articles raises questions or you would like to talk about your project, feel free to get in touch.',
+        cta_btn: 'Get in touch',
+        foot_meta: 'Architect · Urban Planner · Director of Velat Studio',
+      }
+    };
+
+    let lang = localStorage.getItem('dsf_lang') || 'es';
+
+    function applyLang(l) {
+      lang = l;
+      localStorage.setItem('dsf_lang', l);
+      const t = T[l];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (t[k] !== undefined) el.textContent = t[k];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const k = el.getAttribute('data-i18n-html');
+        if (t[k] !== undefined) el.innerHTML = t[k];
+      });
+      document.getElementById('lang-toggle').textContent = l === 'es' ? 'EN' : 'ES';
+      document.documentElement.lang = l;
+    }
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      applyLang(lang === 'es' ? 'en' : 'es');
+    });
+
+    applyLang(lang);
+  </script>
 </body>
 </html>

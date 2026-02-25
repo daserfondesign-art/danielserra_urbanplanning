@@ -4,166 +4,773 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Servicios — Daniel Serra Font</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
   <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #f5f4f0;
+      --bg2:      #edecea;
+      --surf:     #ffffff;
+      --border:   #0d0d0d;
+      --border-l: rgba(13,13,13,0.1);
+      --text:     #0d0d0d;
+      --text2:    rgba(13,13,13,0.5);
+      --text3:    rgba(13,13,13,0.28);
+      --red:      #c44b2b;
+      --serif:    'Spectral', Georgia, serif;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+      --mono:     'DM Mono', monospace;
+      --sidebar:  280px;
+      --topbar:   52px;
+    }
+    html, body { width: 100%; min-height: 100%; background: var(--bg); }
+    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-l); }
+
+    /* ══ TOP NAV — identical to index / sobre-mi ══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--topbar); z-index: 500;
+      display: flex; align-items: stretch;
+      background: var(--bg); border-bottom: 2px solid var(--border);
+    }
+    .nav-identity {
+      width: var(--sidebar); flex-shrink: 0;
+      display: flex; align-items: center;
+      padding: 0 1.5rem; border-right: 2px solid var(--border); gap: 0.75rem;
+    }
+    .nav-id-mark {
+      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; color: var(--red);
+      border: 1.5px solid var(--red); border-radius: 2px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
+    .nav-id-name {
+      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.02em; line-height: 1; color: var(--text); white-space: nowrap;
+    }
+    .nav-id-name em { font-style: italic; }
+    .nav-id-role {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red); line-height: 1;
+    }
+    .nav-links-slot {
+      flex: 1; display: flex; align-items: center; justify-content: flex-end;
+      padding: 0 1.25rem;
+    }
+    .nav-links { display: flex; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--text3);
+      padding: 0 0.65rem; height: var(--topbar);
+      display: flex; align-items: center;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      transition: color 0.18s, border-color 0.18s; white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); border-bottom-color: var(--red); }
+    .lang-toggle {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3);
+      background: none; border: 1.5px solid var(--border-l);
+      padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.18s; margin-left: 1rem;
+    }
+    .lang-toggle:hover { border-color: var(--border); color: var(--text); }
+
+    /* ══ LEFT SIDEBAR — fixed ══ */
+    .sidebar {
+      position: fixed; top: var(--topbar); left: 0; bottom: 0;
+      width: var(--sidebar); z-index: 400;
+      background: var(--surf); border-right: 2px solid var(--border);
+      display: flex; flex-direction: column; overflow: hidden;
+    }
+    .sb-identity {
+      padding: 1.75rem 1.5rem 1.25rem;
+      border-bottom: 1px solid var(--border-l); flex-shrink: 0;
+    }
+    .sb-label {
+      font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 0.85rem;
+    }
+    .sb-big-num {
+      font-family: var(--serif); font-size: 5rem; font-weight: 300;
+      line-height: 0.9; color: rgba(13,13,13,0.04);
+      letter-spacing: -0.04em; margin-bottom: -1.4rem; user-select: none;
+    }
+    .sb-name {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
+      line-height: 1.1; color: var(--text); margin-bottom: 0.2rem;
+      position: relative; z-index: 2;
+    }
+    .sb-name em { font-style: italic; }
+    .sb-rule { width: 100%; height: 2px; background: var(--border); margin: 0.75rem 0; }
+    .sb-role {
+      font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
+    }
+    .sb-scroll {
+      flex: 1; overflow-y: auto;
+      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
+    }
+    .sb-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.85rem; padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border-l);
+    }
+    .sb-stat { display: flex; flex-direction: column; gap: 0.12rem; }
+    .sb-stat-num {
+      font-family: var(--serif); font-size: 1.75rem; font-weight: 300;
+      line-height: 1; color: var(--text);
+    }
+    .sb-stat-lbl {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3);
+    }
+    .sb-section {
+      padding: 1.1rem 1.5rem;
+      border-bottom: 1px solid var(--border-l);
+    }
+    .sb-section-title {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text3);
+      border-bottom: 2px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 0.85rem;
+    }
+    .sb-row { margin-bottom: 0.65rem; }
+    .sb-row:last-child { margin-bottom: 0; }
+    .sb-row-lbl {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 0.12rem;
+    }
+    .sb-row-val { font-size: 0.78rem; color: var(--text2); line-height: 1.45; }
+    .sb-row-val a:hover { color: var(--red); }
+    .sb-row-val.accent { color: var(--red); font-weight: 500; font-size: 0.75rem; }
+    .sb-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .sb-tag {
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.05em;
+      text-transform: uppercase; padding: 0.18rem 0.5rem;
+      border: 1px solid var(--border-l); color: var(--text3); background: var(--bg);
+    }
+    /* Service index list */
+    .sb-svc-list { display: flex; flex-direction: column; }
+    .sb-svc-item {
+      display: grid; grid-template-columns: 28px 1fr;
+      gap: 0.65rem; align-items: center;
+      padding: 0.6rem 1.5rem;
+      border-bottom: 1px solid var(--border-l);
+      transition: background 0.15s;
+    }
+    .sb-svc-item:hover { background: var(--bg2); }
+    .sb-svc-num {
+      font-family: var(--mono); font-size: 0.46rem;
+      color: var(--text3); text-align: right;
+    }
+    .sb-svc-name { font-size: 0.75rem; color: var(--text2); line-height: 1.3; }
+    .sb-cta { padding: 1.1rem 1.5rem; }
+    .sb-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.8rem;
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--text); color: white;
+      text-decoration: none; transition: background 0.18s; margin-bottom: 0.5rem;
+    }
+    .sb-btn:hover { background: var(--red); }
+    .sb-footer {
+      padding: 0.85rem 1.5rem;
+      border-top: 1px solid var(--border-l);
+      flex-shrink: 0; display: flex; gap: 1.25rem;
+    }
+    .sb-footer a {
+      font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text3); transition: color 0.18s;
+    }
+    .sb-footer a:hover { color: var(--red); }
+
+    /* ══ MAIN CONTENT ══ */
+    .main-wrap { margin-left: var(--sidebar); padding-top: var(--topbar); min-height: 100vh; }
+    .main-content { max-width: 900px; margin: 0 auto; padding: 3.5rem 2.5rem 6rem; }
+
+    .page-header { margin-bottom: 3.5rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
+    .page-num {
+      font-family: var(--mono); font-size: 0.55rem;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
+      letter-spacing: -0.02em; line-height: 1.05;
+    }
+    .page-header h1 em { font-style: italic; font-weight: 300; color: var(--text2); }
+    .page-header p { margin-top: 1rem; max-width: 520px; font-size: 0.9rem; color: var(--text2); line-height: 1.75; }
+
+    .section-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; margin-bottom: 1.75rem; line-height: 1.2; }
+    .section-title em { font-style: italic; color: var(--text2); }
+    .section-lbl {
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text3); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-lbl::after { content:''; flex: 1; height: 1px; background: var(--border-l); }
+    .divider { border: none; border-top: 1px solid var(--border-l); margin: 3rem 0; }
+
+    /* ══ SERVICES GRID (2×4) ══ */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 0; margin-bottom: 4rem;
+      border-top: 2px solid var(--border); border-left: 2px solid var(--border);
+    }
+    .svc-card {
+      border-right: 2px solid var(--border); border-bottom: 2px solid var(--border);
+      padding: 1.6rem; background: var(--surf);
+      display: flex; flex-direction: column; gap: 0.6rem;
+      transition: background 0.18s; position: relative; overflow: hidden;
+    }
+    .svc-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--red);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    .svc-card:hover { background: var(--bg2); }
+    .svc-card:hover::before { transform: scaleX(1); }
+    .svc-num { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.1em; color: var(--text3); }
+    .svc-icon { font-size: 1.3rem; line-height: 1; }
+    .svc-card h3 { font-family: var(--serif); font-size: 1.05rem; font-weight: 400; line-height: 1.25; }
+    .svc-card p { font-size: 0.8rem; color: var(--text2); line-height: 1.68; flex: 1; }
+    .svc-tag {
+      display: inline-block; margin-top: 0.25rem; align-self: flex-start;
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.07em; text-transform: uppercase;
+      color: var(--text3); border: 1px solid var(--border-l); padding: 0.16rem 0.5rem; background: var(--bg);
+    }
+
+    /* ══ METHODOLOGY — two column ══ */
+    .method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 4rem; }
+    .method-intro p { font-size: 0.88rem; color: var(--text2); line-height: 1.78; margin-bottom: 1.1rem; }
+    .method-intro p strong { color: var(--text); font-weight: 600; }
+    .method-steps { display: flex; flex-direction: column; }
+    .method-step {
+      display: grid; grid-template-columns: 36px 1fr; gap: 1rem; align-items: start;
+      padding: 1.1rem 0; border-bottom: 1px solid var(--border-l);
+    }
+    .method-step:last-child { border-bottom: none; }
+    .step-num { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.1em; color: var(--red); padding-top: 3px; text-align: right; }
+    .step-body h4 { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 0.3rem; }
+    .step-body p { font-size: 0.78rem; color: var(--text2); line-height: 1.65; }
+
+    /* ══ CLIENTS ══ */
     .clients-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-bottom: 4rem;
+      display: flex; flex-wrap: wrap; gap: 0;
+      border-top: 1px solid var(--border-l); margin-bottom: 4rem;
     }
     .client-pill {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 2px;
-      padding: 0.45rem 0.85rem;
-      font-size: 0.82rem;
-      font-weight: 500;
-      transition: border-color 0.2s;
+      display: flex; align-items: center; gap: 0.55rem;
+      border-right: 1px solid var(--border-l); border-bottom: 1px solid var(--border-l);
+      padding: 0.65rem 1rem; font-size: 0.78rem; font-weight: 500;
+      transition: background 0.15s;
     }
-    .client-pill:hover { border-color: var(--text); }
-    .client-pill .pill-region {
-      font-family: var(--mono);
-      font-size: 0.55rem;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--text-3);
+    .client-pill:hover { background: var(--bg2); }
+    .pill-region { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); }
+    .pill-sep { width: 1px; height: 10px; background: var(--border-l); flex-shrink: 0; }
+
+    /* ══ CTA BANNER ══ */
+    .cta-banner {
+      background: var(--text); color: white; padding: 2.5rem;
+      display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
     }
-    .client-pill .pill-dot {
-      width: 4px; height: 4px;
-      border-radius: 50%;
-      background: var(--border);
-      flex-shrink: 0;
+    .cta-banner h2 { font-family: var(--serif); font-size: 1.8rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.6rem; }
+    .cta-banner h2 em { font-style: italic; }
+    .cta-banner p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 460px; }
+    .cta-link {
+      display: inline-flex; align-items: center; gap: 0.55rem;
+      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: white; border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.85rem 1.5rem; transition: all 0.2s; white-space: nowrap;
+    }
+    .cta-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
+
+    /* ══ FOOTER ══ */
+    footer {
+      border-top: 2px solid var(--border); padding: 1.5rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surf); margin-left: var(--sidebar);
+    }
+    .foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; }
+    .foot-meta { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
+    .foot-links { display: flex; gap: 1.5rem; }
+    .foot-links a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
+    .foot-links a:hover { color: var(--red); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 960px) {
+      :root { --sidebar: 0px; }
+      .sidebar { display: none; }
+      .nav-identity { display: none; }
+      footer { margin-left: 0; }
+      .method-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .cta-banner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .main-content { padding: 2.5rem 1.5rem 4rem; }
+      .page-header h1 { font-size: 2.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
   </style>
 </head>
 <body>
 
+  <!-- ══ NAV ══ -->
   <nav class="nav">
-    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
-    <div class="nav-links">
-      <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
-      <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
-      <a href="servicios.html"     class="active" data-i18n="nav_services">Servicios</a>
-      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
-      <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
-      <a href="blog.html"          data-i18n="nav_blog">Blog</a>
-      <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+    <div class="nav-identity">
+      <div class="nav-id-mark">D</div>
+      <div class="nav-id-text">
+        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
+        <div class="nav-id-role" data-i18n="nav_role">Urbanista · Planificador Territorial</div>
+      </div>
     </div>
-    <div class="nav-right">
+    <div class="nav-links-slot">
+      <div class="nav-links">
+        <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
+        <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+        <a href="servicios.html"     class="active" data-i18n="nav_services">Servicios</a>
+        <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+        <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
+        <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+        <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+      </div>
       <button class="lang-toggle" id="lang-toggle">EN</button>
     </div>
   </nav>
 
-  <div class="page-content">
-    <main class="inner-page">
+  <!-- ══ LEFT SIDEBAR ══ -->
+  <aside class="sidebar">
+
+    <div class="sb-identity">
+      <div class="sb-label" data-i18n="sb_label">03 — Servicios</div>
+      <div class="sb-big-num">03</div>
+      <div class="sb-name">Servicios <em>&amp; Consultoría</em></div>
+      <div class="sb-rule"></div>
+      <div class="sb-role" data-i18n="sb_role">Planeamiento · Paisaje · SIG</div>
+    </div>
+
+    <div class="sb-scroll">
+
+      <!-- Key stats -->
+      <div class="sb-stats">
+        <div class="sb-stat">
+          <span class="sb-stat-num">10+</span>
+          <span class="sb-stat-lbl" data-i18n="st_munis">Municipios</span>
+        </div>
+        <div class="sb-stat">
+          <span class="sb-stat-num">8</span>
+          <span class="sb-stat-lbl" data-i18n="st_areas">Áreas de servicio</span>
+        </div>
+        <div class="sb-stat">
+          <span class="sb-stat-num">6+</span>
+          <span class="sb-stat-lbl" data-i18n="st_years">Años con LOTUP</span>
+        </div>
+        <div class="sb-stat">
+          <span class="sb-stat-num">4</span>
+          <span class="sb-stat-lbl" data-i18n="st_plans">Planes aprobados</span>
+        </div>
+      </div>
+
+      <!-- Service index -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_svc_title">Índice de servicios</div>
+      </div>
+      <div class="sb-svc-list">
+        <div class="sb-svc-item"><span class="sb-svc-num">01</span><span class="sb-svc-name" data-i18n="si1">Planeamiento General (LOTUP)</span></div>
+        <div class="sb-svc-item"><span class="sb-svc-num">02</span><span class="sb-svc-name" data-i18n="si2">Planeamiento de Desarrollo</span></div>
+        <div class="sb-svc-item"><span class="sb-svc-num">03</span><span class="sb-svc-name" data-i18n="si3">Estudios de Paisaje</span></div>
+        <div class="sb-svc-item"><span class="sb-svc-num">04</span><span class="sb-svc-name" data-i18n="si4">Catálogos de Protecciones</span></div>
+        <div class="sb-svc-item"><span class="sb-svc-num">05</span><span class="sb-svc-name" data-i18n="si5">Cartografía y SIG</span></div>
+        <div class="sb-svc-item"><span class="sb-svc-num">06</span><span class="sb-svc-name" data-i18n="si6">Consultoría Urbanística</span></div>
+        <div class="sb-svc-item"><span class="sb-svc-num">07</span><span class="sb-svc-name" data-i18n="si7">Urbanismo Sostenible</span></div>
+        <div class="sb-svc-item"><span class="sb-svc-num">08</span><span class="sb-svc-name" data-i18n="si8">Informes Técnicos</span></div>
+      </div>
+
+      <!-- Specialization -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_spec_title">Especialización</div>
+        <div class="sb-tags">
+          <span class="sb-tag">LOTUP</span>
+          <span class="sb-tag" data-i18n="tag_pgm">Plan. General</span>
+          <span class="sb-tag" data-i18n="tag_pp">Plan. Parcial</span>
+          <span class="sb-tag" data-i18n="tag_land">Paisaje</span>
+          <span class="sb-tag">SIG / GIS</span>
+          <span class="sb-tag">AutoCAD</span>
+          <span class="sb-tag">SketchUp</span>
+          <span class="sb-tag" data-i18n="tag_cat">Catálogos</span>
+          <span class="sb-tag" data-i18n="tag_sust">Sostenibilidad</span>
+        </div>
+      </div>
+
+      <!-- Availability -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_avail_title">Disponible para</div>
+        <div style="display:flex;flex-direction:column;gap:0.38rem;">
+          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av1">· Planes Generales Estructurales</span>
+          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av2">· Planes Parciales y PAI</span>
+          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av3">· Estudios de Paisaje</span>
+          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av4">· Consultoría urbanística</span>
+          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av5">· Tramitación administrativa</span>
+          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av6">· Colaboraciones y ponencias</span>
+        </div>
+      </div>
+
+      <!-- Contact data -->
+      <div class="sb-section">
+        <div class="sb-section-title" data-i18n="sb_contact_title">Contacto</div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="sb_studio_lbl">Estudio</div>
+          <div class="sb-row-val"><a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a></div>
+        </div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="sb_location_lbl">Ubicación</div>
+          <div class="sb-row-val">Comunitat Valenciana, España</div>
+        </div>
+        <div class="sb-row">
+          <div class="sb-row-lbl" data-i18n="sb_normativa_lbl">Normativa</div>
+          <div class="sb-row-val accent">LOTUP · GVA · PGOU</div>
+        </div>
+      </div>
+
+    </div><!-- /sb-scroll -->
+
+    <div class="sb-cta">
+      <a href="contacto.html" class="sb-btn" data-i18n="sb_btn_contact">Solicitar consulta</a>
+    </div>
+
+    <div class="sb-footer">
+      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
+      <a href="sobre-mi.html" data-i18n="nav_about">Sobre mí</a>
+      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+    </div>
+  </aside>
+
+  <!-- ══ MAIN CONTENT ══ -->
+  <div class="main-wrap">
+    <main class="main-content">
 
       <header class="page-header">
-        <div class="page-number">03 — Servicios</div>
-        <h1>Servicios <em>&amp; Consultoría</em></h1>
-        <p>Apoyo integral en proyectos de planificación territorial y urbanismo para administraciones locales y estudios de arquitectura en la Comunitat Valenciana.</p>
+        <div class="page-num" data-i18n="pg_num">03 — Servicios</div>
+        <h1>Servicios<br><em>&amp; Consultoría</em></h1>
+        <p data-i18n="pg_desc">Apoyo técnico integral en planeamiento territorial y urbanismo para administraciones locales, estudios de arquitectura y promotores privados en la Comunitat Valenciana.</p>
       </header>
 
+      <!-- ══ SERVICES GRID ══ -->
+      <h2 class="section-title" data-i18n="sec_svc">Áreas de <em>servicio</em></h2>
       <div class="services-grid">
 
-        <div class="service-card">
-          <div class="service-icon">📐</div>
-          <h3>Planeamiento General (LOTUP)</h3>
-          <p>Redacción de Planes Generales Estructurales y Planes de Ordenación Detallada adaptados a la Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana.</p>
+        <div class="svc-card">
+          <div class="svc-num">01</div>
+          <div class="svc-icon">📐</div>
+          <h3 data-i18n="s1_title">Planeamiento General (LOTUP)</h3>
+          <p data-i18n="s1_desc">Redacción de Planes Generales Estructurales y Planes de Ordenación Detallada adaptados a la Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana.</p>
+          <span class="svc-tag" data-i18n="s1_tag">Planeamiento general</span>
         </div>
 
-        <div class="service-card">
-          <div class="service-icon">🏗️</div>
-          <h3>Planeamiento de Desarrollo</h3>
-          <p>Redacción de Planes Parciales, Planes de Actuación Integrada (PAI), Planes de Reforma Interior (PRI), Planes Especiales y demás instrumentos de desarrollo del planeamiento general.</p>
+        <div class="svc-card">
+          <div class="svc-num">02</div>
+          <div class="svc-icon">🏗️</div>
+          <h3 data-i18n="s2_title">Planeamiento de Desarrollo</h3>
+          <p data-i18n="s2_desc">Redacción de Planes Parciales, PAI, PRI, Planes Especiales y demás instrumentos de desarrollo. Tramitación administrativa íntegra ante la Conselleria de Territori.</p>
+          <span class="svc-tag" data-i18n="s2_tag">Desarrollo urbanístico</span>
         </div>
 
-        <div class="service-card">
-          <div class="service-icon">🌄</div>
-          <h3>Estudios de Paisaje y Simulaciones Visuales</h3>
-          <p>Elaboración de Estudios de Paisaje según la normativa valenciana, con especial énfasis en la producción de simulaciones visuales de integración paisajística mediante herramientas 3D avanzadas (SketchUp, 3ds Max, Corona Render) para evaluar el impacto visual de las actuaciones previstas.</p>
+        <div class="svc-card">
+          <div class="svc-num">03</div>
+          <div class="svc-icon">🌄</div>
+          <h3 data-i18n="s3_title">Estudios de Paisaje</h3>
+          <p data-i18n="s3_desc">Elaboración de Estudios de Paisaje según normativa valenciana, con simulaciones visuales de integración paisajística mediante SketchUp, 3ds Max y Corona Render.</p>
+          <span class="svc-tag" data-i18n="s3_tag">Paisaje · 3D</span>
         </div>
 
-        <div class="service-card">
-          <div class="service-icon">📋</div>
-          <h3>Catálogos de Protecciones</h3>
-          <p>Redacción de Catálogos de Protecciones del patrimonio arquitectónico, arqueológico, etnológico y paisajístico para su incorporación a los instrumentos de planeamiento.</p>
+        <div class="svc-card">
+          <div class="svc-num">04</div>
+          <div class="svc-icon">📋</div>
+          <h3 data-i18n="s4_title">Catálogos de Protecciones</h3>
+          <p data-i18n="s4_desc">Redacción de Catálogos de Protecciones del patrimonio arquitectónico, arqueológico, etnológico y paisajístico para su incorporación al planeamiento municipal.</p>
+          <span class="svc-tag" data-i18n="s4_tag">Patrimonio</span>
         </div>
 
-        <div class="service-card">
-          <div class="service-icon">🗺️</div>
-          <h3>Cartografía y SIG</h3>
-          <p>Elaboración de cartografía urbanística, análisis territorial mediante sistemas de información geográfica (QGIS / ArcGIS) y producción de documentación gráfica técnica para planes e informes.</p>
+        <div class="svc-card">
+          <div class="svc-num">05</div>
+          <div class="svc-icon">🗺️</div>
+          <h3 data-i18n="s5_title">Cartografía y SIG</h3>
+          <p data-i18n="s5_desc">Análisis territorial mediante QGIS / ArcGIS, cartografía urbanística y producción de documentación gráfica técnica para planes e informes.</p>
+          <span class="svc-tag" data-i18n="s5_tag">GIS · Cartografía</span>
         </div>
 
-        <div class="service-card">
-          <div class="service-icon">🤝</div>
-          <h3>Consultoría Urbanística</h3>
-          <p>Asesoramiento técnico a particulares, promotores y administraciones locales sobre viabilidad urbanística de actuaciones, interpretación de normativa LOTUP y gestión de suelo.</p>
+        <div class="svc-card">
+          <div class="svc-num">06</div>
+          <div class="svc-icon">🤝</div>
+          <h3 data-i18n="s6_title">Consultoría Urbanística</h3>
+          <p data-i18n="s6_desc">Asesoramiento técnico a particulares, promotores y administraciones sobre viabilidad urbanística, interpretación de la normativa LOTUP y gestión del suelo.</p>
+          <span class="svc-tag" data-i18n="s6_tag">Consultoría</span>
         </div>
 
-        <div class="service-card">
-          <div class="service-icon">♻️</div>
-          <h3>Urbanismo Sostenible</h3>
-          <p>Integración de criterios de sostenibilidad, resiliencia climática, infraestructura verde y biodiversidad en la redacción de instrumentos de planeamiento y proyectos de transformación urbana.</p>
+        <div class="svc-card">
+          <div class="svc-num">07</div>
+          <div class="svc-icon">♻️</div>
+          <h3 data-i18n="s7_title">Urbanismo Sostenible</h3>
+          <p data-i18n="s7_desc">Integración de criterios de sostenibilidad, resiliencia climática, infraestructura verde y biodiversidad en planes e instrumentos de transformación urbana.</p>
+          <span class="svc-tag" data-i18n="s7_tag">Sostenibilidad</span>
         </div>
 
-        <div class="service-card">
-          <div class="service-icon">📊</div>
-          <h3>Análisis e Informes Técnicos</h3>
-          <p>Redacción de informes urbanísticos, memorias técnicas, estudios de viabilidad territorial y análisis de impacto ambiental para instrumentos de planeamiento urbanístico.</p>
+        <div class="svc-card">
+          <div class="svc-num">08</div>
+          <div class="svc-icon">📊</div>
+          <h3 data-i18n="s8_title">Informes Técnicos</h3>
+          <p data-i18n="s8_desc">Redacción de informes urbanísticos, memorias técnicas, estudios de viabilidad territorial y análisis de impacto ambiental para instrumentos de planeamiento.</p>
+          <span class="svc-tag" data-i18n="s8_tag">Análisis · Informes</span>
         </div>
 
       </div>
 
-      <hr class="divider">
+      <!-- ══ METHODOLOGY ══ -->
+      <div class="divider"></div>
+      <div class="method-grid">
+        <div class="method-intro">
+          <h2 class="section-title" data-i18n="sec_method">Metodología <em>de trabajo</em></h2>
+          <p data-i18n="method_p1">Cada proyecto parte de un análisis exhaustivo del territorio y la normativa vigente para proponer soluciones <strong>viables, tramitables y duraderas.</strong></p>
+          <p data-i18n="method_p2">La experiencia acumulada en más de diez municipios de la Comunitat Valenciana garantiza un conocimiento profundo de los procesos administrativos y los requerimientos técnicos de la Conselleria de Territori i Habitatge.</p>
+        </div>
+        <div class="method-steps">
+          <div class="method-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <h4 data-i18n="ap1_title">Análisis territorial</h4>
+              <p data-i18n="ap1_desc">Diagnosis del municipio: estructura urbana, clasificación del suelo, normativa vigente y condicionantes ambientales y paisajísticos.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <h4 data-i18n="ap2_title">Redacción técnica</h4>
+              <p data-i18n="ap2_desc">Elaboración completa: memoria justificativa, normativa urbanística, planos y estudios complementarios.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <h4 data-i18n="ap3_title">Tramitación administrativa</h4>
+              <p data-i18n="ap3_desc">Seguimiento del expediente ante organismos sectoriales y la Conselleria hasta la aprobación definitiva.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <h4 data-i18n="ap4_title">Participación ciudadana</h4>
+              <p data-i18n="ap4_desc">Exposición pública y procesos de participación integrados desde el inicio del proceso de planeamiento.</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- ══ CLIENTS ══ -->
-      <p class="section-label" style="margin-bottom: 1.25rem;">Administraciones con las que he colaborado</p>
-
+      <div class="divider"></div>
+      <h2 class="section-title" data-i18n="sec_clients">Administraciones <em>colaboradoras</em></h2>
       <div class="clients-row">
-        <div class="client-pill">Ayuntamiento de Elche <span class="pill-dot"></span><span class="pill-region">Alicante</span></div>
-        <div class="client-pill">Ayto. de Jávea / Xàbia <span class="pill-dot"></span><span class="pill-region">Alicante</span></div>
-        <div class="client-pill">Ayuntamiento de Tibi <span class="pill-dot"></span><span class="pill-region">Alicante</span></div>
-        <div class="client-pill">Ayuntamiento de Torrent <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
-        <div class="client-pill">Ayuntamiento de Segart <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
-        <div class="client-pill">Ayuntamiento de Gilet <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
-        <div class="client-pill">Ayto. Llocnou de Sant Jeroni <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
-        <div class="client-pill">Ayuntamiento de Náquera <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
-        <div class="client-pill">Ayuntamiento de Massalfassar <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
-        <div class="client-pill">Ayuntamiento de Mislata <span class="pill-dot"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Elche <span class="pill-sep"></span><span class="pill-region">Alicante</span></div>
+        <div class="client-pill">Ayto. de Jávea / Xàbia <span class="pill-sep"></span><span class="pill-region">Alicante</span></div>
+        <div class="client-pill">Ayuntamiento de Tibi <span class="pill-sep"></span><span class="pill-region">Alicante</span></div>
+        <div class="client-pill">Ayuntamiento de Torrent <span class="pill-sep"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Segart <span class="pill-sep"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Gilet <span class="pill-sep"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayto. Llocnou de Sant Jeroni <span class="pill-sep"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Náquera <span class="pill-sep"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Massalfassar <span class="pill-sep"></span><span class="pill-region">Valencia</span></div>
+        <div class="client-pill">Ayuntamiento de Mislata <span class="pill-sep"></span><span class="pill-region">Valencia</span></div>
       </div>
 
-      <hr class="divider">
-
-      <div style="max-width: 640px;">
-        <p class="section-label">¿Hablamos de tu proyecto?</p>
-        <h2 style="font-family: var(--serif); font-size: 2rem; font-weight: 400; margin-bottom: 1rem; line-height: 1.3;">
-          Cada municipio tiene sus propias necesidades urbanísticas.<br>
-          <em>Trabajemos juntos en las tuyas.</em>
-        </h2>
-        <a href="contacto.html" style="display: inline-flex; align-items: center; gap: 0.65rem; margin-top: 1.5rem; background: var(--text); color: white; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.9rem 1.75rem; border-radius: var(--radius);">
-          Contactar
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+      <!-- ══ CTA BANNER ══ -->
+      <div class="cta-banner">
+        <div>
+          <h2 data-i18n-html="cta_title">Cada municipio tiene sus propias <em>necesidades urbanísticas.</em></h2>
+          <p data-i18n="cta_desc">Si tienes un proyecto de planeamiento, necesitas asesoramiento técnico o quieres saber cómo puedo ayudarte, escríbeme sin compromiso.</p>
+        </div>
+        <a href="contacto.html" class="cta-link">
+          <span data-i18n="cta_btn">Contactar</span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </a>
       </div>
 
     </main>
-
-    <footer>
-      <span class="foot-name">Daniel Serra Font</span>
-      <span class="foot-meta">Arquitecto · Urbanista · Director de Velat Studio</span>
-      <div class="foot-links">
-        <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
-        <a href="contacto.html">Contacto</a>
-        <a href="index.html">Proyectos</a>
-      </div>
-    </footer>
   </div>
 
-  <script src="js/main.js"></script>
+  <footer>
+    <span class="foot-name">Daniel Serra Font</span>
+    <span class="foot-meta" data-i18n="foot_meta">Arquitecto · Urbanista · Director de Velat Studio</span>
+    <div class="foot-links">
+      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+      <a href="contacto.html" data-i18n="nav_contact">Contacto</a>
+      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
+    </div>
+  </footer>
+
+  <script>
+    const T = {
+      es: {
+        nav_role: 'Urbanista · Planificador Territorial',
+        nav_projects: 'Proyectos', nav_about: 'Sobre mí', nav_services: 'Servicios',
+        nav_publications: 'Publicaciones', nav_awards: 'Reconocimientos',
+        nav_blog: 'Blog', nav_contact: 'Contacto',
+        sb_label: '03 — Servicios',
+        sb_role: 'Planeamiento · Paisaje · SIG',
+        st_munis: 'Municipios', st_areas: 'Áreas de servicio',
+        st_years: 'Años con LOTUP', st_plans: 'Planes aprobados',
+        sb_svc_title: 'Índice de servicios',
+        si1: 'Planeamiento General (LOTUP)', si2: 'Planeamiento de Desarrollo',
+        si3: 'Estudios de Paisaje', si4: 'Catálogos de Protecciones',
+        si5: 'Cartografía y SIG', si6: 'Consultoría Urbanística',
+        si7: 'Urbanismo Sostenible', si8: 'Informes Técnicos',
+        sb_spec_title: 'Especialización',
+        tag_pgm: 'Plan. General', tag_pp: 'Plan. Parcial',
+        tag_land: 'Paisaje', tag_cat: 'Catálogos', tag_sust: 'Sostenibilidad',
+        sb_avail_title: 'Disponible para',
+        av1: '· Planes Generales Estructurales', av2: '· Planes Parciales y PAI',
+        av3: '· Estudios de Paisaje', av4: '· Consultoría urbanística',
+        av5: '· Tramitación administrativa', av6: '· Colaboraciones y ponencias',
+        sb_contact_title: 'Contacto', sb_studio_lbl: 'Estudio',
+        sb_location_lbl: 'Ubicación', sb_normativa_lbl: 'Normativa',
+        sb_btn_contact: 'Solicitar consulta',
+        pg_num: '03 — Servicios',
+        pg_desc: 'Apoyo técnico integral en planeamiento territorial y urbanismo para administraciones locales, estudios de arquitectura y promotores privados en la Comunitat Valenciana.',
+        sec_svc: 'Áreas de servicio',
+        s1_title: 'Planeamiento General (LOTUP)',
+        s1_desc: 'Redacción de Planes Generales Estructurales y Planes de Ordenación Detallada adaptados a la Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana.',
+        s1_tag: 'Planeamiento general',
+        s2_title: 'Planeamiento de Desarrollo',
+        s2_desc: 'Redacción de Planes Parciales, PAI, PRI, Planes Especiales y demás instrumentos de desarrollo. Tramitación administrativa íntegra ante la Conselleria de Territori.',
+        s2_tag: 'Desarrollo urbanístico',
+        s3_title: 'Estudios de Paisaje',
+        s3_desc: 'Elaboración de Estudios de Paisaje según normativa valenciana, con simulaciones visuales de integración paisajística mediante SketchUp, 3ds Max y Corona Render.',
+        s3_tag: 'Paisaje · 3D',
+        s4_title: 'Catálogos de Protecciones',
+        s4_desc: 'Redacción de Catálogos de Protecciones del patrimonio arquitectónico, arqueológico, etnológico y paisajístico para su incorporación al planeamiento municipal.',
+        s4_tag: 'Patrimonio',
+        s5_title: 'Cartografía y SIG',
+        s5_desc: 'Análisis territorial mediante QGIS / ArcGIS, cartografía urbanística y producción de documentación gráfica técnica para planes e informes.',
+        s5_tag: 'GIS · Cartografía',
+        s6_title: 'Consultoría Urbanística',
+        s6_desc: 'Asesoramiento técnico a particulares, promotores y administraciones sobre viabilidad urbanística, interpretación de la normativa LOTUP y gestión del suelo.',
+        s6_tag: 'Consultoría',
+        s7_title: 'Urbanismo Sostenible',
+        s7_desc: 'Integración de criterios de sostenibilidad, resiliencia climática, infraestructura verde y biodiversidad en planes e instrumentos de transformación urbana.',
+        s7_tag: 'Sostenibilidad',
+        s8_title: 'Informes Técnicos',
+        s8_desc: 'Redacción de informes urbanísticos, memorias técnicas, estudios de viabilidad territorial y análisis de impacto ambiental para instrumentos de planeamiento.',
+        s8_tag: 'Análisis · Informes',
+        sec_method: 'Metodología de trabajo',
+        method_p1: 'Cada proyecto parte de un análisis exhaustivo del territorio y la normativa vigente para proponer soluciones viables, tramitables y duraderas.',
+        method_p2: 'La experiencia acumulada en más de diez municipios de la Comunitat Valenciana garantiza un conocimiento profundo de los procesos administrativos y los requerimientos técnicos de la Conselleria de Territori i Habitatge.',
+        ap1_title: 'Análisis territorial', ap1_desc: 'Diagnosis del municipio: estructura urbana, clasificación del suelo, normativa vigente y condicionantes ambientales y paisajísticos.',
+        ap2_title: 'Redacción técnica', ap2_desc: 'Elaboración completa: memoria justificativa, normativa urbanística, planos y estudios complementarios.',
+        ap3_title: 'Tramitación administrativa', ap3_desc: 'Seguimiento del expediente ante organismos sectoriales y la Conselleria hasta la aprobación definitiva.',
+        ap4_title: 'Participación ciudadana', ap4_desc: 'Exposición pública y procesos de participación integrados desde el inicio del proceso de planeamiento.',
+        sec_clients: 'Administraciones colaboradoras',
+        cta_title: 'Cada municipio tiene sus propias <em>necesidades urbanísticas.</em>',
+        cta_desc: 'Si tienes un proyecto de planeamiento, necesitas asesoramiento técnico o quieres saber cómo puedo ayudarte, escríbeme sin compromiso.',
+        cta_btn: 'Contactar',
+        foot_meta: 'Arquitecto · Urbanista · Director de Velat Studio',
+      },
+      en: {
+        nav_role: 'Architect · Urban Planner',
+        nav_projects: 'Projects', nav_about: 'About', nav_services: 'Services',
+        nav_publications: 'Publications', nav_awards: 'Recognition',
+        nav_blog: 'Blog', nav_contact: 'Contact',
+        sb_label: '03 — Services',
+        sb_role: 'Planning · Landscape · GIS',
+        st_munis: 'Municipalities', st_areas: 'Service areas',
+        st_years: 'Years with LOTUP', st_plans: 'Approved plans',
+        sb_svc_title: 'Service index',
+        si1: 'General Planning (LOTUP)', si2: 'Development Planning',
+        si3: 'Landscape Studies', si4: 'Heritage Protection Catalogues',
+        si5: 'Cartography & GIS', si6: 'Urban Planning Consultancy',
+        si7: 'Sustainable Urbanism', si8: 'Technical Reports',
+        sb_spec_title: 'Specialisation',
+        tag_pgm: 'General Planning', tag_pp: 'Partial Planning',
+        tag_land: 'Landscape', tag_cat: 'Catalogues', tag_sust: 'Sustainability',
+        sb_avail_title: 'Available for',
+        av1: '· Structural General Plans', av2: '· Partial Plans and PAI',
+        av3: '· Landscape Studies', av4: '· Urban planning consultancy',
+        av5: '· Administrative processing', av6: '· Collaborations and lectures',
+        sb_contact_title: 'Contact', sb_studio_lbl: 'Studio',
+        sb_location_lbl: 'Location', sb_normativa_lbl: 'Regulations',
+        sb_btn_contact: 'Request consultation',
+        pg_num: '03 — Services',
+        pg_desc: 'Full technical support in territorial planning and urban design for local authorities, architecture practices and private developers in the Valencian Community.',
+        sec_svc: 'Service areas',
+        s1_title: 'General Planning (LOTUP)',
+        s1_desc: 'Drafting of Structural General Plans and Detailed Planning Orders adapted to the Land Use, Urban Planning and Landscape Act (LOTUP) of the Valencian Community.',
+        s1_tag: 'General planning',
+        s2_title: 'Development Planning',
+        s2_desc: 'Drafting of Partial Plans (PP), Integrated Action Programmes (PAI), Interior Reform Plans (PRI) and other instruments. Full administrative processing before the Conselleria.',
+        s2_tag: 'Urban development',
+        s3_title: 'Landscape Studies',
+        s3_desc: 'Landscape Studies under Valencian regulations, including visual integration simulations using SketchUp, 3ds Max and Corona Render to assess visual impact.',
+        s3_tag: 'Landscape · 3D',
+        s4_title: 'Heritage Protection Catalogues',
+        s4_desc: 'Drafting of Protection Catalogues covering architectural, archaeological, ethnological and landscape heritage for incorporation into municipal planning instruments.',
+        s4_tag: 'Heritage',
+        s5_title: 'Cartography & GIS',
+        s5_desc: 'Territorial analysis using QGIS / ArcGIS, urban cartography and production of technical graphic documentation for plans and reports.',
+        s5_tag: 'GIS · Cartography',
+        s6_title: 'Urban Planning Consultancy',
+        s6_desc: 'Technical advice to individuals, developers and local authorities on planning viability, LOTUP regulatory interpretation and land classification and management.',
+        s6_tag: 'Consultancy',
+        s7_title: 'Sustainable Urbanism',
+        s7_desc: 'Integration of sustainability criteria, climate resilience, green infrastructure and biodiversity into planning instruments and urban transformation projects.',
+        s7_tag: 'Sustainability',
+        s8_title: 'Technical Reports',
+        s8_desc: 'Urban planning reports, technical memoranda, territorial feasibility studies and environmental impact assessments for planning instruments.',
+        s8_tag: 'Analysis · Reports',
+        sec_method: 'Working methodology',
+        method_p1: 'Every project begins with a thorough analysis of the territory and applicable regulations to propose solutions that are viable, processable and lasting.',
+        method_p2: 'Experience accumulated across more than ten municipalities in the Valencian Community ensures a deep knowledge of administrative processes and the technical requirements of the Conselleria de Territori i Habitatge.',
+        ap1_title: 'Territorial analysis', ap1_desc: 'Municipal diagnosis: urban structure, land classification, applicable regulations and environmental and landscape constraints.',
+        ap2_title: 'Technical drafting', ap2_desc: 'Complete preparation: planning memoranda, urban regulations, plans and complementary studies.',
+        ap3_title: 'Administrative processing', ap3_desc: 'File follow-up before sectoral bodies and the Conselleria through to definitive approval.',
+        ap4_title: 'Citizen participation', ap4_desc: 'Public information periods and participation processes integrated from the start of the planning process.',
+        sec_clients: 'Partner authorities',
+        cta_title: 'Every municipality has its own <em>planning needs.</em>',
+        cta_desc: "If you have a planning project, need technical advice or want to find out how I can help, get in touch. No obligation.",
+        cta_btn: 'Get in touch',
+        foot_meta: 'Architect · Urban Planner · Director of Velat Studio',
+      }
+    };
+
+    let lang = localStorage.getItem('dsf_lang') || 'es';
+
+    function applyLang(l) {
+      lang = l;
+      localStorage.setItem('dsf_lang', l);
+      const t = T[l];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (t[k] !== undefined) el.textContent = t[k];
+      });
+      document.querySelectorAll('[data-i18n-html]').forEach(el => {
+        const k = el.getAttribute('data-i18n-html');
+        if (t[k] !== undefined) el.innerHTML = t[k];
+      });
+      document.getElementById('lang-toggle').textContent = l === 'es' ? 'EN' : 'ES';
+      document.documentElement.lang = l;
+    }
+
+    document.getElementById('lang-toggle').addEventListener('click', () => {
+      applyLang(lang === 'es' ? 'en' : 'es');
+    });
+
+    applyLang(lang);
+  </script>
 </body>
 </html>

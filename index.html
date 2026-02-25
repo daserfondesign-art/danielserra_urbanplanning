@@ -3,58 +3,862 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Daniel Serra Font — Urbanista y Planificador Territorial. Portfolio de proyectos de planeamiento urbanístico en la Comunitat Valenciana.">
+  <meta name="description" content="Daniel Serra Font — Urbanista y Planificador Territorial. Proyectos de planeamiento urbanístico en la Comunitat Valenciana.">
   <title>Daniel Serra Font — Urbanista y Planificador Territorial</title>
-  <link rel="stylesheet" href="css/styles.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #f5f4f0;
+      --bg2:      #edecea;
+      --surf:     #ffffff;
+      --border:   #0d0d0d;
+      --border-l: rgba(13,13,13,0.1);
+      --text:     #0d0d0d;
+      --text2:    rgba(13,13,13,0.5);
+      --text3:    rgba(13,13,13,0.28);
+      --red:      #c44b2b;
+      --serif:    'Spectral', Georgia, serif;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+      --mono:     'DM Mono', monospace;
+      --sidebar:  280px;
+      --topbar:   52px;
+    }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); }
+    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ══ SCROLLBARS ══ */
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-l); }
+
+    /* ══ TOP NAV ══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--topbar); z-index: 500;
+      display: flex; align-items: stretch;
+      background: var(--bg);
+      border-bottom: 2px solid var(--border);
+    }
+
+    /* Identity slot */
+    .nav-identity {
+      width: var(--sidebar);
+      flex-shrink: 0;
+      display: flex; align-items: center;
+      padding: 0 1.5rem;
+      border-right: 2px solid var(--border);
+      gap: 0.75rem;
+    }
+    .nav-id-mark {
+      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; color: var(--red);
+      border: 1.5px solid var(--red); border-radius: 2px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
+    .nav-id-name {
+      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.02em; line-height: 1; color: var(--text);
+      white-space: nowrap;
+    }
+    .nav-id-name em { font-style: italic; }
+    .nav-id-role {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red); line-height: 1;
+    }
+
+    /* Links slot */
+    .nav-links-slot {
+      flex: 1; display: flex; align-items: center; justify-content: flex-end;
+      padding: 0 1.25rem; gap: 0.05rem;
+    }
+    .nav-links { display: flex; }
+    .nav-links a {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--text3);
+      padding: 0 0.65rem; height: var(--topbar);
+      display: flex; align-items: center;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.18s, border-color 0.18s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a.active { color: var(--text); border-bottom-color: var(--red); }
+    .lang-toggle {
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3);
+      background: none; border: 1.5px solid var(--border-l);
+      padding: 0.3rem 0.6rem; cursor: pointer;
+      transition: all 0.18s; margin-left: 1rem;
+    }
+    .lang-toggle:hover { border-color: var(--border); color: var(--text); }
+
+    /* ══ LEFT SIDEBAR ══ */
+    .sidebar {
+      position: fixed; top: var(--topbar); left: 0; bottom: 0;
+      width: var(--sidebar); z-index: 400;
+      background: var(--surf);
+      border-right: 2px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Identity block */
+    .sidebar-identity {
+      padding: 1.75rem 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--border-l);
+      flex-shrink: 0;
+    }
+    .sidebar-issue {
+      font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 1rem;
+    }
+    .sidebar-number {
+      font-family: var(--serif); font-size: 5rem; font-weight: 300;
+      line-height: 0.9; color: rgba(13,13,13,0.05);
+      letter-spacing: -0.04em; margin-bottom: -1.4rem;
+      user-select: none;
+    }
+    .sidebar-name {
+      font-family: var(--serif); font-size: 1.6rem; font-weight: 400;
+      line-height: 1.1; color: var(--text); margin-bottom: 0.2rem;
+      position: relative; z-index: 2;
+    }
+    .sidebar-name em { font-style: italic; }
+    .sidebar-line { width: 100%; height: 2px; background: var(--border); margin: 0.85rem 0; }
+    .sidebar-role {
+      font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red);
+      line-height: 1.5; margin-bottom: 0.5rem;
+    }
+    .sidebar-desc {
+      font-family: var(--sans); font-size: 0.72rem;
+      color: var(--text3); line-height: 1.6;
+    }
+
+    /* Project list */
+    .sidebar-list-header {
+      padding: 0.85rem 1.5rem 0.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .sidebar-list-label {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text3);
+    }
+    .sidebar-list-count {
+      font-family: var(--mono); font-size: 0.5rem; color: var(--text3);
+    }
+
+    .project-list {
+      flex: 1; overflow-y: auto;
+      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
+    }
+
+    .proj-item {
+      display: grid; grid-template-columns: 36px 1fr;
+      gap: 0.65rem; align-items: start;
+      padding: 0.8rem 1.5rem;
+      cursor: pointer; position: relative;
+      border-bottom: 1px solid var(--border-l);
+      transition: background 0.15s;
+    }
+    .proj-item::before {
+      content: ''; position: absolute;
+      left: 0; top: 0; bottom: 0; width: 3px;
+      background: transparent; transition: background 0.15s;
+    }
+    .proj-item:hover { background: var(--bg2); }
+    .proj-item:hover::before { background: rgba(196,75,43,0.3); }
+    .proj-item.active { background: var(--bg2); }
+    .proj-item.active::before { background: var(--red); }
+
+    .proj-num {
+      font-family: var(--mono); font-size: 0.48rem;
+      color: var(--text3); padding-top: 3px; text-align: right;
+    }
+    .proj-item.active .proj-num { color: var(--red); }
+    .proj-info {}
+    .proj-title {
+      font-family: var(--serif); font-size: 0.85rem; font-weight: 400;
+      line-height: 1.3; color: var(--text2);
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden; margin-bottom: 0.2rem;
+      transition: color 0.15s;
+    }
+    .proj-item:hover .proj-title, .proj-item.active .proj-title { color: var(--text); }
+    .proj-meta {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .proj-year {
+      font-family: var(--mono); font-size: 0.48rem;
+      letter-spacing: 0.05em; color: var(--text3);
+    }
+    .proj-tag-pill {
+      font-family: var(--mono); font-size: 0.44rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 0.1rem 0.4rem; border: 1px solid var(--border-l);
+      color: var(--text3); white-space: nowrap;
+    }
+    .proj-item.active .proj-tag-pill {
+      border-color: rgba(196,75,43,0.4); color: var(--red);
+    }
+
+    /* Footer */
+    .sidebar-footer {
+      padding: 0.85rem 1.5rem;
+      border-top: 1px solid var(--border-l);
+      flex-shrink: 0;
+      display: flex; gap: 1.5rem;
+    }
+    .sidebar-footer a {
+      font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text3); transition: color 0.18s;
+    }
+    .sidebar-footer a:hover { color: var(--red); }
+
+    /* ══ MAP ══ */
+    #map {
+      position: fixed;
+      top: var(--topbar); left: var(--sidebar); right: 0; bottom: 0;
+      z-index: 1;
+      filter: grayscale(100%) contrast(1.05);
+      transition: filter 0.4s ease;
+    }
+    #map.active-project { filter: grayscale(100%) contrast(1.05) brightness(0.7); }
+
+    /* Leaflet overrides */
+    .leaflet-control-zoom { display: none !important; }
+    .leaflet-control-attribution {
+      background: rgba(245,244,240,0.9) !important;
+      color: rgba(13,13,13,0.3) !important;
+      font-family: var(--mono) !important; font-size: 8px !important;
+      border: none !important; border-top: 1px solid var(--border-l) !important;
+    }
+    .leaflet-control-attribution a { color: rgba(13,13,13,0.4) !important; }
+
+    /* ══ HERO OVERLAY ══ */
+    .map-hero {
+      position: fixed;
+      bottom: 3.5rem; left: calc(var(--sidebar) + 2.5rem);
+      z-index: 50; pointer-events: none;
+      opacity: 1; transition: opacity 1s ease;
+    }
+    .map-hero.hidden { opacity: 0; }
+    .map-hero-issue {
+      font-family: var(--mono); font-size: 0.55rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 0.6rem;
+    }
+    .map-hero-name {
+      font-family: var(--serif); font-weight: 300;
+      font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+      line-height: 1.0; letter-spacing: -0.01em;
+      color: var(--text);
+    }
+    .map-hero-name em { font-style: italic; }
+    .map-hero-rule { width: 100%; height: 2px; background: var(--border); margin: 0.8rem 0; }
+    .map-hero-sub {
+      font-family: var(--sans); font-size: 0.62rem; font-weight: 500;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--text2);
+    }
+
+    /* ══ MAP LEGEND ══ */
+    .map-legend {
+      position: fixed; bottom: 2.5rem; right: 1.5rem;
+      z-index: 200; pointer-events: none;
+    }
+    .legend-hint {
+      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--text3);
+      display: flex; align-items: center; gap: 0.5rem;
+      background: rgba(245,244,240,0.9);
+      border: 1px solid var(--border-l);
+      padding: 0.5rem 0.85rem;
+    }
+    .legend-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--red); flex-shrink: 0;
+      animation: lp 2s ease infinite;
+    }
+    @keyframes lp { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* ══ BOTTOM BAR ══ */
+    .bottom-bar {
+      position: fixed; bottom: 0; left: var(--sidebar); right: 0;
+      height: 32px; z-index: 200; pointer-events: none;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem;
+      border-top: 1px solid var(--border-l);
+      background: rgba(245,244,240,0.85);
+    }
+    .bottom-bar span {
+      font-family: var(--mono); font-size: 0.5rem;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3);
+    }
+
+    /* ══ CUSTOM MARKERS ══ */
+    .mkr { cursor: pointer; }
+    .mkr-body {
+      width: 28px; height: 28px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .mkr-body::after {
+      content: ''; position: absolute; inset: -6px;
+      border: 1px solid rgba(13,13,13,0.1);
+    }
+    .mkr-dot { width: 6px; height: 6px; background: var(--text); transition: all 0.2s; }
+    .mkr:hover .mkr-body, .mkr.active .mkr-body {
+      background: var(--red); border-color: var(--red);
+    }
+    .mkr:hover .mkr-dot, .mkr.active .mkr-dot { background: white; }
+    .mkr-lbl {
+      position: absolute; top: 32px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3);
+      white-space: nowrap; pointer-events: none; transition: color 0.2s;
+      background: rgba(245,244,240,0.85); padding: 0.1rem 0.35rem;
+    }
+    .mkr:hover .mkr-lbl, .mkr.active .mkr-lbl { color: var(--red); }
+
+    /* ══ FULL-SCREEN DETAIL ══ */
+    .detail-overlay {
+      position: fixed;
+      top: var(--topbar); left: var(--sidebar); right: 0; bottom: 0;
+      z-index: 600;
+      background: var(--bg);
+      display: flex; flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+    .detail-overlay.open { transform: translateY(0); }
+
+    /* Detail nav bar */
+    .detail-nav {
+      display: flex; align-items: center;
+      height: var(--topbar);
+      border-bottom: 2px solid var(--border);
+      flex-shrink: 0; background: var(--surf);
+    }
+    .btn-back {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text2); background: none; border: none; border-right: 1px solid var(--border-l);
+      padding: 0 1.5rem; height: 100%; cursor: pointer;
+      transition: all 0.18s;
+    }
+    .btn-back:hover { color: var(--text); background: var(--bg2); }
+    .btn-back svg { transition: transform 0.18s; }
+    .btn-back:hover svg { transform: translateX(-3px); }
+    .detail-nav-title {
+      font-family: var(--serif); font-size: 0.95rem; font-weight: 400;
+      color: var(--text2); padding: 0 1.5rem; flex: 1;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .detail-nav-tag {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.3rem 0.8rem;
+      border-left: 1px solid var(--border-l); height: 100%;
+      display: flex; align-items: center;
+    }
+
+    /* Detail layout */
+    .detail-body {
+      flex: 1; display: grid;
+      grid-template-columns: 1fr 320px;
+      overflow: hidden;
+    }
+
+    /* Main column */
+    .detail-main {
+      display: flex; flex-direction: column;
+      border-right: 1px solid var(--border-l);
+      overflow-y: auto;
+    }
+
+    /* Hero */
+    .detail-hero {
+      width: 100%; aspect-ratio: 21/8;
+      flex-shrink: 0; position: relative;
+      overflow: hidden; background: #1a1916;
+      display: flex; align-items: flex-end;
+    }
+    .detail-hero-bg { position: absolute; inset: 0; }
+    .detail-hero-abbr {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 11rem; font-weight: 300;
+      color: rgba(245,244,240,0.04); letter-spacing: -0.04em; user-select: none;
+    }
+    .detail-hero-fade {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 65%;
+      background: linear-gradient(to top, rgba(26,25,22,0.95), transparent);
+      pointer-events: none;
+    }
+    .detail-hero-info {
+      position: relative; z-index: 2;
+      padding: 2rem 2.5rem;
+    }
+    .detail-hero-kicker {
+      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(196,75,43,0.8); margin-bottom: 0.5rem;
+    }
+    .detail-hero-name {
+      font-family: var(--serif); font-size: 2.2rem; font-weight: 400;
+      line-height: 1.1; color: rgba(245,244,240,0.92);
+      margin-bottom: 0.25rem;
+    }
+    .detail-hero-sub {
+      font-family: var(--serif); font-style: italic;
+      font-size: 0.95rem; color: rgba(245,244,240,0.42);
+    }
+
+    /* Carousel controls */
+    .detail-carousel-ctrl {
+      position: absolute; bottom: 1rem; right: 1.25rem; z-index: 10;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .carr-btn {
+      width: 28px; height: 28px;
+      background: rgba(245,244,240,0.1); border: 1px solid rgba(245,244,240,0.15);
+      color: rgba(245,244,240,0.6); cursor: pointer; font-size: 0.85rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.18s;
+    }
+    .carr-btn:hover { background: rgba(245,244,240,0.2); color: rgba(245,244,240,0.95); }
+    .carr-counter {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.05em;
+      color: rgba(245,244,240,0.3);
+    }
+    .carr-dots { display: flex; gap: 0.3rem; align-items: center; }
+    .carr-dot { height: 2px; border-radius: 1px; background: rgba(245,244,240,0.25); cursor: pointer; transition: all 0.18s; }
+
+    /* Detail content */
+    .detail-content { padding: 2rem 2.5rem 3rem; }
+    .detail-meta-strip {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.6rem 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .dm-item { display: flex; flex-direction: column; gap: 0.1rem; }
+    .dm-lbl { font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); }
+    .dm-val { font-family: var(--mono); font-size: 0.72rem; color: var(--text2); line-height: 1.3; }
+    .dm-val.accent { color: var(--red); }
+
+    .detail-desc { font-size: 0.875rem; line-height: 1.8; color: var(--text2); margin-bottom: 2rem; }
+    .detail-desc p + p { margin-top: 0.85em; }
+
+    .detail-sec-lbl {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text3); display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .detail-sec-lbl::after { content: ''; flex: 1; height: 1px; background: var(--border-l); }
+
+    .d-task {
+      display: flex; gap: 0.75rem; margin-bottom: 0.5rem;
+      font-size: 0.82rem; color: var(--text2); line-height: 1.55;
+    }
+    .d-task-dot { width: 3px; height: 3px; background: var(--red); flex-shrink: 0; margin-top: 0.62em; }
+
+    .press-item { padding: 0.65rem 0; border-bottom: 1px solid var(--border-l); }
+    .press-item:last-child { border-bottom: none; }
+    .press-src { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.2rem; }
+    .press-ttl { font-size: 0.8rem; color: var(--text2); line-height: 1.4; transition: color 0.15s; }
+    .press-item a:hover .press-ttl { color: var(--red); }
+
+    /* Right sidebar */
+    .detail-sidebar {
+      background: var(--surf);
+      border-left: 1px solid var(--border-l);
+      padding: 1.75rem 1.5rem;
+      overflow-y: auto; display: flex; flex-direction: column; gap: 1.75rem;
+      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
+    }
+    .ds-label {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--text3);
+      border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 0.85rem;
+    }
+    .ds-row { margin-bottom: 0.6rem; }
+    .ds-row-lbl { font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.12rem; }
+    .ds-row-val { font-size: 0.8rem; color: var(--text2); line-height: 1.4; }
+    .ds-part-item { display: flex; gap: 0.6rem; margin-bottom: 0.45rem; font-size: 0.78rem; color: var(--text2); line-height: 1.5; }
+    .ds-part-dot { width: 3px; height: 3px; background: var(--border-l); flex-shrink: 0; margin-top: 0.6em; }
+
+    .btn-full {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.85rem 1rem;
+      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--text); color: white;
+      border: none; cursor: pointer; transition: background 0.18s;
+      text-decoration: none;
+    }
+    .btn-full:hover { background: var(--red); }
+    .btn-ext {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 0.7rem;
+      font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.08em; text-transform: uppercase;
+      background: none; border: 1.5px solid var(--border-l); color: var(--text2);
+      cursor: pointer; transition: all 0.18s; text-decoration: none; margin-top: 0.5rem;
+    }
+    .btn-ext:hover { border-color: var(--red); color: var(--red); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 900px) {
+      :root { --sidebar: 0px; }
+      .sidebar { display: none; }
+      .nav-identity { display: none; }
+      .nav { padding-left: 1rem; }
+      .map-hero { left: 1.5rem; }
+      .detail-overlay { left: 0; }
+      .bottom-bar { left: 0; }
+      .detail-body { grid-template-columns: 1fr; }
+      .detail-sidebar { display: none; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ══ NAVIGATION ══ -->
+  <!-- ══ TOP NAV ══ -->
   <nav class="nav">
-    <a href="index.html" class="nav-logo">Daniel Serra <span>Font</span></a>
-    <div class="nav-links">
-      <a href="index.html"         class="active" data-i18n="nav_projects">Proyectos</a>
-      <a href="sobre-mi.html"                     data-i18n="nav_about">Sobre mí</a>
-      <a href="servicios.html"                    data-i18n="nav_services">Servicios</a>
-      <a href="publicaciones.html"                data-i18n="nav_publications">Publicaciones</a>
-      <a href="premios.html"                      data-i18n="nav_awards">Premios</a>
-      <a href="blog.html"                         data-i18n="nav_blog">Blog</a>
-      <a href="contacto.html"                     data-i18n="nav_contact">Contacto</a>
+    <div class="nav-identity">
+      <div class="nav-id-mark">D</div>
+      <div class="nav-id-text">
+        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
+        <div class="nav-id-role">Urbanista · Planificador Territorial</div>
+      </div>
     </div>
-    <div class="nav-right">
+    <div class="nav-links-slot">
+      <div class="nav-links">
+        <a href="index.html" class="active" data-i18n="nav_projects">Proyectos</a>
+        <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
+        <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
+        <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
+        <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
+        <a href="blog.html"          data-i18n="nav_blog">Blog</a>
+        <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
+      </div>
       <button class="lang-toggle" id="lang-toggle">EN</button>
     </div>
   </nav>
 
-  <!-- ══ MAIN LAYOUT ══ -->
-  <div class="page-content">
-    <div class="projects-layout">
+  <!-- ══ LEFT SIDEBAR ══ -->
+  <aside class="sidebar">
+    <div class="sidebar-identity">
+      <div class="sidebar-issue">Portfolio · Urbanismo · Comunitat Valenciana</div>
+      <div class="sidebar-number">06</div>
+      <div class="sidebar-name">Daniel <em>Serra Font</em></div>
+      <div class="sidebar-line"></div>
+      <div class="sidebar-role">Arquitecto Urbanista<br>Planificador Territorial</div>
+      <div class="sidebar-desc">Planeamiento general, consultoría y gestión urbanística en la Comunitat Valenciana.</div>
+    </div>
 
-      <!-- ── Left Sidebar: Project List ── -->
-      <aside class="project-sidebar">
-        <div class="sidebar-header">
-          <h2 data-i18n="sidebar_title">Proyectos</h2>
-          <div class="sidebar-filter">
-            <button class="filter-btn active" data-filter="all" data-filter-label="filter_all">Todos</button>
-            <button class="filter-btn" data-filter="pgm" data-filter-label="filter_pgm">Planeamiento</button>
-            <button class="filter-btn" data-filter="urban" data-filter-label="filter_urban">Urbanismo</button>
-          </div>
-        </div>
-        <!-- Populated by JS -->
-        <div id="project-list"></div>
-      </aside>
+    <div class="sidebar-list-header">
+      <span class="sidebar-list-label">Proyectos</span>
+      <span class="sidebar-list-count" id="proj-count">6</span>
+    </div>
 
-      <!-- ── Right: Project Detail ── -->
-      <section id="project-detail">
-        <div class="detail-empty">
-          <div class="big-letter">DSF</div>
-          <p data-i18n="click_hint">Selecciona un proyecto para ver los detalles</p>
-        </div>
-      </section>
+    <div class="project-list" id="project-list"></div>
 
+    <div class="sidebar-footer">
+      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="sobre-mi.html">Sobre mí</a>
+    </div>
+  </aside>
+
+  <!-- ══ MAP ══ -->
+  <div id="map"></div>
+
+  <!-- ══ HERO OVERLAY ══ -->
+  <div class="map-hero" id="map-hero">
+    <div class="map-hero-issue">Portfolio — 2025</div>
+    <div class="map-hero-name">Daniel<br><em>Serra Font</em></div>
+    <div class="map-hero-rule"></div>
+    <div class="map-hero-sub">Urbanista &amp; Planificador Territorial · Comunitat Valenciana</div>
+  </div>
+
+  <!-- ══ LEGEND ══ -->
+  <div class="map-legend" id="map-legend">
+    <div class="legend-hint">
+      <div class="legend-dot"></div>
+      <span>Clic en un proyecto para explorar</span>
     </div>
   </div>
 
+  <!-- ══ BOTTOM BAR ══ -->
+  <div class="bottom-bar">
+    <span>Comunitat Valenciana · España</span>
+    <span id="proj-count-bar">6 proyectos</span>
+  </div>
+
+  <!-- ══ DETAIL OVERLAY ══ -->
+  <div class="detail-overlay" id="detail-overlay">
+
+    <div class="detail-nav">
+      <button class="btn-back" id="btn-back">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Volver al mapa
+      </button>
+      <div class="detail-nav-title" id="det-nav-title"></div>
+      <div class="detail-nav-tag" id="det-nav-tag"></div>
+    </div>
+
+    <div class="detail-body">
+      <!-- Main -->
+      <div class="detail-main">
+        <div class="detail-hero" id="det-hero">
+          <div class="detail-hero-bg" id="det-hero-bg"></div>
+          <div class="detail-hero-abbr" id="det-hero-abbr"></div>
+          <div class="detail-hero-fade"></div>
+          <div class="detail-carousel-ctrl">
+            <button class="carr-btn" id="det-prev">‹</button>
+            <div class="carr-dots" id="det-dots"></div>
+            <span class="carr-counter" id="det-counter"></span>
+            <button class="carr-btn" id="det-next">›</button>
+          </div>
+          <div class="detail-hero-info">
+            <div class="detail-hero-kicker" id="det-kicker"></div>
+            <h1 class="detail-hero-name" id="det-name"></h1>
+            <div class="detail-hero-sub" id="det-sub"></div>
+          </div>
+        </div>
+
+        <div class="detail-content">
+          <div class="detail-meta-strip" id="det-meta"></div>
+          <div class="detail-desc" id="det-desc"></div>
+          <div class="detail-sec-lbl">Tareas lideradas</div>
+          <div id="det-tasks" style="margin-bottom:2.5rem"></div>
+          <div id="det-press-section" style="display:none">
+            <div class="detail-sec-lbl">Cobertura de prensa</div>
+            <div id="det-press"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right sidebar -->
+      <div class="detail-sidebar" id="det-sidebar"></div>
+    </div>
+  </div>
+
+  <!-- ══ SCRIPTS ══ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
   <script src="js/main.js"></script>
+  <script>
+    /* ── MAP ── */
+    const map = L.map('map', {
+      center: [39.1, -0.35], zoom: 8,
+      zoomControl: false, attributionControl: true,
+    });
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd', maxZoom: 19,
+    }).addTo(map);
+
+    map.setView([40.5, -0.35], 6);
+    setTimeout(() => map.flyTo([39.1, -0.35], 8, { animate: true, duration: 2, easeLinearity: 0.3 }), 300);
+    setTimeout(() => { const h = document.getElementById('map-hero'); if (h) h.classList.add('hidden'); }, 5000);
+
+    /* ── STATE ── */
+    let activeId = null;
+    let carouselIdx = 0;
+
+    /* ── SIDEBAR LIST ── */
+    function buildList() {
+      const list = document.getElementById('project-list');
+      list.innerHTML = '';
+      PROJECTS.forEach((p, i) => {
+        const el = document.createElement('div');
+        el.className = 'proj-item' + (activeId === p.id ? ' active' : '');
+        el.setAttribute('data-id', p.id);
+        const name = currentLang === 'es' ? p.name_es : p.name_en;
+        const tag  = currentLang === 'es' ? p.tag_es  : p.tag_en;
+        el.innerHTML = `
+          <div class="proj-num">0${i + 1}</div>
+          <div class="proj-info">
+            <div class="proj-title">${name}</div>
+            <div class="proj-meta">
+              <span class="proj-year">${p.year}</span>
+              <span class="proj-tag-pill">${tag}</span>
+            </div>
+          </div>`;
+        el.addEventListener('click', () => openDetail(p.id));
+        list.appendChild(el);
+      });
+    }
+
+    /* ── MARKERS ── */
+    PROJECTS.forEach(p => {
+      const el = document.createElement('div');
+      el.className = 'mkr';
+      el.innerHTML = `<div class="mkr-body"><div class="mkr-dot"></div></div><div class="mkr-lbl">${p.abbr}</div>`;
+      const icon = L.divIcon({ className: '', html: el.outerHTML, iconSize: [28, 48], iconAnchor: [14, 14] });
+      const marker = L.marker([p.lat, p.lng], { icon }).addTo(map);
+      marker.on('click', () => openDetail(p.id));
+    });
+
+    /* ── OPEN / CLOSE ── */
+    function openDetail(id) {
+      activeId = id;
+      carouselIdx = 0;
+      buildList();
+      renderDetail(id);
+      document.getElementById('detail-overlay').classList.add('open');
+      document.getElementById('map').classList.add('active-project');
+      document.getElementById('map-hero').classList.add('hidden');
+      document.getElementById('map-legend').style.opacity = '0';
+      const p = PROJECTS.find(x => x.id === id);
+      map.panTo([p.lat, p.lng], { animate: true, duration: 0.6 });
+    }
+
+    function closeDetail() {
+      activeId = null;
+      document.getElementById('detail-overlay').classList.remove('open');
+      document.getElementById('map').classList.remove('active-project');
+      document.getElementById('map-legend').style.opacity = '1';
+      buildList();
+    }
+
+    /* ── RENDER ── */
+    function renderDetail(id) {
+      const p = PROJECTS.find(x => x.id === id);
+      const lang = currentLang;
+      const name   = lang === 'es' ? p.name_es    : p.name_en;
+      const sub    = lang === 'es' ? p.subtitle_es : p.subtitle_en;
+      const client = lang === 'es' ? p.client_es   : p.client_en;
+      const role   = lang === 'es' ? p.role_es     : p.role_en;
+      const area   = lang === 'es' ? p.area_es     : p.area_en;
+      const tag    = lang === 'es' ? p.tag_es      : p.tag_en;
+      const desc   = lang === 'es' ? p.desc_es     : p.desc_en;
+      const led    = lang === 'es' ? p.led_es      : p.led_en;
+      const part   = lang === 'es' ? p.part_es     : p.part_en;
+
+      /* Nav */
+      document.getElementById('det-nav-title').textContent = name;
+      const tagEl = document.getElementById('det-nav-tag');
+      tagEl.textContent = tag;
+      tagEl.style.color = '#c44b2b';
+
+      /* Hero */
+      document.getElementById('det-hero-bg').style.background =
+        `linear-gradient(145deg, ${p.gradA} 0%, ${p.gradB} 60%, ${p.gradA} 100%)`;
+      document.getElementById('det-hero-abbr').textContent = p.abbr;
+      document.getElementById('det-kicker').textContent = tag;
+      document.getElementById('det-name').textContent = name;
+      document.getElementById('det-sub').textContent = sub;
+
+      /* Carousel dots */
+      const dotsEl = document.getElementById('det-dots');
+      dotsEl.innerHTML = '';
+      for (let i = 0; i < p.images; i++) {
+        const d = document.createElement('div');
+        d.className = 'carr-dot';
+        d.style.width = i === carouselIdx ? '16px' : '5px';
+        d.style.background = i === carouselIdx ? '#c44b2b' : 'rgba(245,244,240,0.3)';
+        d.addEventListener('click', () => { carouselIdx = i; renderDetail(id); });
+        dotsEl.appendChild(d);
+      }
+      document.getElementById('det-counter').textContent = `${carouselIdx + 1} / ${p.images}`;
+
+      /* Meta strip */
+      document.getElementById('det-meta').innerHTML = `
+        <div class="dm-item"><div class="dm-lbl">Año</div><div class="dm-val">${p.year}</div></div>
+        <div class="dm-item"><div class="dm-lbl">Cliente</div><div class="dm-val">${client}</div></div>
+        <div class="dm-item"><div class="dm-lbl">Rol</div><div class="dm-val">${role}</div></div>
+        <div class="dm-item"><div class="dm-lbl">Territorio</div><div class="dm-val accent">${area}</div></div>`;
+
+      /* Description */
+      document.getElementById('det-desc').innerHTML =
+        desc.split('\n\n').map(t => `<p>${t}</p>`).join('');
+
+      /* Tasks */
+      document.getElementById('det-tasks').innerHTML =
+        led.map(t => `<div class="d-task"><div class="d-task-dot"></div>${t}</div>`).join('');
+
+      /* Press */
+      const pressSection = document.getElementById('det-press-section');
+      if (p.press && p.press.length > 0) {
+        pressSection.style.display = '';
+        document.getElementById('det-press').innerHTML = p.press.map(pr => `
+          <div class="press-item">
+            <a href="${pr.url}" target="_blank" rel="noopener">
+              <div class="press-src">${pr.source} · ${pr.date}</div>
+              <div class="press-ttl">${pr.title}</div>
+            </a>
+          </div>`).join('');
+      } else {
+        pressSection.style.display = 'none';
+      }
+
+      /* Right sidebar */
+      document.getElementById('det-sidebar').innerHTML = `
+        <div>
+          <div class="ds-label">Ficha del proyecto</div>
+          <div class="ds-row"><div class="ds-row-lbl">Municipio</div><div class="ds-row-val">${sub}</div></div>
+          <div class="ds-row"><div class="ds-row-lbl">Período</div><div class="ds-row-val">${p.year}</div></div>
+          <div class="ds-row"><div class="ds-row-lbl">Cliente</div><div class="ds-row-val">${client}</div></div>
+          <div class="ds-row"><div class="ds-row-lbl">Rol</div><div class="ds-row-val">${role}</div></div>
+          <div class="ds-row"><div class="ds-row-lbl">Ámbito</div><div class="ds-row-val" style="color:var(--red)">${area}</div></div>
+          <div class="ds-row"><div class="ds-row-lbl">Tipo</div><div class="ds-row-val" style="color:var(--red)">${tag}</div></div>
+        </div>
+        ${part && part.length ? `
+        <div>
+          <div class="ds-label">Participación en equipo</div>
+          ${part.map(t => `<div class="ds-part-item"><div class="ds-part-dot"></div>${t}</div>`).join('')}
+        </div>` : ''}
+        <div style="margin-top:auto">
+          <a href="proyecto.html?id=${id}" class="btn-full">
+            Expediente completo
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+          ${p.link ? `<a href="${p.link}" target="_blank" rel="noopener" class="btn-ext">Enlace externo ↗</a>` : ''}
+        </div>`;
+    }
+
+    /* Carousel */
+    document.getElementById('det-prev').addEventListener('click', () => {
+      if (!activeId) return;
+      const p = PROJECTS.find(x => x.id === activeId);
+      carouselIdx = (carouselIdx - 1 + p.images) % p.images;
+      renderDetail(activeId);
+    });
+    document.getElementById('det-next').addEventListener('click', () => {
+      if (!activeId) return;
+      const p = PROJECTS.find(x => x.id === activeId);
+      carouselIdx = (carouselIdx + 1) % p.images;
+      renderDetail(activeId);
+    });
+
+    /* Close */
+    document.getElementById('btn-back').addEventListener('click', closeDetail);
+    map.on('click', () => { if (document.getElementById('detail-overlay').classList.contains('open')) closeDetail(); });
+
+    /* Init + lang */
+    document.addEventListener('DOMContentLoaded', buildList);
+
+    const _origApply = applyI18n;
+    window.applyI18n = function(lang) {
+      _origApply(lang);
+      buildList();
+      if (activeId) renderDetail(activeId);
+    };
+  </script>
 </body>
 </html>
