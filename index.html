@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Daniel Serra Font — Urbanista y Planificador Territorial. Proyectos de planeamiento urbanístico en la Comunitat Valenciana.">
+  <meta name="description" content="Daniel Serra Font — Urbanista y Planificador Territorial. Proyectos de planeamiento urbanístico.">
   <title>Daniel Serra Font — Urbanista y Planificador Territorial</title>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
@@ -562,12 +562,11 @@
   <!-- ══ LEFT SIDEBAR ══ -->
   <aside class="sidebar">
     <div class="sidebar-identity">
-      <div class="sidebar-issue">Portfolio · Urbanismo · Comunitat Valenciana</div>
-      <div class="sidebar-number">06</div>
-      <div class="sidebar-name">Daniel <em>Serra Font</em></div>
+      <div class="sidebar-number">01</div>
+      <div class="sidebar-name"><em>Proyectos</em></div>
       <div class="sidebar-line"></div>
-      <div class="sidebar-role">Arquitecto Urbanista<br>Planificador Territorial</div>
-      <div class="sidebar-desc">Planeamiento general, consultoría y gestión urbanística en la Comunitat Valenciana.</div>
+      <div class="sidebar-role" data-i18n="sb_role">Planeamiento General · Planes Parciales<br>Consultoría Territorial</div>
+      <div class="sidebar-desc" data-i18n="sb_desc">Proyectos de urbanismo y ordenación territorial.</div>
     </div>
 
     <div class="sidebar-list-header">
@@ -576,12 +575,6 @@
     </div>
 
     <div class="project-list" id="project-list"></div>
-
-    <div class="sidebar-footer">
-      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
-      <a href="contacto.html">Contacto</a>
-      <a href="sobre-mi.html">Sobre mí</a>
-    </div>
   </aside>
 
   <!-- ══ MAP ══ -->
@@ -589,10 +582,9 @@
 
   <!-- ══ HERO OVERLAY ══ -->
   <div class="map-hero" id="map-hero">
-    <div class="map-hero-issue">Portfolio — 2025</div>
     <div class="map-hero-name">Daniel<br><em>Serra Font</em></div>
     <div class="map-hero-rule"></div>
-    <div class="map-hero-sub">Urbanista &amp; Planificador Territorial · Comunitat Valenciana</div>
+    <div class="map-hero-sub" data-i18n="hero_sub">Urbanista &amp; Planificador Territorial</div>
   </div>
 
   <!-- ══ LEGEND ══ -->
@@ -605,7 +597,7 @@
 
   <!-- ══ BOTTOM BAR ══ -->
   <div class="bottom-bar">
-    <span>Comunitat Valenciana · España</span>
+    <span>Valencia · España</span>
     <span id="proj-count-bar">6 proyectos</span>
   </div>
 
@@ -674,7 +666,6 @@
 
     map.setView([40.5, -0.35], 6);
     setTimeout(() => map.flyTo([39.1, -0.35], 8, { animate: true, duration: 2, easeLinearity: 0.3 }), 300);
-    setTimeout(() => { const h = document.getElementById('map-hero'); if (h) h.classList.add('hidden'); }, 5000);
 
     /* ── STATE ── */
     let activeId = null;
@@ -722,7 +713,6 @@
       renderDetail(id);
       document.getElementById('detail-overlay').classList.add('open');
       document.getElementById('map').classList.add('active-project');
-      document.getElementById('map-hero').classList.add('hidden');
       document.getElementById('map-legend').style.opacity = '0';
       const p = PROJECTS.find(x => x.id === id);
       map.panTo([p.lat, p.lng], { animate: true, duration: 0.6 });

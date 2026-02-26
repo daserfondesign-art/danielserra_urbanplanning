@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviso legal — Daniel Serra Font</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #f5f4f0;
+      --bg2:      #edecea;
+      --surf:     #ffffff;
+      --border:   #0d0d0d;
+      --border-l: rgba(13,13,13,0.1);
+      --text:     #0d0d0d;
+      --text2:    rgba(13,13,13,0.5);
+      --text3:    rgba(13,13,13,0.28);
+      --red:      #c44b2b;
+      --serif:    'Spectral', Georgia, serif;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+      --mono:     'DM Mono', monospace;
+      --topbar:   52px;
+    }
+    html, body { width: 100%; min-height: 100%; background: var(--bg); }
+    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-l); }
+
+    /* ══ TOP NAV ══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--topbar); z-index: 500;
+      display: flex; align-items: stretch;
+      background: var(--bg); border-bottom: 2px solid var(--border);
+    }
+    .nav-identity {
+      display: flex; align-items: center;
+      padding: 0 1.5rem; gap: 0.75rem;
+    }
+    .nav-id-mark {
+      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; color: var(--red);
+      border: 1.5px solid var(--red); border-radius: 2px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
+    .nav-id-name {
+      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.02em; line-height: 1; color: var(--text);
+    }
+    .nav-id-name em { font-style: italic; }
+    .nav-id-role {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red); line-height: 1;
+    }
+    .nav-back {
+      margin-left: auto; padding: 0 1.5rem;
+      display: flex; align-items: center; gap: 0.45rem;
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3);
+      transition: color 0.18s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-back svg { flex-shrink: 0; }
+
+    /* ══ CONTENT ══ */
+    .page-wrap { padding-top: var(--topbar); min-height: 100vh; }
+    .page-content { max-width: 720px; margin: 0 auto; padding: 4rem 2.5rem 6rem; }
+
+    .page-header {
+      margin-bottom: 3rem; padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .page-kicker {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 0.6rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif); font-size: 2.8rem; font-weight: 300;
+      letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .page-header h1 em { font-style: italic; color: var(--text2); }
+    .page-header p {
+      margin-top: 0.85rem; font-size: 0.82rem;
+      color: var(--text3); font-family: var(--mono); letter-spacing: 0.04em;
+    }
+
+    /* ══ LEGAL TEXT ══ */
+    .legal-section { margin-bottom: 2.5rem; }
+    .legal-section h2 {
+      font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
+      margin-bottom: 0.75rem; padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-l);
+    }
+    .legal-section p {
+      font-size: 0.85rem; color: var(--text2); line-height: 1.8;
+      margin-bottom: 0.65rem;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+    .legal-section ul {
+      margin: 0.5rem 0 0.5rem 1.25rem;
+      display: flex; flex-direction: column; gap: 0.35rem;
+    }
+    .legal-section ul li {
+      font-size: 0.85rem; color: var(--text2); line-height: 1.7;
+    }
+    .legal-contact {
+      margin-top: 1.25rem; padding: 1.25rem 1.5rem;
+      background: var(--surf); border: 1px solid var(--border-l);
+    }
+    .legal-contact p {
+      font-size: 0.82rem; color: var(--text2); line-height: 1.7; margin: 0;
+    }
+    .legal-contact a { color: var(--text); border-bottom: 1px solid var(--border-l); }
+    .legal-contact a:hover { border-color: var(--red); color: var(--red); }
+
+    /* ══ FOOTER ══ */
+    .privacy-bar-foot {
+      background: var(--surf); border-top: 1px solid var(--border-l);
+      padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem;
+    }
+    .privacy-bar-foot span {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3); margin-right: auto;
+    }
+    .privacy-bar-foot a {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3); transition: color 0.18s;
+    }
+    .privacy-bar-foot a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-identity">
+      <div class="nav-id-mark">D</div>
+      <div class="nav-id-text">
+        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
+        <div class="nav-id-role">Urbanista · Planificador Territorial</div>
+      </div>
+    </div>
+    <a href="index.html" class="nav-back">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Volver al portfolio
+    </a>
+  </nav>
+
+  <div class="page-wrap">
+    <main class="page-content">
+
+      <header class="page-header">
+        <div class="page-kicker">Legal</div>
+        <h1>Aviso <em>legal</em></h1>
+        <p>Última actualización: enero 2025</p>
+      </header>
+
+      <div class="legal-section">
+        <h2>1. Titular del sitio web</h2>
+        <p>En cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y Comercio Electrónico (LSSI-CE), se facilitan los siguientes datos identificativos:</p>
+        <div class="legal-contact">
+          <p><strong>Daniel Serra Font</strong><br>
+          Profesional independiente — Urbanista y Planificador Territorial<br>
+          Av. María Cristina 5, 46001 Valencia<br>
+          Email: <a href="mailto:daniel.serra.urb@gmail.com">daniel.serra.urb@gmail.com</a><br>
+          Teléfono: <a href="tel:+34625893300">+34 625 893 300</a></p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <h2>2. Objeto y ámbito de aplicación</h2>
+        <p>El presente aviso legal regula el acceso y uso del sitio web de Daniel Serra Font (en adelante, «el sitio web»), cuya finalidad es la presentación profesional de su actividad como urbanista y planificador territorial, así como la captación de consultas y proyectos.</p>
+        <p>El acceso y uso del sitio web implica la aceptación de las condiciones recogidas en este aviso legal.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>3. Propiedad intelectual e industrial</h2>
+        <p>Todos los contenidos del sitio web —incluyendo, sin carácter limitativo, textos, imágenes, gráficos, logotipos, diseño visual y código fuente— son propiedad de Daniel Serra Font o de terceros que han autorizado su uso, y están protegidos por la legislación española e internacional sobre propiedad intelectual e industrial.</p>
+        <p>Queda prohibida la reproducción, distribución, comunicación pública o transformación de cualquier contenido del sitio web sin autorización expresa y por escrito del titular, salvo para uso personal y privado.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>4. Responsabilidad</h2>
+        <p>Daniel Serra Font no garantiza la disponibilidad continua e ininterrumpida del sitio web ni la ausencia de errores en sus contenidos, y se reserva el derecho a modificar, suspender o eliminar cualquier información sin previo aviso.</p>
+        <p>El titular no será responsable de los daños o perjuicios derivados del uso indebido del sitio web ni del acceso a contenidos de terceros enlazados desde el mismo.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>5. Enlaces a terceros</h2>
+        <p>Este sitio web puede contener enlaces a sitios web de terceros (entre ellos, <a href="https://www.velatstudio.com" target="_blank" rel="noopener" style="color:var(--text);border-bottom:1px solid var(--border-l);">Velat Studio</a>). Dichos enlaces se ofrecen únicamente a efectos informativos. Daniel Serra Font no controla ni asume responsabilidad alguna por los contenidos, políticas de privacidad o prácticas de esos sitios.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>6. Legislación aplicable y jurisdicción</h2>
+        <p>El presente aviso legal se rige por la legislación española. Para la resolución de cualquier controversia derivada del acceso o uso de este sitio web, las partes se someten a los juzgados y tribunales de Valencia, con renuncia expresa a cualquier otro fuero que pudiera corresponderles.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>7. Modificaciones</h2>
+        <p>Daniel Serra Font se reserva el derecho a modificar este aviso legal en cualquier momento para adaptarlo a cambios normativos o funcionales. Se recomienda consultarlo periódicamente.</p>
+      </div>
+
+    </main>
+
+    <footer class="privacy-bar-foot">
+      <span>© 2025 Daniel Serra Font</span>
+      <a href="privacidad.html">Política de privacidad</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+    </footer>
+  </div>
+
+</body>
+</html>

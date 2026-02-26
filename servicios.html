@@ -115,6 +115,10 @@
       font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
     }
+    .sb-desc {
+      font-size: 0.73rem; color: var(--text2); line-height: 1.6;
+      margin-top: 0.6rem;
+    }
     .sb-scroll {
       flex: 1; overflow-y: auto;
       scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
@@ -321,6 +325,10 @@
       .services-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 1rem; text-align: center; }
     }
+    .privacy-bar-foot { margin-left: var(--sidebar); background: var(--surface); border-top: 1px solid var(--border-l); padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem; }
+    .privacy-bar-foot span { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-right: auto; }
+    .privacy-bar-foot a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
+    .privacy-bar-foot a:hover { color: var(--text); }
   </style>
 </head>
 <body>
@@ -352,106 +360,17 @@
   <aside class="sidebar">
 
     <div class="sb-identity">
-      <div class="sb-label" data-i18n="sb_label">03 — Servicios</div>
       <div class="sb-big-num">03</div>
       <div class="sb-name">Servicios <em>&amp; Consultoría</em></div>
       <div class="sb-rule"></div>
       <div class="sb-role" data-i18n="sb_role">Planeamiento · Paisaje · SIG</div>
+      <p class="sb-desc" data-i18n="sb_desc">Apoyo técnico integral en planeamiento territorial y urbanismo para administraciones locales, estudios de arquitectura y promotores privados en la Comunitat Valenciana.</p>
     </div>
 
-    <div class="sb-scroll">
-
-      <!-- Key stats -->
-      <div class="sb-stats">
-        <div class="sb-stat">
-          <span class="sb-stat-num">10+</span>
-          <span class="sb-stat-lbl" data-i18n="st_munis">Municipios</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">8</span>
-          <span class="sb-stat-lbl" data-i18n="st_areas">Áreas de servicio</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">6+</span>
-          <span class="sb-stat-lbl" data-i18n="st_years">Años con LOTUP</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">4</span>
-          <span class="sb-stat-lbl" data-i18n="st_plans">Planes aprobados</span>
-        </div>
-      </div>
-
-      <!-- Service index -->
-      <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_svc_title">Índice de servicios</div>
-      </div>
-      <div class="sb-svc-list">
-        <div class="sb-svc-item"><span class="sb-svc-num">01</span><span class="sb-svc-name" data-i18n="si1">Planeamiento General (LOTUP)</span></div>
-        <div class="sb-svc-item"><span class="sb-svc-num">02</span><span class="sb-svc-name" data-i18n="si2">Planeamiento de Desarrollo</span></div>
-        <div class="sb-svc-item"><span class="sb-svc-num">03</span><span class="sb-svc-name" data-i18n="si3">Estudios de Paisaje</span></div>
-        <div class="sb-svc-item"><span class="sb-svc-num">04</span><span class="sb-svc-name" data-i18n="si4">Catálogos de Protecciones</span></div>
-        <div class="sb-svc-item"><span class="sb-svc-num">05</span><span class="sb-svc-name" data-i18n="si5">Cartografía y SIG</span></div>
-        <div class="sb-svc-item"><span class="sb-svc-num">06</span><span class="sb-svc-name" data-i18n="si6">Consultoría Urbanística</span></div>
-        <div class="sb-svc-item"><span class="sb-svc-num">07</span><span class="sb-svc-name" data-i18n="si7">Urbanismo Sostenible</span></div>
-        <div class="sb-svc-item"><span class="sb-svc-num">08</span><span class="sb-svc-name" data-i18n="si8">Informes Técnicos</span></div>
-      </div>
-
-      <!-- Specialization -->
-      <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_spec_title">Especialización</div>
-        <div class="sb-tags">
-          <span class="sb-tag">LOTUP</span>
-          <span class="sb-tag" data-i18n="tag_pgm">Plan. General</span>
-          <span class="sb-tag" data-i18n="tag_pp">Plan. Parcial</span>
-          <span class="sb-tag" data-i18n="tag_land">Paisaje</span>
-          <span class="sb-tag">SIG / GIS</span>
-          <span class="sb-tag">AutoCAD</span>
-          <span class="sb-tag">SketchUp</span>
-          <span class="sb-tag" data-i18n="tag_cat">Catálogos</span>
-          <span class="sb-tag" data-i18n="tag_sust">Sostenibilidad</span>
-        </div>
-      </div>
-
-      <!-- Availability -->
-      <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_avail_title">Disponible para</div>
-        <div style="display:flex;flex-direction:column;gap:0.38rem;">
-          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av1">· Planes Generales Estructurales</span>
-          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av2">· Planes Parciales y PAI</span>
-          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av3">· Estudios de Paisaje</span>
-          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av4">· Consultoría urbanística</span>
-          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av5">· Tramitación administrativa</span>
-          <span style="font-size:0.77rem;color:var(--text2);" data-i18n="av6">· Colaboraciones y ponencias</span>
-        </div>
-      </div>
-
-      <!-- Contact data -->
-      <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_contact_title">Contacto</div>
-        <div class="sb-row">
-          <div class="sb-row-lbl" data-i18n="sb_studio_lbl">Estudio</div>
-          <div class="sb-row-val"><a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a></div>
-        </div>
-        <div class="sb-row">
-          <div class="sb-row-lbl" data-i18n="sb_location_lbl">Ubicación</div>
-          <div class="sb-row-val">Comunitat Valenciana, España</div>
-        </div>
-        <div class="sb-row">
-          <div class="sb-row-lbl" data-i18n="sb_normativa_lbl">Normativa</div>
-          <div class="sb-row-val accent">LOTUP · GVA · PGOU</div>
-        </div>
-      </div>
-
-    </div><!-- /sb-scroll -->
+    <div style="flex:1"></div>
 
     <div class="sb-cta">
       <a href="contacto.html" class="sb-btn" data-i18n="sb_btn_contact">Solicitar consulta</a>
-    </div>
-
-    <div class="sb-footer">
-      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
-      <a href="sobre-mi.html" data-i18n="nav_about">Sobre mí</a>
-      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
     </div>
   </aside>
 
@@ -460,18 +379,14 @@
     <main class="main-content">
 
       <header class="page-header">
-        <div class="page-num" data-i18n="pg_num">03 — Servicios</div>
-        <h1>Servicios<br><em>&amp; Consultoría</em></h1>
-        <p data-i18n="pg_desc">Apoyo técnico integral en planeamiento territorial y urbanismo para administraciones locales, estudios de arquitectura y promotores privados en la Comunitat Valenciana.</p>
+        <h1>Áreas de<br><em>servicio</em></h1>
       </header>
 
       <!-- ══ SERVICES GRID ══ -->
-      <h2 class="section-title" data-i18n="sec_svc">Áreas de <em>servicio</em></h2>
       <div class="services-grid">
 
         <div class="svc-card">
           <div class="svc-num">01</div>
-          <div class="svc-icon">📐</div>
           <h3 data-i18n="s1_title">Planeamiento General (LOTUP)</h3>
           <p data-i18n="s1_desc">Redacción de Planes Generales Estructurales y Planes de Ordenación Detallada adaptados a la Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana.</p>
           <span class="svc-tag" data-i18n="s1_tag">Planeamiento general</span>
@@ -479,7 +394,6 @@
 
         <div class="svc-card">
           <div class="svc-num">02</div>
-          <div class="svc-icon">🏗️</div>
           <h3 data-i18n="s2_title">Planeamiento de Desarrollo</h3>
           <p data-i18n="s2_desc">Redacción de Planes Parciales, PAI, PRI, Planes Especiales y demás instrumentos de desarrollo. Tramitación administrativa íntegra ante la Conselleria de Territori.</p>
           <span class="svc-tag" data-i18n="s2_tag">Desarrollo urbanístico</span>
@@ -487,7 +401,6 @@
 
         <div class="svc-card">
           <div class="svc-num">03</div>
-          <div class="svc-icon">🌄</div>
           <h3 data-i18n="s3_title">Estudios de Paisaje</h3>
           <p data-i18n="s3_desc">Elaboración de Estudios de Paisaje según normativa valenciana, con simulaciones visuales de integración paisajística mediante SketchUp, 3ds Max y Corona Render.</p>
           <span class="svc-tag" data-i18n="s3_tag">Paisaje · 3D</span>
@@ -495,7 +408,6 @@
 
         <div class="svc-card">
           <div class="svc-num">04</div>
-          <div class="svc-icon">📋</div>
           <h3 data-i18n="s4_title">Catálogos de Protecciones</h3>
           <p data-i18n="s4_desc">Redacción de Catálogos de Protecciones del patrimonio arquitectónico, arqueológico, etnológico y paisajístico para su incorporación al planeamiento municipal.</p>
           <span class="svc-tag" data-i18n="s4_tag">Patrimonio</span>
@@ -503,7 +415,6 @@
 
         <div class="svc-card">
           <div class="svc-num">05</div>
-          <div class="svc-icon">🗺️</div>
           <h3 data-i18n="s5_title">Cartografía y SIG</h3>
           <p data-i18n="s5_desc">Análisis territorial mediante QGIS / ArcGIS, cartografía urbanística y producción de documentación gráfica técnica para planes e informes.</p>
           <span class="svc-tag" data-i18n="s5_tag">GIS · Cartografía</span>
@@ -511,7 +422,6 @@
 
         <div class="svc-card">
           <div class="svc-num">06</div>
-          <div class="svc-icon">🤝</div>
           <h3 data-i18n="s6_title">Consultoría Urbanística</h3>
           <p data-i18n="s6_desc">Asesoramiento técnico a particulares, promotores y administraciones sobre viabilidad urbanística, interpretación de la normativa LOTUP y gestión del suelo.</p>
           <span class="svc-tag" data-i18n="s6_tag">Consultoría</span>
@@ -519,7 +429,6 @@
 
         <div class="svc-card">
           <div class="svc-num">07</div>
-          <div class="svc-icon">♻️</div>
           <h3 data-i18n="s7_title">Urbanismo Sostenible</h3>
           <p data-i18n="s7_desc">Integración de criterios de sostenibilidad, resiliencia climática, infraestructura verde y biodiversidad en planes e instrumentos de transformación urbana.</p>
           <span class="svc-tag" data-i18n="s7_tag">Sostenibilidad</span>
@@ -527,7 +436,6 @@
 
         <div class="svc-card">
           <div class="svc-num">08</div>
-          <div class="svc-icon">📊</div>
           <h3 data-i18n="s8_title">Informes Técnicos</h3>
           <p data-i18n="s8_desc">Redacción de informes urbanísticos, memorias técnicas, estudios de viabilidad territorial y análisis de impacto ambiental para instrumentos de planeamiento.</p>
           <span class="svc-tag" data-i18n="s8_tag">Análisis · Informes</span>
@@ -606,14 +514,10 @@
     </main>
   </div>
 
-  <footer>
-    <span class="foot-name">Daniel Serra Font</span>
-    <span class="foot-meta" data-i18n="foot_meta">Arquitecto · Urbanista · Director de Velat Studio</span>
-    <div class="foot-links">
-      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
-      <a href="contacto.html" data-i18n="nav_contact">Contacto</a>
-      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
-    </div>
+  <footer class="privacy-bar-foot">
+    <span>© 2025 Daniel Serra Font</span>
+    <a href="privacidad.html">Política de privacidad</a>
+    <a href="aviso-legal.html">Aviso legal</a>
   </footer>
 
   <script>
@@ -623,8 +527,9 @@
         nav_projects: 'Proyectos', nav_about: 'Sobre mí', nav_services: 'Servicios',
         nav_publications: 'Publicaciones', nav_awards: 'Reconocimientos',
         nav_blog: 'Blog', nav_contact: 'Contacto',
-        sb_label: '03 — Servicios',
+        sb_label: '03 — Servicios &amp; Consultoría',
         sb_role: 'Planeamiento · Paisaje · SIG',
+        sb_desc: 'Apoyo técnico integral en planeamiento territorial y urbanismo para administraciones locales, estudios de arquitectura y promotores privados en la Comunitat Valenciana.',
         st_munis: 'Municipios', st_areas: 'Áreas de servicio',
         st_years: 'Años con LOTUP', st_plans: 'Planes aprobados',
         sb_svc_title: 'Índice de servicios',
@@ -642,8 +547,7 @@
         sb_contact_title: 'Contacto', sb_studio_lbl: 'Estudio',
         sb_location_lbl: 'Ubicación', sb_normativa_lbl: 'Normativa',
         sb_btn_contact: 'Solicitar consulta',
-        pg_num: '03 — Servicios',
-        pg_desc: 'Apoyo técnico integral en planeamiento territorial y urbanismo para administraciones locales, estudios de arquitectura y promotores privados en la Comunitat Valenciana.',
+        pg_num: '03 — Servicios &amp; Consultoría',
         sec_svc: 'Áreas de servicio',
         s1_title: 'Planeamiento General (LOTUP)',
         s1_desc: 'Redacción de Planes Generales Estructurales y Planes de Ordenación Detallada adaptados a la Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana.',
@@ -687,8 +591,9 @@
         nav_projects: 'Projects', nav_about: 'About', nav_services: 'Services',
         nav_publications: 'Publications', nav_awards: 'Recognition',
         nav_blog: 'Blog', nav_contact: 'Contact',
-        sb_label: '03 — Services',
+        sb_label: '03 — Services &amp; Consultancy',
         sb_role: 'Planning · Landscape · GIS',
+        sb_desc: 'Full technical support in territorial planning and urban design for local authorities, architecture practices and private developers in the Valencian Community.',
         st_munis: 'Municipalities', st_areas: 'Service areas',
         st_years: 'Years with LOTUP', st_plans: 'Approved plans',
         sb_svc_title: 'Service index',
@@ -706,8 +611,7 @@
         sb_contact_title: 'Contact', sb_studio_lbl: 'Studio',
         sb_location_lbl: 'Location', sb_normativa_lbl: 'Regulations',
         sb_btn_contact: 'Request consultation',
-        pg_num: '03 — Services',
-        pg_desc: 'Full technical support in territorial planning and urban design for local authorities, architecture practices and private developers in the Valencian Community.',
+        pg_num: '03 — Services &amp; Consultancy',
         sec_svc: 'Service areas',
         s1_title: 'General Planning (LOTUP)',
         s1_desc: 'Drafting of Structural General Plans and Detailed Planning Orders adapted to the Land Use, Urban Planning and Landscape Act (LOTUP) of the Valencian Community.',

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de privacidad — Daniel Serra Font</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #f5f4f0;
+      --bg2:      #edecea;
+      --surf:     #ffffff;
+      --border:   #0d0d0d;
+      --border-l: rgba(13,13,13,0.1);
+      --text:     #0d0d0d;
+      --text2:    rgba(13,13,13,0.5);
+      --text3:    rgba(13,13,13,0.28);
+      --red:      #c44b2b;
+      --serif:    'Spectral', Georgia, serif;
+      --sans:     'Plus Jakarta Sans', sans-serif;
+      --mono:     'DM Mono', monospace;
+      --topbar:   52px;
+    }
+    html, body { width: 100%; min-height: 100%; background: var(--bg); }
+    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-thumb { background: var(--border-l); }
+
+    /* ══ TOP NAV ══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--topbar); z-index: 500;
+      display: flex; align-items: stretch;
+      background: var(--bg); border-bottom: 2px solid var(--border);
+    }
+    .nav-identity {
+      display: flex; align-items: center;
+      padding: 0 1.5rem; gap: 0.75rem;
+    }
+    .nav-id-mark {
+      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
+      letter-spacing: 0.08em; color: var(--red);
+      border: 1.5px solid var(--red); border-radius: 2px;
+      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
+    .nav-id-name {
+      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
+      letter-spacing: 0.02em; line-height: 1; color: var(--text);
+    }
+    .nav-id-name em { font-style: italic; }
+    .nav-id-role {
+      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--red); line-height: 1;
+    }
+    .nav-back {
+      margin-left: auto; padding: 0 1.5rem;
+      display: flex; align-items: center; gap: 0.45rem;
+      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3);
+      transition: color 0.18s;
+    }
+    .nav-back:hover { color: var(--text); }
+    .nav-back svg { flex-shrink: 0; }
+
+    /* ══ CONTENT ══ */
+    .page-wrap { padding-top: var(--topbar); min-height: 100vh; }
+    .page-content { max-width: 720px; margin: 0 auto; padding: 4rem 2.5rem 6rem; }
+
+    .page-header {
+      margin-bottom: 3rem; padding-bottom: 2rem;
+      border-bottom: 2px solid var(--border);
+    }
+    .page-kicker {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--text3); margin-bottom: 0.6rem;
+    }
+    .page-header h1 {
+      font-family: var(--serif); font-size: 2.8rem; font-weight: 300;
+      letter-spacing: -0.02em; line-height: 1.1;
+    }
+    .page-header h1 em { font-style: italic; color: var(--text2); }
+    .page-header p {
+      margin-top: 0.85rem; font-size: 0.82rem;
+      color: var(--text3); font-family: var(--mono); letter-spacing: 0.04em;
+    }
+
+    /* ══ LEGAL TEXT ══ */
+    .legal-section { margin-bottom: 2.5rem; }
+    .legal-section h2 {
+      font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
+      margin-bottom: 0.75rem; padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-l);
+    }
+    .legal-section p {
+      font-size: 0.85rem; color: var(--text2); line-height: 1.8;
+      margin-bottom: 0.65rem;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+    .legal-section ul {
+      margin: 0.5rem 0 0.5rem 1.25rem;
+      display: flex; flex-direction: column; gap: 0.35rem;
+    }
+    .legal-section ul li {
+      font-size: 0.85rem; color: var(--text2); line-height: 1.7;
+    }
+    .legal-contact {
+      margin-top: 2rem; padding: 1.25rem 1.5rem;
+      background: var(--surf); border: 1px solid var(--border-l);
+    }
+    .legal-contact p {
+      font-size: 0.82rem; color: var(--text2); line-height: 1.7; margin: 0;
+    }
+    .legal-contact a { color: var(--text); border-bottom: 1px solid var(--border-l); }
+    .legal-contact a:hover { border-color: var(--red); color: var(--red); }
+
+    /* ══ FOOTER ══ */
+    .privacy-bar-foot {
+      background: var(--surf); border-top: 1px solid var(--border-l);
+      padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem;
+    }
+    .privacy-bar-foot span {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3); margin-right: auto;
+    }
+    .privacy-bar-foot a {
+      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--text3); transition: color 0.18s;
+    }
+    .privacy-bar-foot a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-identity">
+      <div class="nav-id-mark">D</div>
+      <div class="nav-id-text">
+        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
+        <div class="nav-id-role">Urbanista · Planificador Territorial</div>
+      </div>
+    </div>
+    <a href="index.html" class="nav-back">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      Volver al portfolio
+    </a>
+  </nav>
+
+  <div class="page-wrap">
+    <main class="page-content">
+
+      <header class="page-header">
+        <div class="page-kicker">Legal</div>
+        <h1>Política de <em>privacidad</em></h1>
+        <p>Última actualización: enero 2025</p>
+      </header>
+
+      <div class="legal-section">
+        <h2>1. Responsable del tratamiento</h2>
+        <p>El responsable del tratamiento de los datos personales recabados a través de este sitio web es:</p>
+        <div class="legal-contact">
+          <p><strong>Daniel Serra Font</strong><br>
+          Profesional independiente — Urbanista y Planificador Territorial<br>
+          Av. María Cristina 5, 46001 Valencia<br>
+          Email: <a href="mailto:daniel.serra.urb@gmail.com">daniel.serra.urb@gmail.com</a></p>
+        </div>
+      </div>
+
+      <div class="legal-section">
+        <h2>2. Datos que se recaban</h2>
+        <p>Este sitio web puede recopilar los siguientes datos de carácter personal:</p>
+        <ul>
+          <li>Nombre y apellidos, proporcionados voluntariamente a través del formulario de contacto.</li>
+          <li>Dirección de correo electrónico, para dar respuesta a las consultas recibidas.</li>
+          <li>Mensaje o consulta libre incluida en el formulario.</li>
+          <li>Datos de navegación de carácter técnico (dirección IP, navegador, dispositivo) recogidos de forma anónima con fines estadísticos.</li>
+        </ul>
+      </div>
+
+      <div class="legal-section">
+        <h2>3. Finalidad y base jurídica del tratamiento</h2>
+        <p>Los datos facilitados mediante el formulario de contacto se tratan con la única finalidad de atender la consulta o solicitud realizada, con base en el consentimiento del interesado (art. 6.1.a RGPD).</p>
+        <p>No se utilizan los datos para comunicaciones comerciales sin consentimiento previo ni se ceden a terceros salvo obligación legal.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>4. Conservación de los datos</h2>
+        <p>Los datos se conservan durante el tiempo necesario para dar respuesta a la consulta y, posteriormente, durante los plazos legales de prescripción aplicables. Una vez cumplida la finalidad, los datos son eliminados de forma segura.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>5. Derechos del interesado</h2>
+        <p>En virtud del Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), el interesado puede ejercer en cualquier momento los siguientes derechos:</p>
+        <ul>
+          <li><strong>Acceso:</strong> conocer qué datos personales se tratan.</li>
+          <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos.</li>
+          <li><strong>Supresión:</strong> solicitar la eliminación de los datos.</li>
+          <li><strong>Oposición y limitación:</strong> oponerse al tratamiento o solicitar su restricción.</li>
+          <li><strong>Portabilidad:</strong> recibir los datos en formato estructurado.</li>
+        </ul>
+        <p>Para ejercer cualquiera de estos derechos, puede dirigirse a <a href="mailto:daniel.serra.urb@gmail.com" style="color:var(--text);border-bottom:1px solid var(--border-l);">daniel.serra.urb@gmail.com</a>. Si considera que el tratamiento no es conforme a la normativa, puede presentar una reclamación ante la <a href="https://www.aepd.es" target="_blank" rel="noopener" style="color:var(--text);border-bottom:1px solid var(--border-l);">Agencia Española de Protección de Datos (AEPD)</a>.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>6. Cookies</h2>
+        <p>Este sitio web no utiliza cookies de seguimiento ni publicidad. Únicamente pueden emplearse cookies técnicas estrictamente necesarias para el funcionamiento del sitio. No se realiza ningún tipo de perfilado de usuario.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>7. Seguridad</h2>
+        <p>Se aplican las medidas técnicas y organizativas razonables para proteger los datos personales frente a accesos no autorizados, pérdida o alteración, de acuerdo con el nivel de riesgo del tratamiento.</p>
+      </div>
+
+      <div class="legal-section">
+        <h2>8. Modificaciones</h2>
+        <p>Esta política de privacidad puede actualizarse para adaptarse a cambios normativos o funcionales del sitio web. Se recomienda revisarla periódicamente. La fecha de última actualización figura en el encabezado de este documento.</p>
+      </div>
+
+    </main>
+
+    <footer class="privacy-bar-foot">
+      <span>© 2025 Daniel Serra Font</span>
+      <a href="privacidad.html">Política de privacidad</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+    </footer>
+  </div>
+
+</body>
+</html>

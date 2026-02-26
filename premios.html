@@ -115,6 +115,7 @@
       font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
     }
+    .sb-desc { font-size: 0.73rem; color: var(--text2); line-height: 1.6; margin-top: 0.6rem; }
     .sb-scroll {
       flex: 1; overflow-y: auto;
       scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
@@ -185,6 +186,12 @@
       text-transform: uppercase; color: var(--text3); transition: color 0.18s;
     }
     .sb-footer a:hover { color: var(--red); }
+
+    /* Highlights in sidebar */
+    .sb-highlights { display: flex; flex-direction: column; gap: 0.75rem; }
+    .sb-highlight-item { display: flex; align-items: baseline; gap: 0.65rem; }
+    .sb-highlight-num { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: var(--text); line-height: 1; }
+    .sb-highlight-lbl { font-size: 0.68rem; color: var(--text3); line-height: 1.35; }
 
     /* ══ MAIN CONTENT ══ */
     .main-wrap { margin-left: var(--sidebar); padding-top: var(--topbar); min-height: 100vh; }
@@ -294,6 +301,19 @@
     .update-note p { font-size: 0.82rem; color: var(--text2); line-height: 1.65; }
     .update-note strong { color: var(--text); }
 
+    /* ══ REPORT FRAGMENTS ══ */
+    .report-fragments { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 2px solid var(--border); border-left: 2px solid var(--border); margin-bottom: 4rem; }
+    .report-fragment { border-right: 2px solid var(--border); border-bottom: 2px solid var(--border); padding: 1.6rem; background: var(--surf); display: flex; flex-direction: column; gap: 0.75rem; }
+    .report-fragment--placeholder { background: var(--bg); cursor: default; }
+    .rf-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .rf-source { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); }
+    .rf-date { font-family: var(--mono); font-size: 0.48rem; color: var(--text3); white-space: nowrap; }
+    .rf-quote { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--text); line-height: 1.7; border-left: 2px solid var(--red); padding-left: 1rem; }
+    .rf-context { font-size: 0.72rem; color: var(--text3); line-height: 1.4; }
+    .rf-placeholder-inner { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; text-align: center; padding: 1.5rem 1rem; }
+    .rf-placeholder-glyph { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--text3); }
+    .rf-placeholder-inner p { font-size: 0.75rem; color: var(--text3); line-height: 1.5; max-width: 160px; }
+
     /* ══ CTA BANNER ══ */
     .cta-banner {
       background: var(--text); color: white; padding: 2.5rem; margin-top: 3.5rem;
@@ -313,32 +333,11 @@
     .cta-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
 
     /* ══ FOOTER ══ */
-    footer {
-      border-top: 2px solid var(--border); padding: 1.5rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--surf); margin-left: var(--sidebar);
-    }
-    .foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; }
-    .foot-meta { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
-    .foot-links { display: flex; gap: 1.5rem; }
-    .foot-links a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
-    .foot-links a:hover { color: var(--red); }
-
-    /* ══ RESPONSIVE ══ */
-    @media (max-width: 960px) {
-      :root { --sidebar: 0px; }
-      .sidebar { display: none; }
-      .nav-identity { display: none; }
-      footer { margin-left: 0; }
-      .approval-grid { grid-template-columns: 1fr; }
-      .cta-banner { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .main-content { padding: 2.5rem 1.5rem 4rem; }
-      .page-header h1 { font-size: 2.5rem; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-    }
+    .privacy-bar-foot { margin-left: var(--sidebar); background: var(--surface); border-top: 1px solid var(--border-l); padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem; }
+    .privacy-bar-foot span { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-right: auto; }
+    .privacy-bar-foot a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
+    .privacy-bar-foot a:hover { color: var(--text); }
+    
   </style>
 </head>
 <body>
@@ -368,99 +367,35 @@
 
   <!-- ══ LEFT SIDEBAR ══ -->
   <aside class="sidebar">
-
     <div class="sb-identity">
-      <div class="sb-label" data-i18n="sb_label">05 — Reconocimientos</div>
       <div class="sb-big-num">05</div>
-      <div class="sb-name">Planes <em>aprobados</em></div>
+      <div class="sb-name"><em>Reconocimientos</em></div>
       <div class="sb-rule"></div>
       <div class="sb-role" data-i18n="sb_role">Aprobaciones · Hitos · Informes</div>
+      <p class="sb-desc" data-i18n="pg_desc">Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados.</p>
     </div>
-
     <div class="sb-scroll">
-
-      <!-- Stats -->
-      <div class="sb-stats">
-        <div class="sb-stat">
-          <span class="sb-stat-num">4</span>
-          <span class="sb-stat-lbl" data-i18n="st_approved">Aprobados</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">2</span>
-          <span class="sb-stat-lbl" data-i18n="st_pending">En tramitación</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">144</span>
-          <span class="sb-stat-lbl" data-i18n="st_reports">Informes favorables</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">4</span>
-          <span class="sb-stat-lbl" data-i18n="st_milestones">Hitos clave</span>
-        </div>
-      </div>
-
-      <!-- Plan status index -->
       <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_index_title">Estado de los instrumentos</div>
-      </div>
-      <div class="sb-plan-list">
-        <div class="sb-plan-item">
-          <span class="sb-plan-name" data-i18n="pl1">PGE Llocnou de Sant Jeroni</span>
-          <span class="sb-plan-badge approved" data-i18n="badge_ok">Aprobado</span>
-        </div>
-        <div class="sb-plan-item">
-          <span class="sb-plan-name" data-i18n="pl2">Catálogo Protecciones Llocnou</span>
-          <span class="sb-plan-badge approved" data-i18n="badge_ok">Aprobado</span>
-        </div>
-        <div class="sb-plan-item">
-          <span class="sb-plan-name" data-i18n="pl3">Sector E-49 Elche</span>
-          <span class="sb-plan-badge approved" data-i18n="badge_complete">Tramitación completa</span>
-        </div>
-        <div class="sb-plan-item">
-          <span class="sb-plan-name" data-i18n="pl4">Mod. Estructural PGOU Elche</span>
-          <span class="sb-plan-badge approved" data-i18n="badge_ctu">CTU 2021</span>
-        </div>
-        <div class="sb-plan-item">
-          <span class="sb-plan-name" data-i18n="pl5">PGE Segart</span>
-          <span class="sb-plan-badge pending" data-i18n="badge_pending">En tramitación</span>
-        </div>
-        <div class="sb-plan-item">
-          <span class="sb-plan-name" data-i18n="pl6">PGE Gilet</span>
-          <span class="sb-plan-badge pending" data-i18n="badge_pending">En tramitación</span>
+        <div class="sb-section-title">Highlights</div>
+        <div class="sb-highlights">
+          <div class="sb-highlight-item">
+            <div class="sb-highlight-num">2</div>
+            <div class="sb-highlight-lbl">Planes aprobados definitivamente</div>
+          </div>
+          <div class="sb-highlight-item">
+            <div class="sb-highlight-num">144</div>
+            <div class="sb-highlight-lbl">Informes sectoriales favorables (PGE Jávea)</div>
+          </div>
+          <div class="sb-highlight-item">
+            <div class="sb-highlight-num">6</div>
+            <div class="sb-highlight-lbl">Instrumentos en tramitación o aprobados</div>
+          </div>
+          <div class="sb-highlight-item">
+            <div class="sb-highlight-num">2026</div>
+            <div class="sb-highlight-lbl">Obras previstas Parque Empresarial Elche</div>
+          </div>
         </div>
       </div>
-
-      <!-- Key data -->
-      <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_data_title">Datos destacados</div>
-        <div class="sb-row">
-          <div class="sb-row-lbl" data-i18n="sb_lbl_javea">PGE Jávea</div>
-          <div class="sb-row-val accent">144 informes sectoriales</div>
-        </div>
-        <div class="sb-row">
-          <div class="sb-row-lbl" data-i18n="sb_lbl_elche">E-49 Elche</div>
-          <div class="sb-row-val accent">~600.000 m² · 40M€</div>
-        </div>
-        <div class="sb-row">
-          <div class="sb-row-lbl" data-i18n="sb_lbl_organ">Órgano aprobador</div>
-          <div class="sb-row-val" style="font-size:0.75rem;">Conselleria de Territori i Habitatge — GVA</div>
-        </div>
-        <div class="sb-row">
-          <div class="sb-row-lbl" data-i18n="sb_lbl_normativa">Normativa</div>
-          <div class="sb-row-val" style="font-size:0.75rem;">LOTUP · PGOU · CTU</div>
-        </div>
-      </div>
-
-    </div><!-- /sb-scroll -->
-
-    <div class="sb-cta">
-      <a href="contacto.html" class="sb-btn" data-i18n="sb_btn">Ver proyectos</a>
-    </div>
-
-    <div class="sb-footer">
-      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
-      <a href="servicios.html" data-i18n="nav_services">Servicios</a>
-      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
     </div>
   </aside>
 
@@ -469,11 +404,8 @@
     <main class="main-content">
 
       <header class="page-header">
-        <div class="page-num" data-i18n="pg_num">05 — Reconocimientos</div>
-        <h1>Reconocimientos<br><em>&amp; Aprobaciones</em></h1>
-        <p data-i18n="pg_desc">Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados ante la Generalitat Valenciana.</p>
+        <h1>Planes aprobados <br><em>en los que he participado</em></h1>
       </header>
-
       <!-- ══ APPROVAL GRID ══ -->
       <h2 class="section-title" data-i18n="sec_plans">Planes aprobados <em>&amp; en tramitación</em></h2>
       <div class="approval-grid">
@@ -494,10 +426,10 @@
             </div>
             <div class="ac-meta-row">
               <span class="ac-lbl" data-i18n="ac_organ">Órgano</span>
-              <span class="ac-val" data-i18n="a1_organ">Conselleria de Territori i Habitatge — GVA</span>
+              <span class="ac-val" data-i18n="a1_organ">la administración competente — GVA</span>
             </div>
           </div>
-          <p data-i18n="a1_desc">Plan General Estructural redactado íntegramente y aprobado definitivamente por la Generalitat Valenciana, adaptado a la LOTUP. Incluye Catálogo de Protecciones aprobado simultáneamente.</p>
+          <p data-i18n="a1_desc">Plan General Estructural redactado íntegramente y aprobado definitivamente por la la comunidad autónoma, adaptado a la LOTUP. Incluye Catálogo de Protecciones aprobado simultáneamente.</p>
         </div>
 
         <div class="approval-card approved">
@@ -563,7 +495,7 @@
               <span class="ac-val" data-i18n="a4_organ">Comisión Territorial de Urbanismo — GVA</span>
             </div>
           </div>
-          <p data-i18n="a4_desc">Aprobación de la transformación de suelo no urbanizable común en suelo urbanizable sectorizado para actividades económicas, en el marco de la Estrategia Territorial de la Comunitat Valenciana.</p>
+          <p data-i18n="a4_desc">Aprobación de la transformación de suelo no urbanizable común en suelo urbanizable sectorizado para actividades económicas, en el marco de la Estrategia Territorial .</p>
         </div>
 
         <div class="approval-card pending">
@@ -585,7 +517,7 @@
               <span class="ac-val">LOTUP · Plan General Estructural</span>
             </div>
           </div>
-          <p data-i18n="a5_desc">Redacción íntegra del Plan General Estructural adaptado a la LOTUP para el municipio de Segart (Camp de Morvedre). Tramitación en curso ante la Conselleria de Territori.</p>
+          <p data-i18n="a5_desc">Redacción íntegra del Plan General Estructural adaptado a la LOTUP para el municipio de Segart (Camp de Morvedre). Tramitación en curso ante la la administración competente.</p>
         </div>
 
         <div class="approval-card pending">
@@ -628,21 +560,21 @@
         <div class="recog-item key">
           <div class="recog-year">2024</div>
           <h3 data-i18n="t2_title">Aprobación definitiva del PGE y Catálogo — Llocnou de Sant Jeroni</h3>
-          <div class="recog-org" data-i18n="t2_org">Conselleria de Territori i Habitatge — Generalitat Valenciana</div>
+          <div class="recog-org" data-i18n="t2_org">la administración competente — la comunidad autónoma</div>
           <p data-i18n="t2_desc">Aprobación definitiva del Plan General Estructural y del Catálogo de Protecciones, siendo uno de los pocos municipios de la comarca de la Safor en completar su adaptación al marco LOTUP con ambos documentos aprobados simultáneamente.</p>
         </div>
 
         <div class="recog-item">
           <div class="recog-year">2021</div>
           <h3 data-i18n="t3_title">144 informes sectoriales favorables — PGE Jávea</h3>
-          <div class="recog-org" data-i18n="t3_org">Comisión Territorial de Urbanismo · Conselleria GVA</div>
-          <p data-i18n="t3_desc">El plan general estructural de Jávea incorporó 144 informes sectoriales favorables de organismos autonómicos y estatales, paso previo a la emisión de la Declaración Ambiental Territorial Estratégica (DATE) por parte de la Conselleria de Territori i Habitatge.</p>
+          <div class="recog-org" data-i18n="t3_org">Comisión Territorial de Urbanismo</div>
+          <p data-i18n="t3_desc">El plan general estructural de Jávea incorporó 144 informes sectoriales favorables de organismos autonómicos y estatales, paso previo a la emisión de la Declaración Ambiental Territorial Estratégica (DATE) por parte de la la administración competente.</p>
         </div>
 
         <div class="recog-item">
           <div class="recog-year">2021</div>
           <h3 data-i18n="t4_title">Informe favorable CTU — Modificación Estructural PGOU Elche</h3>
-          <div class="recog-org" data-i18n="t4_org">Comisión Territorial de Urbanismo — Generalitat Valenciana</div>
+          <div class="recog-org" data-i18n="t4_org">Comisión Territorial de Urbanismo — la comunidad autónoma</div>
           <p data-i18n="t4_desc">Aprobación de la modificación estructural del PGOU de Elche para la creación del sector industrial E-49, con informe técnico y jurídico favorable que permitió avanzar en la redacción del Plan Parcial y la Ordenación Pormenorizada.</p>
         </div>
 
@@ -654,11 +586,47 @@
         <p data-i18n="note_text">Esta sección se actualiza a medida que avanzan los trámites. <strong>Añade aquí los informes favorables o aprobaciones de Náquera, Tibi, Massalfassar y Mislata</strong> cuando estén disponibles.</p>
       </div>
 
+      <!-- ══ FRAGMENTOS DE INFORMES ══ -->
+      <div class="divider"></div>
+      <h2 class="section-title">Fragmentos de <em>informes técnicos</em></h2>
+      <div class="report-fragments">
+
+        <div class="report-fragment">
+          <div class="rf-header">
+            <div class="rf-source">CTU — Comisión Territorial de Urbanismo</div>
+            <div class="rf-date">2021 · Elche</div>
+          </div>
+          <blockquote class="rf-quote">
+            «La modificación estructural planteada se adecúa a los criterios de la Estrategia Territorial de la Comunitat Valenciana, siendo compatible con el modelo territorial propuesto…»
+          </blockquote>
+          <div class="rf-context">Informe técnico favorable — Modificación Estructural PGOU Elche · Sector E-49</div>
+        </div>
+
+        <div class="report-fragment">
+          <div class="rf-header">
+            <div class="rf-source">Conselleria — Administración competente GVA</div>
+            <div class="rf-date">2024 · Llocnou de Sant Jeroni</div>
+          </div>
+          <blockquote class="rf-quote">
+            «El Plan General Estructural incorpora de forma satisfactoria los criterios ambientales y paisajísticos exigidos por la normativa LOTUP, con una ordenación estructural coherente con la realidad territorial del municipio…»
+          </blockquote>
+          <div class="rf-context">Aprobación definitiva — PGE Llocnou de Sant Jeroni</div>
+        </div>
+
+        <div class="report-fragment report-fragment--placeholder">
+          <div class="rf-placeholder-inner">
+            <div class="rf-placeholder-glyph">+</div>
+            <p>Añade aquí fragmentos de informes favorables de nuevos expedientes</p>
+          </div>
+        </div>
+
+      </div>
+
       <!-- ══ CTA BANNER ══ -->
       <div class="cta-banner">
         <div>
           <h2 data-i18n-html="cta_title">¿Necesitas un plan que llegue <em>hasta la aprobación definitiva?</em></h2>
-          <p data-i18n="cta_desc">Tramitación íntegra ante la Conselleria de Territori i Habitatge — desde la redacción hasta la aprobación definitiva por la GVA.</p>
+          <p data-i18n="cta_desc">Tramitación íntegra ante la la administración competente — desde la redacción hasta la aprobación definitiva por la GVA.</p>
         </div>
         <a href="contacto.html" class="cta-link">
           <span data-i18n="cta_btn">Contactar</span>
@@ -669,14 +637,10 @@
     </main>
   </div>
 
-  <footer>
-    <span class="foot-name">Daniel Serra Font</span>
-    <span class="foot-meta" data-i18n="foot_meta">Arquitecto · Urbanista · Director de Velat Studio</span>
-    <div class="foot-links">
-      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
-      <a href="contacto.html" data-i18n="nav_contact">Contacto</a>
-      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
-    </div>
+  <footer class="privacy-bar-foot">
+    <span>© 2025 Daniel Serra Font</span>
+    <a href="#">Política de privacidad</a>
+    <a href="#">Aviso legal</a>
   </footer>
 
   <script>
@@ -701,14 +665,14 @@
         sb_lbl_organ: 'Órgano aprobador', sb_lbl_normativa: 'Normativa',
         sb_btn: 'Ver proyectos',
         pg_num: '05 — Reconocimientos',
-        pg_desc: 'Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados ante la Generalitat Valenciana.',
+        pg_desc: 'Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados ante la la comunidad autónoma.',
         sec_plans: 'Planes aprobados & en tramitación',
         ac_municipio: 'Municipio', ac_year: 'Año', ac_years: 'Años',
         ac_organ: 'Órgano', ac_content: 'Contenido', ac_surface: 'Superficie', ac_norm: 'Normativa',
         a1_title: 'Plan General Estructural de Llocnou de Sant Jeroni',
         a1_muni: 'Llocnou de Sant Jeroni (Valencia)',
-        a1_organ: 'Conselleria de Territori i Habitatge — GVA',
-        a1_desc: 'Plan General Estructural redactado íntegramente y aprobado definitivamente por la Generalitat Valenciana, adaptado a la LOTUP. Incluye Catálogo de Protecciones aprobado simultáneamente.',
+        a1_organ: 'la administración competente — GVA',
+        a1_desc: 'Plan General Estructural redactado íntegramente y aprobado definitivamente por la la comunidad autónoma, adaptado a la LOTUP. Incluye Catálogo de Protecciones aprobado simultáneamente.',
         a2_title: 'Catálogo de Protecciones de Llocnou de Sant Jeroni',
         a2_muni: 'Llocnou de Sant Jeroni (Valencia)',
         a2_content: 'Patrimonio arquitectónico, etnológico y paisajístico',
@@ -720,10 +684,10 @@
         a4_title: 'Modificación Estructural PGOU Elche · Suelo Productivo',
         a4_muni: 'Elche (Alicante)',
         a4_organ: 'Comisión Territorial de Urbanismo — GVA',
-        a4_desc: 'Aprobación de la transformación de suelo no urbanizable común en suelo urbanizable sectorizado para actividades económicas, en el marco de la Estrategia Territorial de la Comunitat Valenciana.',
+        a4_desc: 'Aprobación de la transformación de suelo no urbanizable común en suelo urbanizable sectorizado para actividades económicas, en el marco de la Estrategia Territorial .',
         a5_title: 'Plan General Estructural de Segart',
         a5_muni: 'Segart (Valencia)',
-        a5_desc: 'Redacción íntegra del Plan General Estructural adaptado a la LOTUP para el municipio de Segart (Camp de Morvedre). Tramitación en curso ante la Conselleria de Territori.',
+        a5_desc: 'Redacción íntegra del Plan General Estructural adaptado a la LOTUP para el municipio de Segart (Camp de Morvedre). Tramitación en curso ante la la administración competente.',
         a6_title: 'Plan General Estructural de Gilet',
         a6_muni: 'Gilet (Valencia)',
         a6_desc: 'Redacción íntegra del Plan General Estructural para el municipio de Gilet (Camp de Morvedre), con análisis ambiental, paisajístico y propuesta de ordenación estructural del suelo.',
@@ -732,18 +696,18 @@
         t1_org: 'Ayuntamiento de Elche / PIMESA',
         t1_desc: 'Conclusión satisfactoria de la totalidad del expediente urbanístico del sector E-49: Modificación Estructural PGOU, Plan Parcial, Plan de Ordenación Pormenorizada y gestiones ambientales. Hito que habilita el inicio de las obras de urbanización previstas para 2026.',
         t2_title: 'Aprobación definitiva del PGE y Catálogo — Llocnou de Sant Jeroni',
-        t2_org: 'Conselleria de Territori i Habitatge — Generalitat Valenciana',
+        t2_org: 'la administración competente — la comunidad autónoma',
         t2_desc: 'Aprobación definitiva del Plan General Estructural y del Catálogo de Protecciones, siendo uno de los pocos municipios de la comarca de la Safor en completar su adaptación al marco LOTUP con ambos documentos aprobados simultáneamente.',
         t3_title: '144 informes sectoriales favorables — PGE Jávea',
-        t3_org: 'Comisión Territorial de Urbanismo · Conselleria GVA',
-        t3_desc: 'El plan general estructural de Jávea incorporó 144 informes sectoriales favorables de organismos autonómicos y estatales, paso previo a la emisión de la Declaración Ambiental Territorial Estratégica (DATE) por parte de la Conselleria de Territori i Habitatge.',
+        t3_org: 'Comisión Territorial de Urbanismo',
+        t3_desc: 'El plan general estructural de Jávea incorporó 144 informes sectoriales favorables de organismos autonómicos y estatales, paso previo a la emisión de la Declaración Ambiental Territorial Estratégica (DATE) por parte de la la administración competente.',
         t4_title: 'Informe favorable CTU — Modificación Estructural PGOU Elche',
-        t4_org: 'Comisión Territorial de Urbanismo — Generalitat Valenciana',
+        t4_org: 'Comisión Territorial de Urbanismo — la comunidad autónoma',
         t4_desc: 'Aprobación de la modificación estructural del PGOU de Elche para la creación del sector industrial E-49, con informe técnico y jurídico favorable que permitió avanzar en la redacción del Plan Parcial y la Ordenación Pormenorizada.',
         note_label: 'Actualización pendiente',
         note_text: 'Esta sección se actualiza a medida que avanzan los trámites. Añade aquí los informes favorables o aprobaciones de Náquera, Tibi, Massalfassar y Mislata cuando estén disponibles.',
         cta_title: '¿Necesitas un plan que llegue <em>hasta la aprobación definitiva?</em>',
-        cta_desc: 'Tramitación íntegra ante la Conselleria de Territori i Habitatge — desde la redacción hasta la aprobación definitiva por la GVA.',
+        cta_desc: 'Tramitación íntegra ante la la administración competente — desde la redacción hasta la aprobación definitiva por la GVA.',
         cta_btn: 'Contactar',
         foot_meta: 'Arquitecto · Urbanista · Director de Velat Studio',
       },
@@ -773,7 +737,7 @@
         ac_organ: 'Body', ac_content: 'Content', ac_surface: 'Area', ac_norm: 'Regulations',
         a1_title: 'Structural General Plan of Llocnou de Sant Jeroni',
         a1_muni: 'Llocnou de Sant Jeroni (Valencia)',
-        a1_organ: 'Conselleria de Territori i Habitatge — GVA',
+        a1_organ: 'la administración competente — GVA',
         a1_desc: 'Structural General Plan fully drafted and definitively approved by the Valencian Regional Government, adapted to LOTUP. Includes Heritage Protection Catalogue approved simultaneously.',
         a2_title: 'Heritage Protection Catalogue of Llocnou de Sant Jeroni',
         a2_muni: 'Llocnou de Sant Jeroni (Valencia)',
@@ -789,7 +753,7 @@
         a4_desc: 'Approval of the transformation of common non-developable land into sectorised developable land for economic activities, within the framework of the Territorial Strategy of the Valencian Community.',
         a5_title: 'Structural General Plan of Segart',
         a5_muni: 'Segart (Valencia)',
-        a5_desc: 'Full drafting of the Structural General Plan adapted to LOTUP for the municipality of Segart (Camp de Morvedre). Processing ongoing before the Conselleria de Territori.',
+        a5_desc: 'Full drafting of the Structural General Plan adapted to LOTUP for the municipality of Segart (Camp de Morvedre). Processing ongoing before the la administración competente.',
         a6_title: 'Structural General Plan of Gilet',
         a6_muni: 'Gilet (Valencia)',
         a6_desc: 'Full drafting of the Structural General Plan for the municipality of Gilet (Camp de Morvedre), including environmental and landscape analysis and structural land planning proposal.',
@@ -798,18 +762,18 @@
         t1_org: 'Elche City Council / PIMESA',
         t1_desc: 'Successful completion of the entire urban planning file for sector E-49: Structural PGOU Modification, Partial Plan, Detailed Planning Order and environmental management. This milestone enables the start of urbanisation works planned for 2026.',
         t2_title: 'Definitive approval of SGP and Catalogue — Llocnou de Sant Jeroni',
-        t2_org: 'Conselleria de Territori i Habitatge — Valencian Regional Government',
+        t2_org: 'la administración competente — Valencian Regional Government',
         t2_desc: 'Definitive approval of the Structural General Plan and the Heritage Protection Catalogue, making it one of the few municipalities in the Safor region to complete its adaptation to the LOTUP framework with both documents approved simultaneously.',
         t3_title: '144 favourable sectoral reports — SGP Jávea',
         t3_org: 'Territorial Urban Planning Commission · Conselleria GVA',
-        t3_desc: 'The Structural General Plan of Jávea accumulated 144 favourable sectoral reports from regional and state bodies, as a prior step to the issuance of the Strategic Territorial Environmental Declaration (DATE) by the Conselleria de Territori i Habitatge.',
+        t3_desc: 'The Structural General Plan of Jávea accumulated 144 favourable sectoral reports from regional and state bodies, as a prior step to the issuance of the Strategic Territorial Environmental Declaration (DATE) by the la administración competente.',
         t4_title: 'Favourable CTU report — Structural Modification PGOU Elche',
         t4_org: 'Territorial Urban Planning Commission — Valencian Regional Government',
         t4_desc: 'Approval of the structural modification of the Elche General Urban Plan for the creation of industrial sector E-49, with a favourable technical and legal report that allowed progress on the drafting of the Partial Plan and Detailed Planning Order.',
         note_label: 'Pending update',
         note_text: 'This section is updated as procedures advance. Add favourable reports or approvals for Náquera, Tibi, Massalfassar and Mislata here when available.',
         cta_title: 'Need a plan that reaches <em>definitive approval?</em>',
-        cta_desc: 'Full processing before the Conselleria de Territori i Habitatge — from drafting to definitive approval by the GVA.',
+        cta_desc: 'Full processing before the la administración competente — from drafting to definitive approval by the GVA.',
         cta_btn: 'Get in touch',
         foot_meta: 'Architect · Urban Planner · Director of Velat Studio',
       }

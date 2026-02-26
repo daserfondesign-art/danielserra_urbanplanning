@@ -115,6 +115,7 @@
       font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
       letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
     }
+    .sb-desc { font-size: 0.73rem; color: var(--text2); line-height: 1.6; margin-top: 0.6rem; }
     .sb-scroll {
       flex: 1; overflow-y: auto;
       scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
@@ -184,6 +185,21 @@
       text-transform: uppercase; color: var(--text3); transition: color 0.18s;
     }
     .sb-footer a:hover { color: var(--red); }
+
+    /* Article list in sidebar */
+    .sb-article-list { display: flex; flex-direction: column; }
+    .sb-article-item {
+      display: grid; grid-template-columns: 24px 1fr;
+      gap: 0.5rem; align-items: start;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border-l);
+      transition: color 0.15s;
+    }
+    .sb-article-item:last-child { border-bottom: none; }
+    .sb-article-item:hover { color: var(--red); }
+    .sb-article-num { font-family: var(--mono); font-size: 0.46rem; color: var(--text3); padding-top: 2px; }
+    .sb-article-title { font-size: 0.72rem; color: var(--text2); line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .sb-article-item:hover .sb-article-title { color: var(--red); }
 
     /* ══ MAIN CONTENT ══ */
     .main-wrap { margin-left: var(--sidebar); padding-top: var(--topbar); min-height: 100vh; }
@@ -352,35 +368,11 @@
     .cta-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
 
     /* ══ FOOTER ══ */
-    footer {
-      border-top: 2px solid var(--border); padding: 1.5rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--surf); margin-left: var(--sidebar);
-    }
-    .foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; }
-    .foot-meta { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
-    .foot-links { display: flex; gap: 1.5rem; }
-    .foot-links a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
-    .foot-links a:hover { color: var(--red); }
-
-    /* ══ RESPONSIVE ══ */
-    @media (max-width: 960px) {
-      :root { --sidebar: 0px; }
-      .sidebar { display: none; }
-      .nav-identity { display: none; }
-      footer { margin-left: 0; }
-      .featured-article { grid-template-columns: 1fr; }
-      .featured-placeholder { min-height: 180px; }
-      .featured-body { border-left: none; border-top: 2px solid var(--border); }
-      .cta-banner { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .main-content { padding: 2.5rem 1.5rem 4rem; }
-      .page-header h1 { font-size: 2.5rem; }
-      .articles-grid { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-    }
+    .privacy-bar-foot { margin-left: var(--sidebar); background: var(--surface); border-top: 1px solid var(--border-l); padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem; }
+    .privacy-bar-foot span { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-right: auto; }
+    .privacy-bar-foot a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
+    .privacy-bar-foot a:hover { color: var(--text); }
+    
   </style>
 </head>
 <body>
@@ -410,82 +402,43 @@
 
   <!-- ══ LEFT SIDEBAR ══ -->
   <aside class="sidebar">
-
     <div class="sb-identity">
-      <div class="sb-label" data-i18n="sb_label">06 — Blog</div>
       <div class="sb-big-num">06</div>
-      <div class="sb-name">Reflexiones <em>Urbanas</em></div>
+      <div class="sb-name"><em>Blog</em></div>
       <div class="sb-rule"></div>
       <div class="sb-role" data-i18n="sb_role">Ensayos · Notas · Crítica</div>
+      <p class="sb-desc" data-i18n="pg_desc">Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea.</p>
     </div>
-
     <div class="sb-scroll">
-
-      <!-- Stats -->
-      <div class="sb-stats">
-        <div class="sb-stat">
-          <span class="sb-stat-num">6</span>
-          <span class="sb-stat-lbl" data-i18n="st_articles">Artículos</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">5</span>
-          <span class="sb-stat-lbl" data-i18n="st_cats">Categorías</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">2024</span>
-          <span class="sb-stat-lbl" data-i18n="st_last">Última entrada</span>
-        </div>
-        <div class="sb-stat">
-          <span class="sb-stat-num">↗</span>
-          <span class="sb-stat-lbl" data-i18n="st_open">Libre acceso</span>
-        </div>
-      </div>
-
-      <!-- Categories -->
       <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_cats_title">Categorías</div>
-      </div>
-      <div class="sb-cat-list">
-        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat1">Planeamiento</span><span class="sb-cat-count">2</span></div>
-        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat2">Paisaje</span><span class="sb-cat-count">1</span></div>
-        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat3">Tecnología</span><span class="sb-cat-count">1</span></div>
-        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat4">Municipios rurales</span><span class="sb-cat-count">1</span></div>
-        <div class="sb-cat-item"><span class="sb-cat-name" data-i18n="cat5">Participación</span><span class="sb-cat-count">1</span></div>
-      </div>
-
-      <!-- Tags -->
-      <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_tags_title">Etiquetas</div>
-        <div class="sb-tags">
-          <span class="sb-tag">LOTUP</span>
-          <span class="sb-tag" data-i18n="tag_pgm">Plan. General</span>
-          <span class="sb-tag" data-i18n="tag_land">Paisaje</span>
-          <span class="sb-tag" data-i18n="tag_rur">Rural</span>
-          <span class="sb-tag">SIG / GIS</span>
-          <span class="sb-tag" data-i18n="tag_ai">IA</span>
-          <span class="sb-tag" data-i18n="tag_med">Mediterráneo</span>
-          <span class="sb-tag" data-i18n="tag_par">Participación</span>
+        <div class="sb-section-title">Artículos</div>
+        <div class="sb-article-list">
+          <a href="#" class="sb-article-item">
+            <span class="sb-article-num">01</span>
+            <span class="sb-article-title" data-i18n="a1_title_short">¿Para qué sirve un Plan General hoy?</span>
+          </a>
+          <a href="#" class="sb-article-item">
+            <span class="sb-article-num">02</span>
+            <span class="sb-article-title" data-i18n="a2_title_short">El litoral que nos queda</span>
+          </a>
+          <a href="#" class="sb-article-item">
+            <span class="sb-article-num">03</span>
+            <span class="sb-article-title" data-i18n="a3_title_short">IA y SIG en el urbanismo</span>
+          </a>
+          <a href="#" class="sb-article-item">
+            <span class="sb-article-num">04</span>
+            <span class="sb-article-title" data-i18n="a4_title_short">Urbanismo rural</span>
+          </a>
+          <a href="#" class="sb-article-item">
+            <span class="sb-article-num">05</span>
+            <span class="sb-article-title" data-i18n="a5_title_short">Cinco años de LOTUP</span>
+          </a>
+          <a href="#" class="sb-article-item">
+            <span class="sb-article-num">06</span>
+            <span class="sb-article-title" data-i18n="a6_title_short">Hacer participar no es solo informar</span>
+          </a>
         </div>
       </div>
-
-      <!-- Note -->
-      <div class="sb-section">
-        <div class="sb-section-title" data-i18n="sb_note_title">Sobre el blog</div>
-        <div class="sb-row">
-          <div class="sb-row-val" data-i18n="sb_note_val">Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Sin periodicidad fija — se escribe cuando algo merece ser escrito.</div>
-        </div>
-      </div>
-
-    </div><!-- /sb-scroll -->
-
-    <div class="sb-cta">
-      <a href="contacto.html" class="sb-btn" data-i18n="sb_btn">Contactar</a>
-    </div>
-
-    <div class="sb-footer">
-      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
-      <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
-      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
     </div>
   </aside>
 
@@ -494,9 +447,7 @@
     <main class="main-content">
 
       <header class="page-header">
-        <div class="page-num" data-i18n="pg_num">06 — Blog</div>
         <h1>Reflexiones <em>Urbanas</em></h1>
-        <p data-i18n="pg_desc">Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Ideas en proceso, observaciones de campo y lecturas críticas sobre la práctica urbanística.</p>
       </header>
 
       <!-- ══ FEATURED ARTICLE ══ -->
@@ -511,7 +462,7 @@
             <span class="post-cat" data-i18n="cat1">Planeamiento</span>
           </div>
           <h2 data-i18n="a1_title">¿Para qué sirve un Plan General hoy? Reflexiones desde la práctica valenciana</h2>
-          <p data-i18n="a1_excerpt">Después de años redactando planes generales en municipios grandes y pequeños de la Comunitat Valenciana, me hago una pregunta que parece obvia pero que no lo es tanto: ¿para qué sirve realmente un plan general en el contexto actual?</p>
+          <p data-i18n="a1_excerpt">Después de años redactando planes generales en municipios grandes y pequeños , me hago una pregunta que parece obvia pero que no lo es tanto: ¿para qué sirve realmente un plan general en el contexto actual?</p>
           <span class="read-link">
             <span data-i18n="lnk_read">Leer artículo</span>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
@@ -567,7 +518,7 @@
             <span class="post-cat">LOTUP</span>
           </div>
           <h3 data-i18n="a5_title">Cinco años de LOTUP: balance y asignaturas pendientes</h3>
-          <p data-i18n="a5_excerpt">La Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana lleva ya varios años en vigor. Un balance crítico de sus aportaciones, sus dificultades de aplicación y los temas aún pendientes.</p>
+          <p data-i18n="a5_excerpt">La Ley de Ordenación del Territorio, Urbanismo y Paisaje  lleva ya varios años en vigor. Un balance crítico de sus aportaciones, sus dificultades de aplicación y los temas aún pendientes.</p>
           <span class="read-link">
             <span data-i18n="lnk_read">Leer artículo</span>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
@@ -618,14 +569,10 @@
     </main>
   </div>
 
-  <footer>
-    <span class="foot-name">Daniel Serra Font</span>
-    <span class="foot-meta" data-i18n="foot_meta">Arquitecto · Urbanista · Director de Velat Studio</span>
-    <div class="foot-links">
-      <a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio ↗</a>
-      <a href="contacto.html" data-i18n="nav_contact">Contacto</a>
-      <a href="index.html" data-i18n="nav_projects">Proyectos</a>
-    </div>
+  <footer class="privacy-bar-foot">
+    <span>© 2025 Daniel Serra Font</span>
+    <a href="#">Política de privacidad</a>
+    <a href="#">Aviso legal</a>
   </footer>
 
   <script>
@@ -652,8 +599,14 @@
         pg_desc: 'Notas, ensayos y reflexiones sobre urbanismo, territorio y ciudad contemporánea. Ideas en proceso, observaciones de campo y lecturas críticas sobre la práctica urbanística.',
         img_placeholder: 'Imagen del artículo',
         lnk_read: 'Leer artículo',
+        a1_title_short: '¿Para qué sirve un Plan General hoy?',
+        a2_title_short: 'El litoral que nos queda',
+        a3_title_short: 'IA y SIG en el urbanismo',
+        a4_title_short: 'Urbanismo rural',
+        a5_title_short: 'Cinco años de LOTUP',
+        a6_title_short: 'Hacer participar no es solo informar',
         a1_title: '¿Para qué sirve un Plan General hoy? Reflexiones desde la práctica valenciana',
-        a1_excerpt: 'Después de años redactando planes generales en municipios grandes y pequeños de la Comunitat Valenciana, me hago una pregunta que parece obvia pero que no lo es tanto: ¿para qué sirve realmente un plan general en el contexto actual?',
+        a1_excerpt: 'Después de años redactando planes generales en municipios grandes y pequeños , me hago una pregunta que parece obvia pero que no lo es tanto: ¿para qué sirve realmente un plan general en el contexto actual?',
         a2_title: 'El litoral que nos queda: apuntes sobre la protección del paisaje costero mediterráneo',
         a2_excerpt: 'Trabajar en planes generales de municipios costeros como Jávea me ha dado una perspectiva privilegiada —y a veces angustiante— sobre el estado del paisaje litoral mediterráneo.',
         a3_title: 'IA y SIG en el urbanismo: herramientas para el planificador del siglo XXI',
@@ -661,7 +614,7 @@
         a4_title: 'Urbanismo rural: cuando el reto no es crecer sino mantenerse',
         a4_excerpt: 'Los pequeños municipios del interior valenciano plantean un reto urbanístico muy diferente al de las grandes ciudades: aquí el problema no es cómo ordenar el crecimiento, sino cómo garantizar la cohesión territorial ante la despoblación.',
         a5_title: 'Cinco años de LOTUP: balance y asignaturas pendientes',
-        a5_excerpt: 'La Ley de Ordenación del Territorio, Urbanismo y Paisaje de la Comunitat Valenciana lleva ya varios años en vigor. Un balance crítico de sus aportaciones, sus dificultades de aplicación y los temas aún pendientes.',
+        a5_excerpt: 'La Ley de Ordenación del Territorio, Urbanismo y Paisaje  lleva ya varios años en vigor. Un balance crítico de sus aportaciones, sus dificultades de aplicación y los temas aún pendientes.',
         a6_title: 'Hacer participar no es solo informar: lecciones de varios procesos de planeamiento',
         a6_excerpt: 'La participación ciudadana en los procesos de planeamiento urbanístico suele quedarse en el mínimo legal. ¿Puede hacerse algo mejor? La respuesta es sí, y este artículo explica cómo y por qué merece la pena.',
         ph_text: 'Añade aquí tu próximo artículo editando el HTML de esta página.',
@@ -694,6 +647,12 @@
         pg_desc: 'Notes, essays and reflections on urbanism, territory and the contemporary city. Ideas in progress, field observations and critical readings on urban planning practice.',
         img_placeholder: 'Article image',
         lnk_read: 'Read article',
+        a1_title_short: 'What is a General Plan actually for today?',
+        a2_title_short: 'The coastline we have left',
+        a3_title_short: 'AI and GIS in urbanism',
+        a4_title_short: 'Rural urbanism',
+        a5_title_short: 'Five years of LOTUP',
+        a6_title_short: 'Participation is more than information',
         a1_title: 'What is a General Plan actually for today? Reflections from Valencian practice',
         a1_excerpt: 'After years drafting general plans for large and small municipalities in the Valencian Community, I find myself asking a question that seems obvious but isn\'t: what is a general plan really for in the current context?',
         a2_title: 'The coastline we have left: notes on protecting the Mediterranean coastal landscape',
