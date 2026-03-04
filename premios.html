@@ -40,6 +40,10 @@
         <button class="quote-arrow prev" id="quote-prev" aria-label="Anterior">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
+   
+        <div class="carousel-progress-container">
+  <div class="carousel-progress-bar" id="carousel-progress"></div>
+</div>
         
         <div class="quotes-viewport">
           <div class="quotes-track" id="quotes-track">
@@ -211,10 +215,30 @@
         let currentIndex = 0;
         let intervalId;
 
+        let startTime;
+let animationId;
+const duration = 15000; // Los 15 segundos que tienes configurados
+const progressBar = document.getElementById('carousel-progress');
+
         // Función para mover el carrusel
         const updateCarousel = () => {
           track.style.transform = `translateX(-${currentIndex * 100}%)`;
         };
+        
+        const animate = (timestamp) => {
+  if (!startTime) startTime = timestamp;
+  const elapsed = timestamp - startTime;
+  const progress = Math.min((elapsed / duration) * 100, 100);
+  
+  if (progressBar) progressBar.style.width = progress + '%';
+
+  if (elapsed < duration) {
+    animationId = requestAnimationFrame(animate);
+  } else {
+    nextQuote();
+    resetAutoPlay();
+  }
+};
 
         const nextQuote = () => {
           currentIndex = (currentIndex + 1) % quotes.length;
@@ -226,16 +250,16 @@
           updateCarousel();
         };
 
-        // Autoplay cada 5 segundos
         const startAutoPlay = () => {
-          intervalId = setInterval(nextQuote, 10000); 
-        };
+  startTime = null;
+  animationId = requestAnimationFrame(animate);
+};
 
-        // Reiniciar el contador si el usuario hace clic manualmente
-        const resetAutoPlay = () => {
-          clearInterval(intervalId);
-          startAutoPlay();
-        };
+const resetAutoPlay = () => {
+  cancelAnimationFrame(animationId);
+  if (progressBar) progressBar.style.width = '0%';
+  startAutoPlay();
+};
 
         nextBtn.addEventListener('click', () => {
           nextQuote();
