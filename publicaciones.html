@@ -7,426 +7,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:       #f5f4f0;
-      --bg2:      #edecea;
-      --surf:     #ffffff;
-      --border:   #0d0d0d;
-      --border-l: rgba(13,13,13,0.1);
-      --text:     #0d0d0d;
-      --text2:    rgba(13,13,13,0.5);
-      --text3:    rgba(13,13,13,0.28);
-      --red:      #c44b2b;
-      --serif:    'Spectral', Georgia, serif;
-      --sans:     'Plus Jakarta Sans', sans-serif;
-      --mono:     'DM Mono', monospace;
-      --sidebar:  280px;
-      --topbar:   52px;
-    }
-    html, body { width: 100%; min-height: 100%; background: var(--bg); }
-    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-thumb { background: var(--border-l); }
-
-    /* ══ TOP NAV ══ */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--topbar); z-index: 500;
-      display: flex; align-items: stretch;
-      background: var(--bg); border-bottom: 2px solid var(--border);
-    }
-    .nav-identity {
-      width: var(--sidebar); flex-shrink: 0;
-      display: flex; align-items: center;
-      padding: 0 1.5rem; border-right: 2px solid var(--border); gap: 0.75rem;
-    }
-    .nav-id-mark {
-      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
-      letter-spacing: 0.08em; color: var(--red);
-      border: 1.5px solid var(--red); border-radius: 2px;
-      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
-    .nav-id-name {
-      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
-      letter-spacing: 0.02em; line-height: 1; color: var(--text); white-space: nowrap;
-    }
-    .nav-id-name em { font-style: italic; }
-    .nav-id-role {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--red); line-height: 1;
-    }
-    .nav-links-slot {
-      flex: 1; display: flex; align-items: center; justify-content: flex-end;
-      padding: 0 1.25rem;
-    }
-    .nav-links { display: flex; }
-    .nav-links a {
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
-      text-transform: uppercase; color: var(--text3);
-      padding: 0 0.65rem; height: var(--topbar);
-      display: flex; align-items: center;
-      border-bottom: 2px solid transparent; margin-bottom: -2px;
-      transition: color 0.18s, border-color 0.18s; white-space: nowrap;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.active { color: var(--text); border-bottom-color: var(--red); }
-    .lang-toggle {
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text3);
-      background: none; border: 1.5px solid var(--border-l);
-      padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.18s; margin-left: 1rem;
-    }
-    .lang-toggle:hover { border-color: var(--border); color: var(--text); }
-
-    /* ══ LEFT SIDEBAR ══ */
-    .sidebar {
-      position: fixed; top: var(--topbar); left: 0; bottom: 0;
-      width: var(--sidebar); z-index: 400;
-      background: var(--surf); border-right: 2px solid var(--border);
-      display: flex; flex-direction: column; overflow: hidden;
-    }
-    .sb-identity {
-      padding: 1.75rem 1.5rem 1.25rem;
-      border-bottom: 1px solid var(--border-l); flex-shrink: 0;
-    }
-    .sb-label {
-      font-family: var(--mono); font-size: 0.5rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--red); margin-bottom: 0.85rem;
-    }
-    .sb-big-num {
-      font-family: var(--serif); font-size: 5rem; font-weight: 300;
-      line-height: 0.9; color: rgba(13,13,13,0.04);
-      letter-spacing: -0.04em; margin-bottom: -1.4rem; user-select: none;
-    }
-    .sb-name {
-      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
-      line-height: 1.1; color: var(--text); margin-bottom: 0.2rem;
-      position: relative; z-index: 2;
-    }
-    .sb-name em { font-style: italic; }
-    .sb-rule { width: 100%; height: 2px; background: var(--border); margin: 0.75rem 0; }
-    .sb-role {
-      font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
-    }
-    .sb-desc {
-      font-size: 0.73rem; color: var(--text2); line-height: 1.6; margin-top: 0.6rem;
-    }
-    .sb-scroll {
-      flex: 1; overflow-y: auto;
-      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
-    }
-    .sb-stats {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0.85rem; padding: 1.1rem 1.5rem;
-      border-bottom: 1px solid var(--border-l);
-    }
-    .sb-stat { display: flex; flex-direction: column; gap: 0.12rem; }
-    .sb-stat-num {
-      font-family: var(--serif); font-size: 1.75rem; font-weight: 300;
-      line-height: 1; color: var(--text);
-    }
-    .sb-stat-lbl {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3);
-    }
-    .sb-section {
-      padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border-l);
-    }
-    .sb-section-title {
-      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--text3);
-      border-bottom: 2px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 0.85rem;
-    }
-    .sb-row { margin-bottom: 0.65rem; }
-    .sb-row:last-child { margin-bottom: 0; }
-    .sb-row-lbl {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text3); margin-bottom: 0.12rem;
-    }
-    .sb-row-val { font-size: 0.78rem; color: var(--text2); line-height: 1.45; }
-    .sb-row-val a:hover { color: var(--red); }
-    .sb-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .sb-tag {
-      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.05em;
-      text-transform: uppercase; padding: 0.18rem 0.5rem;
-      border: 1px solid var(--border-l); color: var(--text3); background: var(--bg);
-    }
-
-    /* Type filter list in sidebar */
-    .sb-filter-list { display: flex; flex-direction: column; }
-    .sb-filter-item {
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 0.5rem; align-items: center;
-      padding: 0.65rem 1.5rem;
-      border-bottom: 1px solid var(--border-l);
-      transition: background 0.15s; cursor: default;
-    }
-    .sb-filter-item:hover { background: var(--bg2); }
-    .sb-filter-name { font-size: 0.75rem; color: var(--text2); }
-    .sb-filter-count {
-      font-family: var(--mono); font-size: 0.5rem;
-      color: var(--text3); background: var(--bg);
-      border: 1px solid var(--border-l);
-      padding: 0.1rem 0.4rem;
-    }
-
-    .sb-cta { padding: 1.1rem 1.5rem; }
-    .sb-btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      width: 100%; padding: 0.8rem;
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
-      background: var(--text); color: white;
-      text-decoration: none; transition: background 0.18s; margin-bottom: 0.5rem;
-    }
-    .sb-btn:hover { background: var(--red); }
-    .sb-footer {
-      padding: 0.85rem 1.5rem; border-top: 1px solid var(--border-l);
-      flex-shrink: 0; display: flex; gap: 1.25rem;
-    }
-    .sb-footer a {
-      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3); transition: color 0.18s;
-    }
-    .sb-footer a:hover { color: var(--red); }
-
-    /* ══ MAIN CONTENT ══ */
-    .main-wrap { margin-left: var(--sidebar); padding-top: var(--topbar); min-height: 100vh; }
-    .main-content { max-width: 900px; margin: 0 auto; padding: 3.5rem 2.5rem 6rem; }
-
-    .page-header { margin-bottom: 3.5rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
-    .page-num {
-      font-family: var(--mono); font-size: 0.55rem;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem;
-    }
-    .page-header h1 {
-      font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
-      letter-spacing: -0.02em; line-height: 1.05;
-    }
-    .page-header h1 em { font-style: italic; font-weight: 300; color: var(--text2); }
-    .page-header p { margin-top: 1rem; max-width: 520px; font-size: 0.9rem; color: var(--text2); line-height: 1.75; }
-
-    .section-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; margin-bottom: 1.75rem; line-height: 1.2; }
-    .section-title em { font-style: italic; color: var(--text2); }
-    .section-lbl {
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--text3); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem;
-    }
-    .section-lbl::after { content:''; flex: 1; height: 1px; background: var(--border-l); }
-    .divider { border: none; border-top: 1px solid var(--border-l); margin: 3rem 0; }
-
-    /* ══ MUNICIPALITY GROUPS ══ */
-    .muni-group { margin-bottom: 2.5rem; }
-    .muni-group-header {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1rem; padding-bottom: 0.6rem;
-      border-bottom: 2px solid var(--border); margin-bottom: 0;
-    }
-    .muni-label {
-      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text);
-    }
-    .muni-count {
-      font-family: var(--mono); font-size: 0.52rem; color: var(--text3);
-      background: var(--bg2); border: 1px solid var(--border-l);
-      padding: 0.1rem 0.45rem; flex-shrink: 0;
-    }
-    .muni-cols { display: flex; flex-direction: column; }
-
-    /* ══ PUBLICATION ITEM — horizontal row ══ */
-    .pub-item {
-      display: grid;
-      grid-template-columns: 80px 1fr auto;
-      gap: 0 1.5rem;
-      padding: 1.5rem 0;
-      border-bottom: 1px solid var(--border-l);
-      align-items: start;
-      transition: background 0.15s;
-      position: relative;
-    }
-    .pub-item::before {
-      content: '';
-      position: absolute; left: -2.5rem; top: 0; bottom: 0;
-      width: 2px; background: transparent;
-      transition: background 0.18s;
-    }
-    .pub-item:hover { background: transparent; }
-    .pub-item:hover::before { background: var(--red); }
-    .pub-item:first-child { border-top: 2px solid var(--border); }
-    .pub-item:last-child { border-bottom: 2px solid var(--border); }
-
-    .pub-year {
-      font-family: var(--mono); font-size: 0.56rem;
-      letter-spacing: 0.06em; color: var(--text3);
-      padding-top: 0.2rem;
-      display: flex; flex-direction: column; gap: 0.3rem;
-    }
-    .pub-type-badge {
-      display: inline-block;
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.06em; text-transform: uppercase;
-      color: white; background: var(--text);
-      padding: 0.15rem 0.45rem;
-    }
-    .pub-type-badge.congress { background: var(--red); }
-    .pub-type-badge.chapter  { background: #4a6741; }
-    .pub-type-badge.article  { background: #2b4a7a; }
-    .pub-type-badge.report   { background: #5a4a2b; }
-
-    .pub-body {}
-    .pub-title {
-      font-family: var(--serif); font-size: 1.05rem; font-weight: 400;
-      line-height: 1.35; color: var(--text); margin-bottom: 0.4rem;
-    }
-    .pub-authors {
-      font-size: 0.78rem; color: var(--text2); margin-bottom: 0.35rem;
-    }
-    .pub-authors strong { color: var(--text); font-weight: 600; }
-    .pub-venue {
-      font-family: var(--serif); font-style: italic;
-      font-size: 0.82rem; color: var(--text2); margin-bottom: 0.5rem;
-    }
-    .pub-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-    .pub-tag {
-      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.05em; text-transform: uppercase;
-      background: var(--bg2); color: var(--text2);
-      padding: 0.12rem 0.45rem; border: 1px solid var(--border-l);
-    }
-
-    .pub-link {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.07em; text-transform: uppercase;
-      color: var(--text3); border: 1px solid var(--border-l);
-      padding: 0.45rem 0.75rem; white-space: nowrap;
-      transition: all 0.18s; align-self: start; margin-top: 0.2rem;
-    }
-    .pub-link:hover { color: var(--red); border-color: var(--red); }
-
-    /* ══ PRESENTATIONS GRID ══ */
-    .pres-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 0; margin-bottom: 4rem;
-      border-top: 2px solid var(--border); border-left: 2px solid var(--border);
-    }
-    .pres-card {
-      border-right: 2px solid var(--border); border-bottom: 2px solid var(--border);
-      padding: 1.5rem; background: var(--surf);
-      display: flex; flex-direction: column; gap: 0.5rem;
-      transition: background 0.18s; position: relative; overflow: hidden;
-    }
-    .pres-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0;
-      height: 2px; background: var(--red);
-      transform: scaleX(0); transform-origin: left;
-      transition: transform 0.3s ease;
-    }
-    .pres-card:hover { background: var(--bg2); }
-    .pres-card:hover::before { transform: scaleX(1); }
-    .pres-year {
-      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--red);
-    }
-    .pres-card h3 {
-      font-family: var(--serif); font-size: 0.98rem; font-weight: 400; line-height: 1.3;
-    }
-    .pres-event {
-      font-family: var(--serif); font-style: italic;
-      font-size: 0.8rem; color: var(--text2);
-    }
-    .pres-meta {
-      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.05em;
-      color: var(--text3); margin-top: auto; padding-top: 0.5rem;
-      border-top: 1px solid var(--border-l);
-    }
-
-    /* ══ CTA BANNER ══ */
-    .cta-banner {
-      background: var(--text); color: white; padding: 2.5rem;
-      display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
-    }
-    .cta-banner h2 {
-      font-family: var(--serif); font-size: 1.8rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.6rem;
-    }
-    .cta-banner h2 em { font-style: italic; }
-    .cta-banner p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 460px; }
-    .cta-link {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: white; border: 1px solid rgba(255,255,255,0.25);
-      padding: 0.85rem 1.5rem; transition: all 0.2s; white-space: nowrap;
-    }
-    .cta-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
-
-    /* ══ FOOTER ══ */
-    footer {
-      border-top: 2px solid var(--border); padding: 1.5rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--surf); margin-left: var(--sidebar);
-    }
-    .foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; }
-    .foot-meta { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
-    .foot-links { display: flex; gap: 1.5rem; }
-    .foot-links a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
-    .foot-links a:hover { color: var(--red); }
-
-    /* ══ RESPONSIVE ══ */
-    @media (max-width: 960px) {
-      :root { --sidebar: 0px; }
-      .sidebar { display: none; }
-      .nav-identity { display: none; }
-      footer { margin-left: 0; }
-      .pres-grid { grid-template-columns: 1fr; }
-      .cta-banner { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .main-content { padding: 2.5rem 1.5rem 4rem; }
-      .page-header h1 { font-size: 2.5rem; }
-      .pub-item { grid-template-columns: 60px 1fr; }
-      .pub-link { display: none; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-    }
-  </style>
-</head>
+  </head>
 <body>
 
   <!-- ══ NAV ══ -->
-  <nav class="nav">
-    <div class="nav-identity">
-      <div class="nav-id-mark">D</div>
-      <div class="nav-id-text">
-        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
-        <div class="nav-id-role" data-i18n="nav_role">Urbanista · Planificador Territorial</div>
-      </div>
-    </div>
-    <div class="nav-links-slot">
-      <div class="nav-links">
-        <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
-        <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
-        <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
-        <a href="publicaciones.html" class="active" data-i18n="nav_publications">Publicaciones</a>
-        <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
-        <a href="blog.html"          data-i18n="nav_blog">Blog</a>
-        <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
-      </div>
-      <button class="lang-toggle" id="lang-toggle">EN</button>
-    </div>
-  </nav>
+  <div id="nav-root" data-active="publicaciones"></div>
+  <link rel="stylesheet" href="css/styles.css">
 
   <!-- ══ LEFT SIDEBAR ══ -->
   <aside class="sidebar">
 
     <div class="sb-identity">
       <div class="sb-big-num">04</div>
-      <div class="sb-name"><em>Publicaciones</em></div>
+      <div class="sb-name" data-i18n-html="sb_name_pub"><em>Publicaciones</em></div>
       <div class="sb-rule"></div>
-      <div class="sb-role" data-i18n="sb_role">Congresos · Capítulos · Artículos</div>
-      <p class="sb-desc" data-i18n="sb_desc">Contribuciones académicas y técnicas en congresos, libros y revistas especializadas sobre urbanismo, planeamiento territorial y paisaje en la Comunitat Valenciana.</p>
+      <div class="sb-role" data-i18n="sb_role_pub">Congresos · Capítulos · Artículos</div>
+      <p class="sb-desc" data-i18n="sb_desc_pub">Contribuciones académicas y técnicas en congresos, libros y revistas especializadas sobre urbanismo, planeamiento territorial y paisaje en la Comunitat Valenciana.</p>
     </div>
 
     <div style="flex:1"></div>
@@ -441,216 +37,112 @@
     <main class="main-content">
 
       <header class="page-header">
-        <h1><em>Artículos</em></h1>
+        <h1 data-i18n-html="pg_title_pub"><em>Artículos</em></h1>
       </header>
 
       <!-- ══ PUBLICACIONES agrupadas por municipio/ámbito ══ -->
       <!-- Group: Jávea / Paisaje -->
       <div class="muni-group">
         <div class="muni-group-header">
-          <span class="muni-label" data-i18n="mg1_label">Jávea · Paisaje &amp; Participación</span>
+          <span class="muni-label" data-i18n="mg1_label">Elche · Sector E-49</span>
+          <span class="muni-count">3</span>
+        </div>
+        <div class="muni-cols">
+          <div class="pub-item">
+            <div class="pub-year"><span>2025</span><span class="pub-type-badge official" data-i18n="badge_official">Oficial</span></div>
+            <div class="pub-body">
+              <div class="pub-title" data-i18n="p1_title">Elche impulsa la ampliación del Parque Empresarial con 41,5 millones de euros de inversión</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p1_venue">Ayuntamiento de Elche</div>
+            </div>
+            <a href="https://www.elche.es/2025/06/elche-impulsa-la-ampliacion-del-parque-empresarial-con-415-millones-de-euros-de-inversion/" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
+          </div>
+
+          <div class="pub-item">
+            <div class="pub-year"><span>2025</span><span class="pub-type-badge article" data-i18n="badge_press">Prensa</span></div>
+            <div class="pub-body">
+              <div class="pub-title" data-i18n="p2_title">Elche no espera iniciar la ampliación del Parque Empresarial hasta septiembre de 2026</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p2_venue">Alicante Plaza</div>
+            </div>
+            <a href="https://alicanteplaza.es/alicanteplaza/elcheplaza/elche-no-espera-iniciar-la-ampliacion-del-parque-empresarial-hasta-septiembre-de-2026" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
+          </div>
+
+          <div class="pub-item">
+            <div class="pub-year"><span>2021</span><span class="pub-type-badge article" data-i18n="badge_press">Prensa</span></div>
+            <div class="pub-body">
+              <div class="pub-title" data-i18n="p3_title">El Parque Empresarial de Elche contará con una ampliación de 600.000 metros cuadrados</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p3_venue">Gestores Públicos</div>
+            </div>
+            <a href="https://gestorespublicos.org/noticias/ver/el-parque-empresarial-de-elche-contar%C3%A1-con-una-ampliaci%C3%B3n-de-600-000-metros-cuadrados" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="muni-group">
+        <div class="muni-group-header">
+          <span class="muni-label" data-i18n="mg2_label">Jávea / Xàbia · Plan General Estructural</span>
+          <span class="muni-count">3</span>
+        </div>
+        <div class="muni-cols">
+          <div class="pub-item">
+            <div class="pub-year"><span>2017</span><span class="pub-type-badge article" data-i18n="badge_press">Prensa</span></div>
+            <div class="pub-body">
+              <div class="pub-title" data-i18n="p4_title">Xàbia eliminará casi 10 millones de m² de suelo urbanizable en su nuevo Plan General</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p4_venue">elDiario.es</div>
+            </div>
+            <a href="https://www.eldiario.es/comunitat-valenciana/alicante/xabia-eliminara-urbanizable-plan-general_1_3352546.html" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
+          </div>
+
+          <div class="pub-item">
+            <div class="pub-year"><span>2019</span><span class="pub-type-badge official" data-i18n="badge_official">Oficial</span></div>
+            <div class="pub-body">
+              <div class="pub-title" data-i18n="p5_title">La versión preliminar del Plan General protege otros 201.220 m² tras estudiar informes y alegaciones</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p5_venue">Ayuntamiento de Xàbia</div>
+            </div>
+            <a href="https://www.ajxabia.com/ver/7741/la-version-preliminar-del-plan-general-de-xabia-protege-otros-201-220-metros-cuadrados-tras-estudiar-informes-y-alegaciones/" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
+          </div>
+
+          <div class="pub-item">
+            <div class="pub-year"><span>2023</span><span class="pub-type-badge article" data-i18n="badge_press">Prensa</span></div>
+            <div class="pub-body">
+              <div class="pub-title" data-i18n="p6_title">El urbanismo de Xàbia se pone a las puertas de aprobar el Plan General Estructural</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p6_venue">Javea.com</div>
+            </div>
+            <a href="https://www.javea.com/el-urbanismo-de-xabia-da-un-paso-y-se-pone-a-las-puertas-de-aprobar-el-plan-general-estructural/" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="muni-group" style="margin-bottom: 4rem;">
+        <div class="muni-group-header">
+          <span class="muni-label" data-i18n="mg3_label">Tibi · Polígono El Maigmó</span>
           <span class="muni-count">2</span>
         </div>
         <div class="muni-cols">
-
           <div class="pub-item">
-            <div class="pub-year">
-              <span>2023</span>
-              <span class="pub-type-badge congress" data-i18n="badge_congress">Congreso</span>
-            </div>
+            <div class="pub-year"><span>2022</span><span class="pub-type-badge official" data-i18n="badge_official">Oficial</span></div>
             <div class="pub-body">
-              <div class="pub-title" data-i18n="p2_title">✦ Simulaciones visuales como herramienta de participación ciudadana en estudios de paisaje: experiencia en el litoral de Jávea</div>
-              <div class="pub-authors"><strong>Serra Font, D.</strong></div>
-              <div class="pub-venue" data-i18n="p2_venue">XVII Congreso Ibérico de Urbanismo. AETU. Palma de Mallorca.</div>
-              <div class="pub-tags">
-                <span class="pub-tag" data-i18n="tag_land">Paisaje</span>
-                <span class="pub-tag" data-i18n="tag_vis">Simulaciones 3D</span>
-                <span class="pub-tag" data-i18n="tag_par">Participación</span>
-              </div>
+              <div class="pub-title" data-i18n="p7_title">El Consell y el Ayuntamiento de Tibi avanzan en los trabajos de ampliación del polígono El Maigmó</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p7_venue">Generalitat Valenciana</div>
             </div>
-            <a href="#" class="pub-link" data-i18n="lnk_ver">Ver ↗</a>
+            <a href="https://comunica.gva.es/es/detalle?id=391850795&site=373432074" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
           </div>
 
           <div class="pub-item">
-            <div class="pub-year">
-              <span>2021</span>
-              <span class="pub-type-badge congress" data-i18n="badge_congress">Congreso</span>
-            </div>
+            <div class="pub-year"><span>2023</span><span class="pub-type-badge article" data-i18n="badge_press">Prensa</span></div>
             <div class="pub-body">
-              <div class="pub-title" data-i18n="p4_title">✦ La Declaración Ambiental Territorial Estratégica (DATE) como instrumento de evaluación en el PGE de Jávea: 144 informes sectoriales</div>
-              <div class="pub-authors"><strong>Serra Font, D.</strong></div>
-              <div class="pub-venue" data-i18n="p4_venue">XVI Congreso Nacional de Urbanismo. Colegio de Geógrafos. Granada.</div>
-              <div class="pub-tags">
-                <span class="pub-tag">DATE</span>
-                <span class="pub-tag" data-i18n="tag_env">Evaluación ambiental</span>
-                <span class="pub-tag" data-i18n="tag_pgm">Plan. General</span>
-              </div>
+              <div class="pub-title" data-i18n="p8_title">Tibi ultima la EGM Parque Empresarial El Maigmó mientras busca el desarrollo de nuevo suelo</div>
+              <div class="pub-authors" style="font-weight: ft.FontWeight.BOLD;" data-i18n="p8_venue">Alicante Plaza</div>
             </div>
-            <a href="#" class="pub-link" data-i18n="lnk_ver">Ver ↗</a>
+            <a href="https://alicanteplaza.es/alicanteplaza/tibi-ultima-la-egm-parque-empresarial-el-maigmo-mientras-busca-el-desarrollo-de-nuevo-suelo-industrial" target="_blank" rel="noopener" class="pub-link" data-i18n="lnk_ver">Leer noticia ↗</a>
           </div>
-
         </div>
-      </div>
-
-      <!-- Group: Llocnou / Patrimonio -->
-      <div class="muni-group">
-        <div class="muni-group-header">
-          <span class="muni-label" data-i18n="mg2_label">Llocnou de Sant Jeroni · Patrimonio</span>
-          <span class="muni-count">1</span>
-        </div>
-        <div class="muni-cols">
-
-          <div class="pub-item">
-            <div class="pub-year">
-              <span>2020</span>
-              <span class="pub-type-badge chapter" data-i18n="badge_chapter">Capítulo</span>
-            </div>
-            <div class="pub-body">
-              <div class="pub-title" data-i18n="p5_title">✦ Catalogación del patrimonio etnológico y paisajístico: metodología aplicada en municipios de la Safor</div>
-              <div class="pub-authors"><strong>Serra Font, D.</strong></div>
-              <div class="pub-venue" data-i18n="p5_venue">En: Patrimonio y Territorio en la Comunitat Valenciana. Institució Alfons el Magnànim — Diputació de València.</div>
-              <div class="pub-tags">
-                <span class="pub-tag" data-i18n="tag_her">Patrimonio</span>
-                <span class="pub-tag" data-i18n="tag_cat">Catálogos</span>
-                <span class="pub-tag" data-i18n="tag_land">Paisaje</span>
-              </div>
-            </div>
-            <a href="#" class="pub-link" data-i18n="lnk_ver">Ver ↗</a>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Group: Comunitat Valenciana / LOTUP + Rural -->
-      <div class="muni-group">
-        <div class="muni-group-header">
-          <span class="muni-label" data-i18n="mg3_label">Comunitat Valenciana · LOTUP &amp; Sostenibilidad</span>
-          <span class="muni-count">2</span>
-        </div>
-        <div class="muni-cols">
-
-          <div class="pub-item">
-            <div class="pub-year">
-              <span>2024</span>
-              <span class="pub-type-badge chapter" data-i18n="badge_chapter">Capítulo</span>
-            </div>
-            <div class="pub-body">
-              <div class="pub-title" data-i18n="p1_title">Infraestructura verde y resiliencia territorial en la planificación urbanística valenciana bajo el marco LOTUP</div>
-              <div class="pub-authors"><strong>Serra Font, D.</strong></div>
-              <div class="pub-venue" data-i18n="p1_venue">En: Territorios Sostenibles: Nuevos Enfoques en el Urbanismo Mediterráneo. Editorial Tirant lo Blanch, Valencia.</div>
-              <div class="pub-tags">
-                <span class="pub-tag">LOTUP</span>
-                <span class="pub-tag" data-i18n="tag_sus">Sostenibilidad</span>
-                <span class="pub-tag" data-i18n="tag_green">Infraestructura verde</span>
-              </div>
-            </div>
-            <a href="#" class="pub-link" data-i18n="lnk_ver">Ver ↗</a>
-          </div>
-
-          <div class="pub-item">
-            <div class="pub-year">
-              <span>2022</span>
-              <span class="pub-type-badge article" data-i18n="badge_article">Artículo</span>
-            </div>
-            <div class="pub-body">
-              <div class="pub-title" data-i18n="p3_title">✦ El reto del planeamiento en municipios de interior: despoblación, suelo agrícola y ordenación estructural en la Comunitat Valenciana</div>
-              <div class="pub-authors"><strong>Serra Font, D.</strong></div>
-              <div class="pub-venue" data-i18n="p3_venue">Revista Valenciana d'Estudis Autonòmics, núm. 68, pp. 112–134.</div>
-              <div class="pub-tags">
-                <span class="pub-tag" data-i18n="tag_rur">Municipios rurales</span>
-                <span class="pub-tag" data-i18n="tag_pgm">Plan. General</span>
-                <span class="pub-tag">LOTUP</span>
-              </div>
-            </div>
-            <a href="#" class="pub-link" data-i18n="lnk_ver">Ver ↗</a>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Group: Área Metropolitana / SIG -->
-      <div class="muni-group">
-        <div class="muni-group-header">
-          <span class="muni-label" data-i18n="mg4_label">Área Metropolitana de Valencia · SIG</span>
-          <span class="muni-count">1</span>
-        </div>
-        <div class="muni-cols">
-
-          <div class="pub-item">
-            <div class="pub-year">
-              <span>2019</span>
-              <span class="pub-type-badge report" data-i18n="badge_report">Informe</span>
-            </div>
-            <div class="pub-body">
-              <div class="pub-title" data-i18n="p6_title">✦ SIG aplicado al análisis de suelo urbanizable en el área metropolitana de Valencia: metodología y resultados</div>
-              <div class="pub-authors"><strong>Serra Font, D.</strong> · IDOM Consultoría</div>
-              <div class="pub-venue" data-i18n="p6_venue">Documento técnico interno. IDOM Consultoría, Urbanismo y Ordenación del Territorio.</div>
-              <div class="pub-tags">
-                <span class="pub-tag">SIG / GIS</span>
-                <span class="pub-tag" data-i18n="tag_pgm">Plan. General</span>
-                <span class="pub-tag" data-i18n="tag_met">Área metropolitana</span>
-              </div>
-            </div>
-            <a href="#" class="pub-link" data-i18n="lnk_ver">Ver ↗</a>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- ══ PONENCIAS ══ -->
-      <div class="divider"></div>
-      <h2 class="section-title" data-i18n="sec_pres">Ponencias <em>&amp; Conferencias</em></h2>
-
-      <div class="pres-grid">
-
-        <div class="pres-card">
-          <div class="pres-year">2024</div>
-          <h3 data-i18n="pr1_title">La LOTUP a debate: retos y oportunidades del planeamiento estructural tras diez años de aplicación</h3>
-          <div class="pres-event" data-i18n="pr1_event">Jornadas de Urbanismo CTAV · Col·legi Territorial d'Arquitectes de València</div>
-          <div class="pres-meta" data-i18n="pr1_meta">Valencia · Ponente invitado</div>
-        </div>
-
-        <div class="pres-card">
-          <div class="pres-year">2023</div>
-          <h3 data-i18n="pr2_title">Planeamiento en municipios rurales: experiencias desde la Comunitat Valenciana</h3>
-          <div class="pres-event" data-i18n="pr2_event">Congreso de Municipios Rurales de España · FEMP</div>
-          <div class="pres-meta" data-i18n="pr2_meta">Madrid · Comunicación oral</div>
-        </div>
-
-        <div class="pres-card">
-          <div class="pres-year">2022</div>
-          <h3 data-i18n="pr3_title">Catálogos de Protecciones: de la norma a la práctica en municipios pequeños</h3>
-          <div class="pres-event" data-i18n="pr3_event">Jornadas de Patrimonio y Territorio · Universitat de València</div>
-          <div class="pres-meta" data-i18n="pr3_meta">Valencia · Ponente invitado</div>
-        </div>
-
-        <div class="pres-card">
-          <div class="pres-year">2021</div>
-          <h3 data-i18n="pr4_title">El sector E-49 de Elche: de la modificación estructural a la aprobación del Plan Parcial</h3>
-          <div class="pres-event" data-i18n="pr4_event">Jornadas de Suelo Industrial de la Comunitat Valenciana · IVACE</div>
-          <div class="pres-meta" data-i18n="pr4_meta">Alicante · Comunicación técnica</div>
-        </div>
-
-        <div class="pres-card">
-          <div class="pres-year">2019</div>
-          <h3 data-i18n="pr5_title">Visualización 3D y simulaciones de paisaje como herramienta en la tramitación urbanística</h3>
-          <div class="pres-event" data-i18n="pr5_event">Seminario Internacional de Paisaje Urbano · UPV · ETSA</div>
-          <div class="pres-meta" data-i18n="pr5_meta">Valencia · Comunicación oral</div>
-        </div>
-
-        <div class="pres-card" style="background:var(--bg); border-color: var(--border-l);">
-          <div class="pres-year" style="color:var(--text3);">—</div>
-          <h3 style="font-family:var(--sans); font-size:0.82rem; color:var(--text3); font-weight:400;" data-i18n="pr_placeholder">Añade aquí tus próximas ponencias o participaciones en jornadas.</h3>
-          <div class="pres-meta" style="color:var(--text3); margin-top:auto;" data-i18n="pr_ph_sub">Placeholder — editar en publicaciones.html</div>
-        </div>
-
       </div>
 
       <!-- ══ CTA BANNER ══ -->
       <div class="cta-banner">
         <div>
-          <h2 data-i18n-html="cta_title">¿Te interesa una colaboración <em>académica o técnica?</em></h2>
-          <p data-i18n="cta_desc">Estoy disponible para participar en jornadas, grupos de investigación aplicada y publicaciones sobre urbanismo y planeamiento territorial.</p>
+          <h2 data-i18n-html="cta_title_pub">Cada proyecto requiere una solución <em>a medida.</em></h2>
+          <p data-i18n="cta_desc_pub">Si tienes un proyecto de planeamiento o necesitas apoyo técnico en urbanismo, cuéntame en qué puedo ayudarte.</p>
         </div>
         <a href="contacto.html" class="cta-link">
           <span data-i18n="cta_btn">Contactar</span>
@@ -661,172 +153,9 @@
     </main>
   </div>
 
-  <footer>
-    <span class="foot-name">Daniel Serra Font</span>
-    <span class="foot-meta">Arquitecto · Urbanista · Valencia</span>
-    <div class="foot-links">
-      <a href="#">Política de privacidad</a>
-      <a href="#">Aviso legal</a>
-    </div>
-  </footer>
+  <div id="footer-root"></div>
 
-  <script>
-    const T = {
-      es: {
-        nav_role: 'Urbanista · Planificador Territorial',
-        nav_projects: 'Proyectos', nav_about: 'Sobre mí', nav_services: 'Servicios',
-        nav_publications: 'Publicaciones', nav_awards: 'Reconocimientos',
-        nav_blog: 'Blog', nav_contact: 'Contacto',
-        sb_label: '04 — Publicaciones &amp; Ponencias',
-        sb_role: 'Congresos · Capítulos · Artículos',
-        sb_desc: 'Contribuciones académicas y técnicas en congresos, libros y revistas especializadas sobre urbanismo, planeamiento territorial y paisaje en la Comunitat Valenciana.',
-        st_pubs: 'Publicaciones', st_cong: 'Congresos',
-        st_chap: 'Capítulos', st_pres: 'Ponencias',
-        sb_types_title: 'Tipología',
-        ft1: 'Congresos científicos', ft2: 'Capítulos de libro',
-        ft3: 'Artículos técnicos', ft4: 'Ponencias invitadas', ft5: 'Informes técnicos',
-        sb_topics_title: 'Temáticas',
-        tag_pgm: 'Plan. General', tag_land: 'Paisaje', tag_sus: 'Sostenibilidad',
-        tag_her: 'Patrimonio', tag_rur: 'Rural', tag_par: 'Participación',
-        tag_green: 'Infraest. verde', tag_vis: 'Simulaciones 3D', tag_env: 'Eval. ambiental',
-        tag_cat: 'Catálogos', tag_met: 'Área metropolitana',
-        sb_note_title: 'Nota editorial',
-        sb_note_val: 'Actualiza esta sección con tus publicaciones reales. Los registros marcados con ✦ son ejemplos representativos del tipo de output académico esperado.',
-        sb_btn: 'Contactar',
-        pg_num: '04 — Publicaciones &amp; Ponencias',
-        sec_pubs: 'Artículos &amp; Capítulos',
-        mg1_label: 'Jávea · Paisaje &amp; Participación',
-        mg2_label: 'Llocnou de Sant Jeroni · Patrimonio',
-        mg3_label: 'Comunitat Valenciana · LOTUP &amp; Sostenibilidad',
-        mg4_label: 'Área Metropolitana de Valencia · SIG',
-        badge_chapter: 'Capítulo', badge_congress: 'Congreso',
-        badge_article: 'Artículo', badge_report: 'Informe',
-        p1_title: 'Infraestructura verde y resiliencia territorial en la planificación urbanística valenciana bajo el marco LOTUP',
-        p1_venue: 'En: Territorios Sostenibles: Nuevos Enfoques en el Urbanismo Mediterráneo. Editorial Tirant lo Blanch, Valencia.',
-        p2_title: '✦ Simulaciones visuales como herramienta de participación ciudadana en estudios de paisaje: experiencia en el litoral de Jávea',
-        p2_venue: 'XVII Congreso Ibérico de Urbanismo. Asociación Española de Técnicos Urbanistas (AETU). Palma de Mallorca.',
-        p3_title: '✦ El reto del planeamiento en municipios de interior: despoblación, suelo agrícola y ordenación estructural en la Comunitat Valenciana',
-        p3_venue: 'Revista Valenciana d\'Estudis Autonòmics, núm. 68, pp. 112–134.',
-        p4_title: '✦ La Declaración Ambiental Territorial Estratégica (DATE) como instrumento de evaluación en el PGE de Jávea: 144 informes sectoriales',
-        p4_venue: 'XVI Congreso Nacional de Urbanismo y Ordenación del Territorio. Colegio de Geógrafos. Granada.',
-        p5_title: '✦ Catalogación del patrimonio etnológico y paisajístico: metodología aplicada en municipios de la Safor',
-        p5_venue: 'En: Patrimonio y Territorio en la Comunitat Valenciana. Institució Alfons el Magnànim — Diputació de València.',
-        p6_title: '✦ SIG aplicado al análisis de suelo urbanizable en el área metropolitana de Valencia: metodología y resultados',
-        p6_venue: 'Documento técnico interno. IDOM Consultoría, Urbanismo y Ordenación del Territorio.',
-        lnk_ver: 'Ver ↗',
-        sec_pres: 'Ponencias & Conferencias',
-        pr1_title: 'La LOTUP a debate: retos y oportunidades del planeamiento estructural tras diez años de aplicación',
-        pr1_event: 'Jornadas de Urbanismo CTAV · Col·legi Territorial d\'Arquitectes de València',
-        pr1_meta: 'Valencia · Ponente invitado',
-        pr2_title: 'Planeamiento en municipios rurales: experiencias desde la Comunitat Valenciana',
-        pr2_event: 'Congreso de Municipios Rurales de España · FEMP',
-        pr2_meta: 'Madrid · Comunicación oral',
-        pr3_title: 'Catálogos de Protecciones: de la norma a la práctica en municipios pequeños',
-        pr3_event: 'Jornadas de Patrimonio y Territorio · Universitat de València',
-        pr3_meta: 'Valencia · Ponente invitado',
-        pr4_title: 'El sector E-49 de Elche: de la modificación estructural a la aprobación del Plan Parcial',
-        pr4_event: 'Jornadas de Suelo Industrial de la Comunitat Valenciana · IVACE',
-        pr4_meta: 'Alicante · Comunicación técnica',
-        pr5_title: 'Visualización 3D y simulaciones de paisaje como herramienta en la tramitación urbanística',
-        pr5_event: 'Seminario Internacional de Paisaje Urbano · UPV · ETSA',
-        pr5_meta: 'Valencia · Comunicación oral',
-        pr_placeholder: 'Añade aquí tus próximas ponencias o participaciones en jornadas.',
-        pr_ph_sub: 'Placeholder — editar en publicaciones.html',
-        cta_title: '¿Te interesa una colaboración <em>académica o técnica?</em>',
-        cta_desc: 'Estoy disponible para participar en jornadas, grupos de investigación aplicada y publicaciones sobre urbanismo y planeamiento territorial.',
-        cta_btn: 'Contactar',
-        foot_meta: 'Arquitecto · Urbanista · Director de Velat Studio',
-      },
-      en: {
-        nav_role: 'Architect · Urban Planner',
-        nav_projects: 'Projects', nav_about: 'About', nav_services: 'Services',
-        nav_publications: 'Publications', nav_awards: 'Recognition',
-        nav_blog: 'Blog', nav_contact: 'Contact',
-        sb_label: '04 — Publications &amp; Presentations',
-        sb_role: 'Conferences · Chapters · Articles',
-        sb_desc: 'Academic and technical contributions to conferences, books and specialist journals on urban planning, territorial planning and landscape in the Valencian Community.',
-        st_pubs: 'Publications', st_cong: 'Conferences',
-        st_chap: 'Chapters', st_pres: 'Presentations',
-        sb_types_title: 'Type',
-        ft1: 'Scientific conferences', ft2: 'Book chapters',
-        ft3: 'Technical articles', ft4: 'Invited talks', ft5: 'Technical reports',
-        sb_topics_title: 'Topics',
-        tag_pgm: 'General Planning', tag_land: 'Landscape', tag_sus: 'Sustainability',
-        tag_her: 'Heritage', tag_rur: 'Rural', tag_par: 'Participation',
-        tag_green: 'Green infrastructure', tag_vis: '3D simulations', tag_env: 'Env. assessment',
-        tag_cat: 'Catalogues', tag_met: 'Metropolitan area',
-        sb_note_title: 'Editorial note',
-        sb_note_val: 'Update this section with your real publications. Entries marked ✦ are representative examples of expected academic output.',
-        sb_btn: 'Contact',
-        pg_num: '04 — Publications &amp; Presentations',
-        sec_pubs: 'Articles &amp; Chapters',
-        mg1_label: 'Jávea · Landscape &amp; Participation',
-        mg2_label: 'Llocnou de Sant Jeroni · Heritage',
-        mg3_label: 'Valencian Community · LOTUP &amp; Sustainability',
-        mg4_label: 'Valencia Metropolitan Area · GIS',
-        badge_chapter: 'Chapter', badge_congress: 'Conference',
-        badge_article: 'Article', badge_report: 'Report',
-        p1_title: 'Green infrastructure and territorial resilience in Valencian urban planning under the LOTUP framework',
-        p1_venue: 'In: Sustainable Territories: New Approaches in Mediterranean Urbanism. Editorial Tirant lo Blanch, Valencia.',
-        p2_title: '✦ Visual simulations as a citizen participation tool in landscape studies: experience on the Jávea coastline',
-        p2_venue: 'XVII Iberian Congress of Urban Planning. Spanish Association of Urban Planning Technicians (AETU). Palma de Mallorca.',
-        p3_title: '✦ The planning challenge in inland municipalities: depopulation, agricultural land and structural planning in the Valencian Community',
-        p3_venue: 'Revista Valenciana d\'Estudis Autonòmics, no. 68, pp. 112–134.',
-        p4_title: '✦ The Strategic Territorial Environmental Declaration (DATE) as an assessment instrument in the Jávea Structural General Plan: 144 sectoral reports',
-        p4_venue: 'XVI National Congress of Urban Planning and Territorial Planning. Colegio de Geógrafos. Granada.',
-        p5_title: '✦ Cataloguing ethnological and landscape heritage: methodology applied in municipalities of La Safor',
-        p5_venue: 'In: Heritage and Territory in the Valencian Community. Institució Alfons el Magnànim — Diputació de València.',
-        p6_title: '✦ GIS applied to developable land analysis in the Valencia metropolitan area: methodology and results',
-        p6_venue: 'Internal technical report. IDOM Consultoría, Urban Planning and Territorial Planning.',
-        lnk_ver: 'View ↗',
-        sec_pres: 'Presentations & Talks',
-        pr1_title: 'LOTUP under scrutiny: challenges and opportunities of structural planning after ten years',
-        pr1_event: 'Urban Planning Forum CTAV · Col·legi Territorial d\'Arquitectes de València',
-        pr1_meta: 'Valencia · Invited speaker',
-        pr2_title: 'Planning in rural municipalities: experiences from the Valencian Community',
-        pr2_event: 'Congress of Rural Municipalities of Spain · FEMP',
-        pr2_meta: 'Madrid · Oral communication',
-        pr3_title: 'Protection Catalogues: from regulation to practice in small municipalities',
-        pr3_event: 'Heritage and Territory Conference · Universitat de València',
-        pr3_meta: 'Valencia · Invited speaker',
-        pr4_title: 'The E-49 sector in Elche: from structural modification to Partial Plan approval',
-        pr4_event: 'Industrial Land Conference of the Valencian Community · IVACE',
-        pr4_meta: 'Alicante · Technical communication',
-        pr5_title: '3D visualisation and landscape simulations as a tool in urban planning procedures',
-        pr5_event: 'International Urban Landscape Seminar · UPV · ETSA',
-        pr5_meta: 'Valencia · Oral communication',
-        pr_placeholder: 'Add your upcoming presentations or conference participations here.',
-        pr_ph_sub: 'Placeholder — edit in publicaciones.html',
-        cta_title: 'Interested in an <em>academic or technical collaboration?</em>',
-        cta_desc: 'I am available to participate in conferences, applied research groups and publications on urban and territorial planning.',
-        cta_btn: 'Get in touch',
-        foot_meta: 'Architect · Urban Planner · Director of Velat Studio',
-      }
-    };
+  <script src="js/main.js"></script>
 
-    let lang = localStorage.getItem('dsf_lang') || 'es';
-
-    function applyLang(l) {
-      lang = l;
-      localStorage.setItem('dsf_lang', l);
-      const t = T[l];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.getAttribute('data-i18n');
-        if (t[k] !== undefined) el.textContent = t[k];
-      });
-      document.querySelectorAll('[data-i18n-html]').forEach(el => {
-        const k = el.getAttribute('data-i18n-html');
-        if (t[k] !== undefined) el.innerHTML = t[k];
-      });
-      document.getElementById('lang-toggle').textContent = l === 'es' ? 'EN' : 'ES';
-      document.documentElement.lang = l;
-    }
-
-    document.getElementById('lang-toggle').addEventListener('click', () => {
-      applyLang(lang === 'es' ? 'en' : 'es');
-    });
-
-    applyLang(lang);
-  </script>
-</body>
+  </body>
 </html>

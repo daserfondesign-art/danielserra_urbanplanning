@@ -7,542 +7,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:       #f5f4f0;
-      --bg2:      #edecea;
-      --surf:     #ffffff;
-      --border:   #0d0d0d;
-      --border-l: rgba(13,13,13,0.1);
-      --text:     #0d0d0d;
-      --text2:    rgba(13,13,13,0.5);
-      --text3:    rgba(13,13,13,0.28);
-      --red:      #c44b2b;
-      --serif:    'Spectral', Georgia, serif;
-      --sans:     'Plus Jakarta Sans', sans-serif;
-      --mono:     'DM Mono', monospace;
-      --sidebar:  280px;
-      --topbar:   52px;
-    }
-    html, body { width: 100%; min-height: 100%; background: var(--bg); }
-    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-thumb { background: var(--border-l); }
-
-    /* ══ TOP NAV — identical to index ══ */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--topbar); z-index: 500;
-      display: flex; align-items: stretch;
-      background: var(--bg);
-      border-bottom: 2px solid var(--border);
-    }
-    .nav-identity {
-      width: var(--sidebar); flex-shrink: 0;
-      display: flex; align-items: center;
-      padding: 0 1.5rem;
-      border-right: 2px solid var(--border);
-      gap: 0.75rem;
-    }
-    .nav-id-mark {
-      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
-      letter-spacing: 0.08em; color: var(--red);
-      border: 1.5px solid var(--red); border-radius: 2px;
-      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
-    .nav-id-name {
-      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
-      letter-spacing: 0.02em; line-height: 1; color: var(--text); white-space: nowrap;
-    }
-    .nav-id-name em { font-style: italic; }
-    .nav-id-role {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--red); line-height: 1;
-    }
-    .nav-links-slot {
-      flex: 1; display: flex; align-items: center; justify-content: flex-end;
-      padding: 0 1.25rem; gap: 0.05rem;
-    }
-    .nav-links { display: flex; }
-    .nav-links a {
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
-      text-transform: uppercase; color: var(--text3);
-      padding: 0 0.65rem; height: var(--topbar);
-      display: flex; align-items: center;
-      border-bottom: 2px solid transparent; margin-bottom: -2px;
-      transition: color 0.18s, border-color 0.18s; white-space: nowrap;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.active { color: var(--text); border-bottom-color: var(--red); }
-    .lang-toggle {
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text3);
-      background: none; border: 1.5px solid var(--border-l);
-      padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.18s; margin-left: 1rem;
-    }
-    .lang-toggle:hover { border-color: var(--border); color: var(--text); }
-
-    /* Full-width photo in sidebar */
-    .sb-photo-full {
-      width: 100%; flex-shrink: 0;
-      background: var(--bg2); border-bottom: 2px solid var(--border);
-      aspect-ratio: 4/3; overflow: hidden;
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
-    }
-    .sb-photo-full img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .sb-photo-full-inner {
-      width: 100%; height: 100%;
-      display: flex; align-items: center; justify-content: center;
-      background: linear-gradient(160deg, var(--bg2) 0%, var(--bg) 100%);
-    }
-    .sb-photo-initials-full {
-      font-family: var(--serif); font-size: 3rem; font-weight: 300;
-      letter-spacing: 0.1em; color: rgba(13,13,13,0.15);
-    }
-
-    /* Mini timeline */
-    .sb-minitl {
-      padding: 0.9rem 1.5rem 1rem;
-      border-bottom: 1px solid var(--border-l); flex-shrink: 0;
-    }
-    .sb-minitl-title {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--text3);
-      border-bottom: 2px solid var(--border); padding-bottom: 0.35rem; margin-bottom: 0.75rem;
-    }
-    .sb-minitl-item {
-      display: grid; grid-template-columns: 10px 1fr;
-      gap: 0.55rem; margin-bottom: 0.65rem;
-    }
-    .sb-minitl-item:last-child { margin-bottom: 0; }
-    .sb-minitl-dot {
-      width: 6px; height: 6px; border-radius: 50%; margin-top: 4px;
-      border: 1.5px solid var(--border-l); background: var(--bg); flex-shrink: 0;
-    }
-    .sb-minitl-item.current .sb-minitl-dot { background: var(--red); border-color: var(--red); }
-    .sb-minitl-body { display: flex; flex-direction: column; gap: 0.05rem; }
-    .sb-minitl-year {
-      font-family: var(--mono); font-size: 0.45rem;
-      letter-spacing: 0.08em; color: var(--text3); text-transform: uppercase;
-    }
-    .sb-minitl-role {
-      font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
-      color: var(--text); line-height: 1.2;
-    }
-    .sb-minitl-sub {
-      font-size: 0.68rem; color: var(--text2); line-height: 1.3;
-    }
-
-    /* Left sidebar */
-    /* ══ LEFT SIDEBAR — bio data ══ */
-    .sidebar {
-      position: fixed; top: var(--topbar); left: 0; bottom: 0;
-      width: var(--sidebar); z-index: 400;
-      background: var(--surf);
-      border-right: 2px solid var(--border);
-      display: flex; flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* Identity block */
-    .sb-identity {
-      padding: 1.25rem 1.5rem 1rem;
-      flex-shrink: 0;
-    }
-    .sb-label {
-      font-family: var(--mono); font-size: 0.5rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--red); margin-bottom: 0.85rem;
-    }
-    .sb-big-num {
-      font-family: var(--serif); font-size: 5rem; font-weight: 300;
-      line-height: 0.9; color: rgba(13,13,13,0.04);
-      letter-spacing: -0.04em; margin-bottom: -1.4rem;
-      user-select: none;
-    }
-    .sb-name {
-      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
-      line-height: 1.1; color: var(--text); margin-bottom: 0.2rem;
-      position: relative; z-index: 2;
-    }
-    .sb-name em { font-style: italic; }
-    .sb-rule { width: 100%; height: 2px; background: var(--border); margin: 0.75rem 0; }
-    .sb-role {
-      font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
-    }
-
-    /* Scrollable data area */
-    .sb-scroll {
-      flex: 1; overflow-y: auto;
-      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
-    }
-
-    /* Data sections */
-    .sb-section {
-      padding: 1.1rem 1.5rem;
-      border-bottom: 1px solid var(--border-l);
-    }
-    .sb-section-title {
-      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--text3);
-      border-bottom: 2px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 0.85rem;
-    }
-    .sb-row { margin-bottom: 0.65rem; }
-    .sb-row:last-child { margin-bottom: 0; }
-    .sb-row-lbl {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text3); margin-bottom: 0.12rem;
-    }
-    .sb-row-val {
-      font-size: 0.78rem; color: var(--text2); line-height: 1.4;
-    }
-    .sb-row-val a:hover { color: var(--red); }
-    .sb-row-val.accent { color: var(--red); font-weight: 500; }
-    .sb-row-val.phone {
-      font-family: var(--mono); font-size: 0.82rem; letter-spacing: 0.04em;
-      color: var(--text); font-weight: 400;
-    }
-
-    /* Stats */
-    .sb-stats {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0.85rem; padding: 1.1rem 1.5rem;
-      border-bottom: 1px solid var(--border-l);
-    }
-    .sb-stat { display: flex; flex-direction: column; gap: 0.12rem; }
-    .sb-stat-num {
-      font-family: var(--serif); font-size: 1.75rem; font-weight: 300;
-      line-height: 1; color: var(--text);
-    }
-    .sb-stat-lbl {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3);
-    }
-
-    /* Tag pills */
-    .sb-tags {
-      display: flex; flex-wrap: wrap; gap: 0.35rem;
-    }
-    .sb-tag {
-      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.05em;
-      text-transform: uppercase; padding: 0.18rem 0.5rem;
-      border: 1px solid var(--border-l); color: var(--text3);
-      background: var(--bg);
-    }
-
-    /* CTA */
-    .sb-cta {
-      padding: 1.1rem 1.5rem;
-    }
-    .sb-btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      width: 100%; padding: 0.8rem;
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
-      background: var(--text); color: white; border: none; cursor: pointer;
-      text-decoration: none; transition: background 0.18s; margin-bottom: 0.5rem;
-    }
-    .sb-btn:hover { background: var(--red); }
-    .sb-btn-ghost {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      width: 100%; padding: 0.7rem;
-      font-family: var(--mono); font-size: 0.53rem; letter-spacing: 0.08em; text-transform: uppercase;
-      background: none; border: 1.5px solid var(--border-l); color: var(--text2);
-      cursor: pointer; text-decoration: none; transition: all 0.18s;
-    }
-    .sb-btn-ghost:hover { border-color: var(--red); color: var(--red); }
-
-    /* Sidebar footer */
-    .sb-footer {
-      padding: 0.85rem 1.5rem;
-      border-top: 1px solid var(--border-l);
-      flex-shrink: 0; display: flex; gap: 1.25rem;
-    }
-    .sb-footer a {
-      font-family: var(--mono); font-size: 0.5rem;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--text3); transition: color 0.18s;
-    }
-    .sb-footer a:hover { color: var(--red); }
-
-    /* ══ MAIN CONTENT ══ */
-    .main-wrap {
-      margin-left: var(--sidebar);
-      padding-top: var(--topbar);
-      min-height: 100vh;
-    }
-    .main-content {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 3.5rem 2.5rem 6rem;
-    }
-
-    /* Page header */
-    .page-header {
-      margin-bottom: 3.5rem;
-      padding-bottom: 2rem;
-      border-bottom: 2px solid var(--border);
-    }
-    .page-num {
-      font-family: var(--mono); font-size: 0.55rem;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--red); margin-bottom: 0.6rem;
-    }
-    .page-header h1 {
-      font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
-      letter-spacing: -0.02em; line-height: 1.05;
-    }
-    .page-header h1 em { font-style: italic; font-weight: 300; color: var(--text2); }
-    .page-header p {
-      margin-top: 1rem; max-width: 520px;
-      font-size: 0.9rem; color: var(--text2); line-height: 1.75;
-    }
-
-    /* Section utilities */
-    .section-title {
-      font-family: var(--serif); font-size: 1.4rem; font-weight: 400;
-      margin-bottom: 1.75rem; line-height: 1.2;
-    }
-    .section-title em { font-style: italic; color: var(--text2); }
-    .section-lbl {
-      font-family: var(--mono); font-size: 0.55rem;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--text3); margin-bottom: 1.25rem;
-      display: flex; align-items: center; gap: 0.6rem;
-    }
-    .section-lbl::after { content:''; flex: 1; height: 1px; background: var(--border-l); }
-    .divider { border: none; border-top: 1px solid var(--border-l); margin: 3rem 0; }
-
-    /* Tag */
-    .tag {
-      font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.05em; text-transform: uppercase;
-      background: var(--bg2); color: var(--text2); padding: 0.15rem 0.5rem;
-      border: 1px solid var(--border-l);
-    }
-    .tags-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-
-    /* Featured project cards */
-    .highlight-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 0; margin-bottom: 4rem;
-      border-top: 2px solid var(--border); border-left: 2px solid var(--border);
-    }
-    .highlight-card {
-      background: var(--surf);
-      border-right: 2px solid var(--border); border-bottom: 2px solid var(--border);
-      padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;
-      transition: background 0.18s; cursor: pointer; text-decoration: none; color: inherit;
-    }
-    .highlight-card:hover { background: var(--bg2); }
-    .hc-label {
-      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text3);
-    }
-    .highlight-card h3 { font-family: var(--serif); font-size: 1rem; font-weight: 400; line-height: 1.3; }
-    .hc-meta {
-      font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.04em;
-      color: var(--text2); margin-top: auto; padding-top: 0.5rem;
-      border-top: 1px solid var(--border-l);
-    }
-
-    /* Two column layout */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-
-    /* Timeline */
-    .timeline { position: relative; padding-left: 1.75rem; }
-    .timeline::before {
-      content: ''; position: absolute; left: 0; top: 6px; bottom: 0;
-      width: 2px; background: var(--border);
-    }
-    .tl-item { position: relative; padding: 0 0 2.5rem 1.75rem; }
-    .tl-item::before {
-      content: ''; position: absolute; left: -5px; top: 7px;
-      width: 10px; height: 10px;
-      background: var(--bg); border: 2px solid var(--border);
-      transition: border-color 0.2s;
-    }
-    .tl-item.current::before { background: var(--red); border-color: var(--red); }
-    .tl-item:hover::before { border-color: var(--text); }
-    .tl-period {
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3); margin-bottom: 0.3rem;
-    }
-    .tl-item.current .tl-period { color: var(--red); }
-    .tl-role { font-size: 0.95rem; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 0.15rem; }
-    .tl-org { font-family: var(--serif); font-size: 0.95rem; font-style: italic; color: var(--text2); margin-bottom: 0.65rem; }
-    .tl-org a:hover { color: var(--text); text-decoration: underline; }
-    .tl-desc { font-size: 0.83rem; color: var(--text2); line-height: 1.65; }
-    .tl-tags { display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.75rem; }
-
-    /* Education */
-    .edu-list { display: flex; flex-direction: column; gap: 0; }
-    .edu-item {
-      display: grid; grid-template-columns: 90px 1fr;
-      gap: 0.5rem 1.25rem; padding: 1.1rem 0;
-      border-bottom: 1px solid var(--border-l); align-items: start;
-    }
-    .edu-year { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.06em; color: var(--text3); padding-top: 0.2rem; }
-    .edu-body h3 { font-size: 0.88rem; font-weight: 600; margin-bottom: 0.15rem; line-height: 1.35; }
-    .edu-body p { font-family: var(--serif); font-size: 0.87rem; font-style: italic; color: var(--text2); }
-
-    /* Languages */
-    .lang-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.65rem; }
-    .lang-item {
-      background: var(--surf); border: 1px solid var(--border-l);
-      padding: 0.75rem 1rem; display: flex; justify-content: space-between; align-items: center;
-    }
-    .lang-name { font-weight: 500; font-size: 0.85rem; }
-    .lang-level { font-family: var(--mono); font-size: 0.52rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); }
-
-    /* CV button */
-    .cv-btn {
-      display: inline-flex; align-items: center; gap: 0.65rem;
-      margin-top: 1.75rem; background: var(--text); color: white;
-      font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 0.85rem 1.5rem; transition: background 0.18s;
-    }
-    .cv-btn:hover { background: var(--red); }
-
-    /* Skills */
-    .skills-three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2.5rem; margin-bottom: 4rem; }
-    .skill-group { margin-bottom: 1.75rem; }
-    .skill-group h3 {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
-      text-transform: uppercase; color: var(--text); margin-bottom: 0.85rem;
-      padding-bottom: 0.45rem; border-bottom: 2px solid var(--border);
-    }
-    .skill-bars { display: flex; flex-direction: column; gap: 0.7rem; }
-    .skill-bar { display: grid; grid-template-columns: 110px 1fr 30px; align-items: center; gap: 0.85rem; }
-    .skill-bar-name { font-size: 0.78rem; color: var(--text2); }
-    .skill-bar-track { height: 2px; background: var(--border-l); overflow: hidden; }
-    .skill-bar-fill {
-      height: 100%; background: var(--text); width: 0;
-      transition: width 0.8s ease;
-    }
-    .skill-bar-pct { font-family: var(--mono); font-size: 0.5rem; color: var(--text3); text-align: right; }
-
-    /* Other works */
-    .ow-item {
-      padding: 1.25rem 0; border-bottom: 1px solid var(--border-l);
-      display: grid; grid-template-columns: 80px 1fr auto; gap: 0.5rem 1.5rem; align-items: start;
-    }
-    .ow-year { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.06em; color: var(--text3); padding-top: 0.2rem; }
-    .ow-body h3 { font-size: 0.88rem; font-weight: 500; margin-bottom: 0.25rem; }
-    .ow-body p { font-size: 0.8rem; color: var(--text2); line-height: 1.55; }
-
-    /* Client grid */
-    .clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
-    .client-card {
-      background: var(--surf); border: 1px solid var(--border-l);
-      padding: 0.85rem; display: flex; flex-direction: column;
-      align-items: center; gap: 0.55rem; text-align: center; transition: border-color 0.18s;
-    }
-    .client-card:hover { border-color: var(--border); }
-    .client-logo {
-      width: 46px; height: 46px; border-radius: 50%;
-      background: var(--bg2); display: flex; align-items: center;
-      justify-content: center; overflow: hidden;
-    }
-    .client-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
-    .logo-fallback { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--text2); }
-    .client-name { font-size: 0.72rem; font-weight: 600; line-height: 1.3; }
-    .client-type { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text3); }
-
-    /* Velat banner */
-    .velat-banner {
-      background: var(--text); color: white;
-      padding: 2rem 2.5rem; margin-top: 4rem;
-      display: grid; grid-template-columns: 1fr auto; gap: 1.5rem; align-items: center;
-    }
-    .velat-banner h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.5rem; }
-    .velat-banner h2 strong { font-weight: 500; }
-    .velat-banner p { font-size: 0.85rem; color: rgba(255,255,255,0.55); line-height: 1.65; max-width: 520px; }
-    .velat-link {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: white; border: 1px solid rgba(255,255,255,0.25);
-      padding: 0.75rem 1.25rem; transition: all 0.2s; white-space: nowrap;
-    }
-    .velat-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.6); }
-
-    /* Footer */
-    footer {
-      border-top: 2px solid var(--border); padding: 1.5rem 2.5rem;
-      display: flex; align-items: center; justify-content: space-between;
-      background: var(--surf); margin-left: var(--sidebar);
-    }
-    footer .foot-name { font-family: var(--serif); font-size: 0.95rem; font-weight: 400; }
-    footer .foot-meta { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); }
-    footer .foot-links { display: flex; gap: 1.5rem; }
-    footer .foot-links a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
-    footer .foot-links a:hover { color: var(--red); }
-
-    /* Responsive */
-    @media (max-width: 960px) {
-      :root { --sidebar: 0px; }
-      .sidebar { display: none; }
-      .nav-identity { display: none; }
-      footer { margin-left: 0; }
-      .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
-      .skills-three { grid-template-columns: 1fr 1fr; }
-      .highlight-grid { grid-template-columns: 1fr; }
-      .velat-banner { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .skills-three { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
-    }
-    .privacy-bar-foot { margin-left: var(--sidebar); background: var(--surface); border-top: 1px solid var(--border-l); padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem; }
-    .privacy-bar-foot span { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-right: auto; }
-    .privacy-bar-foot a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
-    .privacy-bar-foot a:hover { color: var(--text); }
-  </style>
-</head>
+  </head>
 <body>
 
   <!-- ══ TOP NAV — same as index ══ -->
-  <nav class="nav">
-    <div class="nav-identity">
-      <div class="nav-id-mark">D</div>
-      <div class="nav-id-text">
-        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
-        <div class="nav-id-role" data-i18n="nav_id_role">Urbanista · Planificador Territorial</div>
-      </div>
-    </div>
-    <div class="nav-links-slot">
-      <div class="nav-links">
-        <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
-        <a href="sobre-mi.html"      class="active" data-i18n="nav_about">Sobre mí</a>
-        <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
-        <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
-        <a href="premios.html"       data-i18n="nav_awards">Reconocimientos</a>
-        <a href="blog.html"          data-i18n="nav_blog">Blog</a>
-        <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
-      </div>
-      <button class="lang-toggle" id="lang-toggle">EN</button>
-    </div>
-  </nav>
+
+  <div id="nav-root" data-active="sobre-mi"></div>
+  <link rel="stylesheet" href="css/styles.css">
 
   <!-- ══ LEFT SIDEBAR — fixed profile data ══ -->
   <aside class="sidebar">
 
     <div class="sb-identity" style="border-bottom:none;">
       <div class="sb-big-num">02</div>
-      <div class="sb-name">Sobre <em>mí</em></div>
+      <div class="sb-name" data-i18n-html="sb_name_about">Sobre <em>mí</em></div>
       <div class="sb-rule"></div>
       <div class="sb-role" data-i18n="sb_role">Arquitecto · Urbanista<br>Planificador Territorial</div>
     </div>
 
     <!-- Full-width photo below title -->
-    <div class="sb-photo-full">
-      <div class="sb-photo-full-inner">
-        <span class="sb-photo-initials-full">DSF</span>
+    <div class="sb-photo-full" style="margin-bottom: 1.25rem;">
+      <div class="sb-photo-full-inner" style="background-image: url('assets/img/perfil.jpg'); background-size: cover; background-position: center; margin: 0 1.5rem; border: 1px solid var(--border-l);">
       </div>
     </div>
 
@@ -554,9 +39,11 @@
         <div class="sb-row-val phone"><a href="tel:+34625893300">+34 625 893 300</a></div>
       </div>
       <div class="sb-row">
-        <div class="sb-row-lbl">Email</div>
-        <div class="sb-row-val"><a href="/cdn-cgi/l/email-protection#0c686d62656960227f697e7e6d22797e6e4c6b616d6560226f6361"><span class="__cf_email__" data-cfemail="ceaaafa0a7aba2e0bdabbcbcafe0bbbcac8ea9a3afa7a2e0ada1a3">[email&#160;protected]</span></a></div>
-      </div>
+  <div class="sb-row-lbl">Email</div>
+  <div class="sb-row-val">
+    <a href="mailto:daniel.serra.urb@gmail.com">daniel.serra.urb@gmail.com</a>
+  </div>
+</div>
       <div class="sb-row">
         <div class="sb-row-lbl" data-i18n="sb_addr_lbl">Dirección</div>
         <div class="sb-row-val">Av. María Cristina 5<br>46001, Valencia</div>
@@ -581,7 +68,8 @@
 
       <!-- Header -->
       <header class="page-header">
-        <h1>Daniel Serra<br><em>Font</em></h1>
+        <div class="mobile-profile-photo" style="background-image: url('assets/img/perfil.jpg');"></div>
+        <h1 data-i18n-html="pg_title_about">Daniel Serra<br><em>Font</em></h1>
         <p data-i18n="ph_desc">Urbanista y Planificador Territorial especializado en planeamiento general, planes parciales, estudios de paisaje y consultoría territorial. Más de 8 años de experiencia redactando y tramitando instrumentos urbanísticos.</p>
       </header>
 
@@ -597,7 +85,7 @@
               <div class="tl-period" data-i18n="tl1_period">2021 — Actualidad</div>
               <div class="tl-role" data-i18n="tl1_role">Apoyo Técnico en Planeamiento Territorial y Urbanismo</div>
               <div class="tl-org"><span data-i18n="tl1_type">Profesional independiente · Freelance</span></div>
-              <p class="tl-desc" data-i18n="tl1_desc">Redacción y tramitación de instrumentos urbanísticos: Planes Generales Estructurales, Planes Parciales, Estudios de Paisaje con simulaciones visuales y Catálogos de Protecciones. Consultoría y apoyo técnico a administraciones locales y estudios de arquitectura.</p>
+              <p class="tl-desc" data-i18n="tl1_desc">Soporte especializado y consultoría externa en la redacción y gestión de instrumentos de planeamiento (PGE, PP, Estudios de Paisaje) para administraciones y despachos de arquitectura.</p>
               <div class="tl-tags">
                 <span class="tag" data-i18n="tag_lotup">Planeamiento LOTUP</span>
                 <span class="tag" data-i18n="tag_pgm2">Planes Estructurales</span>
@@ -609,7 +97,7 @@
               <div class="tl-period">2021 — Actualidad</div>
               <div class="tl-role" data-i18n="tl1b_role">Director · Velat Studio</div>
               <div class="tl-org"><a href="https://www.velatstudio.com" target="_blank" rel="noopener">Velat Studio</a> · <span data-i18n="tl1b_type">Autónomo</span></div>
-              <p class="tl-desc" data-i18n="tl1b_desc">Dirección del estudio de interiorismo y arquitectura. Proyectos de diseño de interiores, reformas y dirección de obra para clientes privados.</p>
+              <p class="tl-desc" data-i18n="tl1b_desc">Dirección del Estudio de interiorismo en Valencia especializado en contract y hospitality, centrado en la experiencia de usuario y coherencia de marca.</p>
               <div class="tl-tags">
                 <span class="tag" data-i18n="tag_int2">Interiorismo</span>
                 <span class="tag">Arquitectura</span>
@@ -654,7 +142,7 @@
               </div>
             </div>
             <div class="edu-item">
-              <span class="edu-year">2020</span>
+              <span class="edu-year">2019</span>
               <div class="edu-body">
                 <h3 data-i18n="edu2_title">Curso en Infraestructura Verde y Paisaje</h3>
                 <p data-i18n="edu2_school">Formación especializada</p>
@@ -832,38 +320,7 @@
         </div>
       </div>
 
-      <div class="divider"></div>
-
-      <!-- ══ CLIENTS ══ -->
-      <h2 class="section-title" style="margin-bottom: 1.75rem;" data-i18n="sec_clients">Clientes <em>&amp; Administraciones</em></h2>
-      <div class="clients-grid" style="margin-bottom: 4rem;">
-        <div class="client-card">
-          <div class="client-logo"><img src="https://www.elche.es/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Elche"><div class="logo-fallback" style="display:none">El</div></div>
-          <span class="client-name" data-i18n="cl_elche">Ayuntamiento de Elche</span>
-          <span class="client-type">Alicante</span>
-        </div>
-        <div class="client-card">
-          <div class="client-logo"><img src="https://www.ajxabia.com/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Jávea"><div class="logo-fallback" style="display:none">Jv</div></div>
-          <span class="client-name" data-i18n="cl_javea">Ayto. de Jávea / Xàbia</span>
-          <span class="client-type">Alicante</span>
-        </div>
-        <div class="client-card">
-          <div class="client-logo"><img src="https://torrent.es/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Torrent"><div class="logo-fallback" style="display:none">To</div></div>
-          <span class="client-name" data-i18n="cl_torrent">Ayuntamiento de Torrent</span>
-          <span class="client-type">Valencia</span>
-        </div>
-        <div class="client-card"><div class="client-logo"><div class="logo-fallback">Sg</div></div><span class="client-name" data-i18n="cl_segart">Ayuntamiento de Segart</span><span class="client-type">Valencia</span></div>
-        <div class="client-card"><div class="client-logo"><div class="logo-fallback">Gi</div></div><span class="client-name" data-i18n="cl_gilet">Ayuntamiento de Gilet</span><span class="client-type">Valencia</span></div>
-        <div class="client-card"><div class="client-logo"><div class="logo-fallback">Ll</div></div><span class="client-name" data-i18n="cl_llocnou">Ayto. Llocnou de S. Jeroni</span><span class="client-type">Valencia</span></div>
-        <div class="client-card"><div class="client-logo"><div class="logo-fallback">Nq</div></div><span class="client-name" data-i18n="cl_naquera">Ayuntamiento de Náquera</span><span class="client-type">Valencia</span></div>
-        <div class="client-card"><div class="client-logo"><div class="logo-fallback">Ti</div></div><span class="client-name" data-i18n="cl_tibi">Ayuntamiento de Tibi</span><span class="client-type">Alicante</span></div>
-        <div class="client-card"><div class="client-logo"><div class="logo-fallback">Ms</div></div><span class="client-name" data-i18n="cl_massalf">Ayuntamiento de Massalfassar</span><span class="client-type">Valencia</span></div>
-        <div class="client-card">
-          <div class="client-logo"><img src="https://www.mislata.es/favicon.ico" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Mislata"><div class="logo-fallback" style="display:none">Mi</div></div>
-          <span class="client-name" data-i18n="cl_mislata">Ayuntamiento de Mislata</span>
-          <span class="client-type">Valencia</span>
-        </div>
-      </div>
+      
 
       <!-- ══ VELAT STUDIO ══ -->
       <div class="velat-banner">
@@ -878,253 +335,11 @@
       </div>
 
     </main>
-
-  <footer class="privacy-bar-foot">
-    <span>© 2025 Daniel Serra Font</span>
-    <a href="privacidad.html">Política de privacidad</a>
-    <a href="aviso-legal.html">Aviso legal</a>
-  </footer>
   </div><!-- /main-wrap -->
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/main.js"></script>
-  <script>
-    /* ── Extended i18n for sobre-mi ── */
-    const sobreI18n = {
-      es: {
-        nav_id_role:   'Urbanista · Planificador Territorial',
-        sb_label:      '02 — Sobre mí',
-        sb_role:       'Arquitecto · Urbanista\nPlanificador Territorial',
-        sb_tl_title:   'Trayectoria',
-        tl_short1:     'Director · Velat Studio',
-        tl_short1b:    'Urbanista independiente',
-        tl_short2:     'Urbanista · Planificación Territorial',
-        tl_short3:     'I+D Aplicaciones Urbanísticas',
-        sb_contact_title: 'Contacto',
-        sb_phone_lbl:  'Teléfono',
-        sb_addr_lbl:   'Dirección',
-        sb_location_lbl: 'Ubicación',
-        sb_stat_years: 'Años exp.',
-        sb_stat_municipalities: 'Municipios',
-        sb_stat_plans: 'Planes aprob.',
-        sb_stat_reports: 'Inf. favorables',
-        sb_spec_title: 'Especialización',
-        sb_tag_pgm:    'Plan. General',
-        sb_tag_pgp:    'Plan. Parcial',
-        sb_tag_land:   'Paisaje',
-        sb_tag_vis:    'Simulaciones',
-        sb_tag_cat:    'Catálogos',
-        sb_tag_int:    'Interiorismo',
-        sb_edu_title:  'Formación',
-        sb_edu_1:      'Máster en Arquitectura · UPV',
-        sb_edu_2:      'Máster Interiorismo · Barreira',
-        sb_lang_lbl:   'Idiomas',
-        sb_langs:      'ES · CA · EN (B2) · JA (A2)',
-        sb_avail_title: 'Disponible para',
-        sb_av_1:       '· Planes Generales Estructurales',
-        sb_av_2:       '· Planes Parciales y PAI',
-        sb_av_3:       '· Estudios de Paisaje',
-        sb_av_4:       '· Consultoría urbanística',
-        sb_av_5:       '· Tramitación administrativa',
-        sb_btn_contact: 'Contactar',
-        sb_btn_cv:     'Descargar CV ↓',
-        ph_num:        '02 — Sobre mí',
-        ph_desc:       'Urbanista y Planificador Territorial especializado en planeamiento general, planes parciales, estudios de paisaje y consultoría territorial . Más de 8 años de experiencia redactando y tramitando instrumentos urbanísticos.',
-        sec_feat:      'Proyectos destacados',
-        hc1_label:     'Suelo Productivo · Aprobado',
-        hc1_name:      'Ampliación del Parque Empresarial de Elche · Sector E-49',
-        hc2_label:     'Planeamiento General · En tramitación',
-        hc2_name:      'Plan General Estructural de Jávea / Xàbia',
-        hc3_label:     'Planeamiento General · En tramitación',
-        hc3_name:      'Plan General de Torrent',
-        sec_exp:       'Trayectoria profesional',
-        tl1_period:    '2021 — Actualidad',
-        tl1_role:      'Director & Apoyo en Planificación Territorial',
-        tl1_type:      'Autónomo',
-        tl1_desc:      'Dirección del estudio de interiorismo y arquitectura. Proyectos de diseño de interiores, reformas y dirección de obra para clientes privados.',
-        tag_lotup:     'Planeamiento LOTUP',
-        tag_pgm2:      'Planes Estructurales',
-        tag_int2:      'Interiorismo',
-        tag_vis2:      'Simulaciones visuales',
-        tl2_role:      'Urbanista, Planificador Territorial & Arquitecto de Concursos',
-        tl2_desc:      'Integrado en el equipo de urbanismo y planificación territorial de IDOM. Participación en planes generales, planes parciales y proyectos de desarrollo territorial a distintas escalas.',
-        tag_pgm3:      'Planeamiento general',
-        tag_terr:      'Planificación territorial',
-        tag_comp:      'Concursos arquitectura',
-        tl3_role:      'Colaborador I+D Aplicaciones Urbanísticas',
-        tl3_desc:      'Colaboración en el desarrollo de aplicaciones territoriales y urbanísticas en el marco de la alianza entre la UPV y el Institut Cartogràfic Valencià, con integración de datos geoespaciales.',
-        tag_carto:     'Cartografía digital',
-        sec_edu:       'Formación académica',
-        edu1_title:    'Máster en Interiorismo, Creatividad e Innovación',
-        edu1_school:   "Escola d'Art i Superior de Disseny Barreira · Valencia",
-        edu2_title:    'Curso en Infraestructura Verde y Paisaje',
-        edu2_school:   'Formación especializada',
-        edu3_title:    'Máster en Arquitectura',
-        edu4_title:    'Grado en Fundamentos de la Arquitectura',
-        sec_langs:     'Idiomas',
-        lang_es:       'Español', lang_ca: 'Catalán', lang_en: 'Inglés', lang_ja: 'Japonés',
-        lvl_native:    'Nativo',
-        cv_btn:        'Descargar CV completo',
-        sec_skills:    'Software & Herramientas',
-        sk_prog:       'Programación & IA',
-        sk_3d:         '3D & Visualización',
-        sk_video:      'Edición de Vídeo',
-        sk_spec:       'Especialización',
-        sp_land:       'Estudios Paisaje',
-        sp_vis:        'Sim. visuales',
-        sp_cat:        'Catálogos',
-        sp_sus:        'Urb. sostenible',
-        sp_int:        'Interiorismo',
-        sec_other:     'Otros trabajos',
-        ow1_title:     'Vídeo · Fondos Next Generation EU — Universidad de Murcia',
-        ow1_desc:      'Producción y edición del vídeo para fondos Next Generation sobre la renovación de la antigua universidad. Combinó visualización 3D, motion graphics y edición de vídeo.',
-        ow1_tag:       'Audiovisual',
-        ow2_title:     'Catálogo de Protecciones — Llocnou de Sant Jeroni',
-        ow2_desc:      'Redacción íntegra del Catálogo de Protecciones del municipio, aprobado junto con el Plan General Estructural. Fichas individualizadas del patrimonio arquitectónico, etnológico y paisajístico.',
-        ow2_tag:       'Aprobado',
-        ow_various:    'Varios',
-        ow3_title:     'Estudios de Paisaje con simulaciones visuales',
-        ow3_desc:      'Elaboración de Estudios de Paisaje para municipios valencianos con simulaciones visuales de integración paisajística mediante SketchUp, 3ds Max y Corona Render.',
-        ow3_tag:       'Paisaje',
-        sec_clients:   'Clientes & Administraciones',
-        cl_elche: 'Ayuntamiento de Elche', cl_javea: 'Ayto. de Jávea / Xàbia',
-        cl_torrent: 'Ayuntamiento de Torrent', cl_segart: 'Ayuntamiento de Segart',
-        cl_gilet: 'Ayuntamiento de Gilet', cl_llocnou: 'Ayto. Llocnou de S. Jeroni',
-        cl_naquera: 'Ayuntamiento de Náquera', cl_tibi: 'Ayuntamiento de Tibi',
-        cl_massalf: 'Ayuntamiento de Massalfassar', cl_mislata: 'Ayuntamiento de Mislata',
-        velat_title:   'También dirijo Velat Studio',
-        velat_desc:    'Velat Studio es un estudio de arquitectura e interiorismo con sede en Valencia. Aunamos arquitectura, interiorismo y diseño para dar respuesta integral a proyectos de reforma, interiorismo comercial y residencial, y branding espacial.',
-        urb_title:     'Apoyo y consultoría en planificación territorial',
-        urb_desc:      'Profesional independiente especializado en la redacción y tramitación de instrumentos urbanísticos: Planes Generales Estructurales, Planes Parciales, Estudios de Paisaje, Catálogos de Protecciones y gestión administrativa ante la administración autonómica.',
-        urb_link:      'Ver servicios',
-        foot_meta:     'Arquitecto · Urbanista · Director de Velat Studio',
-      },
-      en: {
-        nav_id_role:   'Urban Planner · Territorial Planner',
-        sb_label:      '02 — About me',
-        sb_role:       'Architect · Urban Planner\nTerritorial Planner',
-        sb_tl_title:   'Career',
-        tl_short1:     'Director · Velat Studio',
-        tl_short1b:    'Independent urban planner',
-        tl_short2:     'Urban Planner · Territorial Planning',
-        tl_short3:     'R&D Urban Applications',
-        sb_contact_title: 'Contact',
-        sb_phone_lbl:  'Phone',
-        sb_addr_lbl:   'Address',
-        sb_location_lbl: 'Location',
-        sb_stat_years: 'Years exp.',
-        sb_stat_municipalities: 'Municipalities',
-        sb_stat_plans: 'Approved plans',
-        sb_stat_reports: 'Fav. reports',
-        sb_spec_title: 'Specialisation',
-        sb_tag_pgm:    'Gen. Planning',
-        sb_tag_pgp:    'Partial Plans',
-        sb_tag_land:   'Landscape',
-        sb_tag_vis:    'Simulations',
-        sb_tag_cat:    'Catalogues',
-        sb_tag_int:    'Interiors',
-        sb_edu_title:  'Education',
-        sb_edu_1:      'Master in Architecture · UPV',
-        sb_edu_2:      'Master Interior Design · Barreira',
-        sb_lang_lbl:   'Languages',
-        sb_langs:      'ES · CA · EN (B2) · JA (A2)',
-        sb_avail_title: 'Available for',
-        sb_av_1:       '· Structural General Plans',
-        sb_av_2:       '· Partial Plans & PAI',
-        sb_av_3:       '· Landscape Studies',
-        sb_av_4:       '· Urban planning consultancy',
-        sb_av_5:       '· Administrative processing',
-        sb_btn_contact: 'Get in touch',
-        sb_btn_cv:     'Download CV ↓',
-        ph_num:        '02 — About me',
-        ph_desc:       'Urban and Territorial Planner specialised in general planning, partial plans, landscape studies and territorial consultancy in the Valencian Community. Over 8 years drafting and processing urban planning instruments before the Valencian Government.',
-        sec_feat:      'Featured projects',
-        hc1_label:     'Productive Land · Approved',
-        hc1_name:      'Expansion of Elche Business Park · Sector E-49',
-        hc2_label:     'General Planning · In progress',
-        hc2_name:      'Structural General Plan of Jávea / Xàbia',
-        hc3_label:     'General Planning · In progress',
-        hc3_name:      'General Plan of Torrent',
-        sec_exp:       'Professional career',
-        tl1_period:    '2021 — Present',
-        tl1_role:      'Director & Territorial Planning Support',
-        tl1_type:      'Freelance',
-        tl1_desc:      'Director of Velat Studio and freelance urban planning technician. Specialised in drafting Structural General Plans, Partial Plans, Landscape Studies with visual simulations, Protection Catalogues and processing before the relevant regional authority.',
-        tag_lotup:     'LOTUP Planning',
-        tag_pgm2:      'Structural Plans',
-        tag_int2:      'Interior Design',
-        tag_vis2:      'Visual simulations',
-        tl2_role:      'Urban Planner, Territorial Planner & Competition Architect',
-        tl2_desc:      'Part of the urban planning and territorial team at IDOM. Involved in general plans, partial plans and territorial development projects at different scales.',
-        tag_pgm3:      'General planning',
-        tag_terr:      'Territorial planning',
-        tag_comp:      'Architecture competitions',
-        tl3_role:      'R&D Collaborator — Urban Applications',
-        tl3_desc:      'Collaboration on territorial and urban applications within the UPV–Institut Cartogràfic Valencià partnership, integrating geospatial data with digital tools for territory analysis.',
-        tag_carto:     'Digital cartography',
-        sec_edu:       'Academic background',
-        edu1_title:    'Master in Interior Design, Creativity & Innovation',
-        edu1_school:   "Escola d'Art i Superior de Disseny Barreira · Valencia",
-        edu2_title:    'Course in Green Infrastructure and Landscape',
-        edu2_school:   'Specialist training · Valencian Community',
-        edu3_title:    'Master of Architecture',
-        edu4_title:    'Bachelor in Architecture Fundamentals',
-        sec_langs:     'Languages',
-        lang_es: 'Spanish', lang_ca: 'Catalan', lang_en: 'English', lang_ja: 'Japanese',
-        lvl_native:    'Native',
-        cv_btn:        'Download full CV',
-        sec_skills:    'Software & Tools',
-        sk_prog:       'Programming & AI',
-        sk_3d:         '3D & Visualisation',
-        sk_video:      'Video Editing',
-        sk_spec:       'Specialisation',
-        sp_land:       'Landscape Studies',
-        sp_vis:        'Visual sims.',
-        sp_cat:        'Catalogues',
-        sp_sus:        'Sust. urbanism',
-        sp_int:        'Interior design',
-        sec_other:     'Other work',
-        ow1_title:     'Video · Next Generation EU Funds — University of Murcia',
-        ow1_desc:      'Production and editing of the video submitted through the Region of Murcia for Next Generation funds on university building renewal. Combined 3D visualisation, motion graphics and video editing.',
-        ow1_tag:       'Audiovisual',
-        ow2_title:     'Protection Catalogue — Llocnou de Sant Jeroni',
-        ow2_desc:      'Complete drafting of the municipal Protection Catalogue, approved together with the Structural General Plan, with individual sheets for each catalogued architectural, ethnological and landscape heritage element.',
-        ow2_tag:       'Approved',
-        ow_various:    'Various',
-        ow3_title:     'Landscape Studies with visual simulations',
-        ow3_desc:      'Landscape Studies for Valencian municipalities with visual landscape integration simulations using SketchUp, 3ds Max and Corona Render, complying with Valencian landscape regulations.',
-        ow3_tag:       'Landscape',
-        sec_clients:   'Clients & Local Authorities',
-        cl_elche: 'Elche City Council', cl_javea: 'Jávea / Xàbia City Council',
-        cl_torrent: 'Torrent City Council', cl_segart: 'Segart City Council',
-        cl_gilet: 'Gilet City Council', cl_llocnou: 'Llocnou de S. Jeroni Council',
-        cl_naquera: 'Náquera City Council', cl_tibi: 'Tibi City Council',
-        cl_massalf: 'Massalfassar City Council', cl_mislata: 'Mislata City Council',
-        velat_title:   'I also run Velat Studio',
-        velat_desc:    'Velat Studio is an architecture and interior design studio based in Valencia. We combine architecture, interior design and branding to deliver comprehensive responses to renovation, commercial interiors and spatial branding projects.',
-        urb_title:     'Support and consultancy in territorial planning',
-        urb_desc:      'Independent professional specialised in drafting and processing urban planning instruments: Structural General Plans, Partial Plans, Landscape Studies, Protection Catalogues and administrative management before the relevant regional authority.',
-        urb_link:      'View services',
-        foot_meta:     'Architect · Urban Planner · Director of Velat Studio',
-      }
-    };
+  <div id="footer-root"></div>
 
-    /* Merge with main.js i18n and apply */
-    function applyPageI18n(lang) {
-      const keys = { ...i18n[lang], ...sobreI18n[lang] };
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (keys[key] !== undefined) {
-          if (key === 'ph_desc') {
-            el.innerHTML = keys[key].replace('Velat Studio', '<strong>Velat Studio</strong>');
-          } else {
-            el.textContent = keys[key];
-          }
-        }
-      });
-      const btn = document.getElementById('lang-toggle');
-      if (btn) btn.textContent = lang === 'es' ? 'EN' : 'ES';
-      document.documentElement.lang = lang;
-    }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const lang = localStorage.getItem('dsf_lang'
+  <script src="js/main.js"></script>
+  </body>
+</html>

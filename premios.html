@@ -7,396 +7,23 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg:       #f5f4f0;
-      --bg2:      #edecea;
-      --surf:     #ffffff;
-      --border:   #0d0d0d;
-      --border-l: rgba(13,13,13,0.1);
-      --text:     #0d0d0d;
-      --text2:    rgba(13,13,13,0.5);
-      --text3:    rgba(13,13,13,0.28);
-      --red:      #c44b2b;
-      --serif:    'Spectral', Georgia, serif;
-      --sans:     'Plus Jakarta Sans', sans-serif;
-      --mono:     'DM Mono', monospace;
-      --sidebar:  280px;
-      --topbar:   52px;
-    }
-    html, body { width: 100%; min-height: 100%; background: var(--bg); }
-    body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
-    ::-webkit-scrollbar { width: 3px; }
-    ::-webkit-scrollbar-thumb { background: var(--border-l); }
-
-    /* ══ TOP NAV ══ */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0;
-      height: var(--topbar); z-index: 500;
-      display: flex; align-items: stretch;
-      background: var(--bg); border-bottom: 2px solid var(--border);
-    }
-    .nav-identity {
-      width: var(--sidebar); flex-shrink: 0;
-      display: flex; align-items: center;
-      padding: 0 1.5rem; border-right: 2px solid var(--border); gap: 0.75rem;
-    }
-    .nav-id-mark {
-      font-family: var(--serif); font-size: 0.75rem; font-weight: 500;
-      letter-spacing: 0.08em; color: var(--red);
-      border: 1.5px solid var(--red); border-radius: 2px;
-      width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .nav-id-text { display: flex; flex-direction: column; gap: 1px; }
-    .nav-id-name {
-      font-family: var(--serif); font-size: 0.88rem; font-weight: 400;
-      letter-spacing: 0.02em; line-height: 1; color: var(--text); white-space: nowrap;
-    }
-    .nav-id-name em { font-style: italic; }
-    .nav-id-role {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--red); line-height: 1;
-    }
-    .nav-links-slot {
-      flex: 1; display: flex; align-items: center; justify-content: flex-end;
-      padding: 0 1.25rem;
-    }
-    .nav-links { display: flex; }
-    .nav-links a {
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.07em;
-      text-transform: uppercase; color: var(--text3);
-      padding: 0 0.65rem; height: var(--topbar);
-      display: flex; align-items: center;
-      border-bottom: 2px solid transparent; margin-bottom: -2px;
-      transition: color 0.18s, border-color 0.18s; white-space: nowrap;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.active { color: var(--text); border-bottom-color: var(--red); }
-    .lang-toggle {
-      font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text3);
-      background: none; border: 1.5px solid var(--border-l);
-      padding: 0.3rem 0.6rem; cursor: pointer; transition: all 0.18s; margin-left: 1rem;
-    }
-    .lang-toggle:hover { border-color: var(--border); color: var(--text); }
-
-    /* ══ LEFT SIDEBAR ══ */
-    .sidebar {
-      position: fixed; top: var(--topbar); left: 0; bottom: 0;
-      width: var(--sidebar); z-index: 400;
-      background: var(--surf); border-right: 2px solid var(--border);
-      display: flex; flex-direction: column; overflow: hidden;
-    }
-    .sb-identity {
-      padding: 1.75rem 1.5rem 1.25rem;
-      border-bottom: 1px solid var(--border-l); flex-shrink: 0;
-    }
-    .sb-label {
-      font-family: var(--mono); font-size: 0.5rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--red); margin-bottom: 0.85rem;
-    }
-    .sb-big-num {
-      font-family: var(--serif); font-size: 5rem; font-weight: 300;
-      line-height: 0.9; color: rgba(13,13,13,0.04);
-      letter-spacing: -0.04em; margin-bottom: -1.4rem; user-select: none;
-    }
-    .sb-name {
-      font-family: var(--serif); font-size: 1.5rem; font-weight: 400;
-      line-height: 1.1; color: var(--text); margin-bottom: 0.2rem;
-      position: relative; z-index: 2;
-    }
-    .sb-name em { font-style: italic; }
-    .sb-rule { width: 100%; height: 2px; background: var(--border); margin: 0.75rem 0; }
-    .sb-role {
-      font-family: var(--sans); font-size: 0.6rem; font-weight: 600;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); line-height: 1.5;
-    }
-    .sb-desc { font-size: 0.73rem; color: var(--text2); line-height: 1.6; margin-top: 0.6rem; }
-    .sb-scroll {
-      flex: 1; overflow-y: auto;
-      scrollbar-width: thin; scrollbar-color: var(--border-l) transparent;
-    }
-    .sb-stats {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 0.85rem; padding: 1.1rem 1.5rem;
-      border-bottom: 1px solid var(--border-l);
-    }
-    .sb-stat { display: flex; flex-direction: column; gap: 0.12rem; }
-    .sb-stat-num {
-      font-family: var(--serif); font-size: 1.75rem; font-weight: 300;
-      line-height: 1; color: var(--text);
-    }
-    .sb-stat-lbl {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3);
-    }
-    .sb-section {
-      padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border-l);
-    }
-    .sb-section-title {
-      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--text3);
-      border-bottom: 2px solid var(--border); padding-bottom: 0.45rem; margin-bottom: 0.85rem;
-    }
-    /* Plan list in sidebar */
-    .sb-plan-list { display: flex; flex-direction: column; }
-    .sb-plan-item {
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 0.5rem; align-items: center;
-      padding: 0.6rem 1.5rem;
-      border-bottom: 1px solid var(--border-l);
-      transition: background 0.15s;
-    }
-    .sb-plan-item:hover { background: var(--bg2); }
-    .sb-plan-name { font-size: 0.74rem; color: var(--text2); line-height: 1.3; }
-    .sb-plan-badge {
-      font-family: var(--mono); font-size: 0.44rem; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 0.15rem 0.45rem; white-space: nowrap; flex-shrink: 0;
-    }
-    .sb-plan-badge.approved  { background: var(--text); color: white; }
-    .sb-plan-badge.pending   { background: transparent; color: var(--text3); border: 1px solid var(--border-l); }
-    /* Milestone list */
-    .sb-row { margin-bottom: 0.7rem; }
-    .sb-row:last-child { margin-bottom: 0; }
-    .sb-row-lbl {
-      font-family: var(--mono); font-size: 0.46rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--text3); margin-bottom: 0.12rem;
-    }
-    .sb-row-val { font-size: 0.78rem; color: var(--text2); line-height: 1.45; }
-    .sb-row-val.accent { color: var(--red); font-weight: 500; }
-    .sb-cta { padding: 1.1rem 1.5rem; }
-    .sb-btn {
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      width: 100%; padding: 0.8rem;
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase;
-      background: var(--text); color: white;
-      text-decoration: none; transition: background 0.18s;
-    }
-    .sb-btn:hover { background: var(--red); }
-    .sb-footer {
-      padding: 0.85rem 1.5rem; border-top: 1px solid var(--border-l);
-      flex-shrink: 0; display: flex; gap: 1.25rem;
-    }
-    .sb-footer a {
-      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3); transition: color 0.18s;
-    }
-    .sb-footer a:hover { color: var(--red); }
-
-    /* Highlights in sidebar */
-    .sb-highlights { display: flex; flex-direction: column; gap: 0.75rem; }
-    .sb-highlight-item { display: flex; align-items: baseline; gap: 0.65rem; }
-    .sb-highlight-num { font-family: var(--serif); font-size: 1.4rem; font-weight: 300; color: var(--text); line-height: 1; }
-    .sb-highlight-lbl { font-size: 0.68rem; color: var(--text3); line-height: 1.35; }
-
-    /* ══ MAIN CONTENT ══ */
-    .main-wrap { margin-left: var(--sidebar); padding-top: var(--topbar); min-height: 100vh; }
-    .main-content { max-width: 900px; margin: 0 auto; padding: 3.5rem 2.5rem 6rem; }
-
-    .page-header { margin-bottom: 3.5rem; padding-bottom: 2rem; border-bottom: 2px solid var(--border); }
-    .page-num {
-      font-family: var(--mono); font-size: 0.55rem;
-      letter-spacing: 0.14em; text-transform: uppercase; color: var(--red); margin-bottom: 0.6rem;
-    }
-    .page-header h1 {
-      font-family: var(--serif); font-size: 3.5rem; font-weight: 300;
-      letter-spacing: -0.02em; line-height: 1.05;
-    }
-    .page-header h1 em { font-style: italic; font-weight: 300; color: var(--text2); }
-    .page-header p { margin-top: 1rem; max-width: 520px; font-size: 0.9rem; color: var(--text2); line-height: 1.75; }
-
-    .section-title { font-family: var(--serif); font-size: 1.4rem; font-weight: 400; margin-bottom: 1.75rem; line-height: 1.2; }
-    .section-title em { font-style: italic; color: var(--text2); }
-    .divider { border: none; border-top: 1px solid var(--border-l); margin: 3rem 0; }
-
-    /* ══ APPROVAL GRID ══ */
-    .approval-grid {
-      display: grid; grid-template-columns: repeat(2, 1fr);
-      gap: 0; margin-bottom: 4rem;
-      border-top: 2px solid var(--border); border-left: 2px solid var(--border);
-    }
-    .approval-card {
-      border-right: 2px solid var(--border); border-bottom: 2px solid var(--border);
-      padding: 1.6rem; background: var(--surf);
-      display: flex; flex-direction: column; gap: 0.65rem;
-      transition: background 0.18s; position: relative; overflow: hidden;
-    }
-    .approval-card::before {
-      content: ''; position: absolute; top: 0; left: 0; bottom: 0;
-      width: 3px; background: transparent;
-      transition: background 0.18s;
-    }
-    .approval-card:hover { background: var(--bg2); }
-    .approval-card.approved:hover::before  { background: var(--text); }
-    .approval-card.pending:hover::before   { background: var(--text3); }
-    .approval-card.favorable:hover::before { background: #4a6741; }
-
-    .ac-header {
-      display: flex; align-items: flex-start;
-      justify-content: space-between; gap: 1rem;
-    }
-    .ac-header h3 {
-      font-family: var(--serif); font-size: 1.05rem; font-weight: 400; line-height: 1.3;
-    }
-    .ac-badge {
-      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
-      text-transform: uppercase; padding: 0.22rem 0.6rem;
-      white-space: nowrap; flex-shrink: 0; border: 1px solid;
-    }
-    .ac-badge.approved  { background: var(--text); color: white; border-color: var(--text); }
-    .ac-badge.favorable { background: #4a6741; color: white; border-color: #4a6741; }
-    .ac-badge.pending   { background: transparent; color: var(--text3); border-color: var(--border-l); }
-
-    .ac-meta { display: flex; flex-direction: column; gap: 0.22rem; }
-    .ac-meta-row { display: flex; gap: 0.5rem; align-items: baseline; }
-    .ac-lbl {
-      font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3); min-width: 68px; flex-shrink: 0;
-    }
-    .ac-val { font-size: 0.78rem; color: var(--text2); }
-    .approval-card p { font-size: 0.8rem; color: var(--text2); line-height: 1.65; }
-
-    /* ══ TIMELINE ══ */
-    .recog-timeline { position: relative; padding-left: 1.75rem; margin-bottom: 4rem; }
-    .recog-timeline::before {
-      content: ''; position: absolute; left: 0; top: 6px; bottom: 0;
-      width: 2px; background: var(--border);
-    }
-    .recog-item { position: relative; padding: 0 0 2.5rem 1.75rem; }
-    .recog-item::before {
-      content: ''; position: absolute; left: -5px; top: 7px;
-      width: 10px; height: 10px;
-      background: var(--bg); border: 2px solid var(--border);
-      transition: border-color 0.2s;
-    }
-    .recog-item.key::before { background: var(--red); border-color: var(--red); }
-    .recog-item:hover::before { border-color: var(--text); }
-    .recog-year {
-      font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--red); margin-bottom: 0.3rem;
-    }
-    .recog-item h3 {
-      font-family: var(--serif); font-size: 1.15rem; font-weight: 400;
-      line-height: 1.3; margin-bottom: 0.2rem;
-    }
-    .recog-org { font-size: 0.8rem; color: var(--text2); margin-bottom: 0.6rem; font-style: italic; }
-    .recog-item p { font-size: 0.83rem; color: var(--text2); line-height: 1.65; max-width: 620px; }
-
-    /* ══ UPDATE NOTE ══ */
-    .update-note {
-      padding: 1.5rem 1.75rem;
-      background: var(--surf);
-      border: 1px solid var(--border-l);
-      border-left: 3px solid var(--border);
-      max-width: 600px;
-    }
-    .update-note-label {
-      font-family: var(--mono); font-size: 0.48rem; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--text3); margin-bottom: 0.6rem;
-    }
-    .update-note p { font-size: 0.82rem; color: var(--text2); line-height: 1.65; }
-    .update-note strong { color: var(--text); }
-
-    /* ══ REPORT FRAGMENTS ══ */
-    .report-fragments { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 2px solid var(--border); border-left: 2px solid var(--border); margin-bottom: 4rem; }
-    .report-fragment { border-right: 2px solid var(--border); border-bottom: 2px solid var(--border); padding: 1.6rem; background: var(--surf); display: flex; flex-direction: column; gap: 0.75rem; }
-    .report-fragment--placeholder { background: var(--bg); cursor: default; }
-    .rf-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-    .rf-source { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text2); }
-    .rf-date { font-family: var(--mono); font-size: 0.48rem; color: var(--text3); white-space: nowrap; }
-    .rf-quote { font-family: var(--serif); font-size: 0.9rem; font-style: italic; color: var(--text); line-height: 1.7; border-left: 2px solid var(--red); padding-left: 1rem; }
-    .rf-context { font-size: 0.72rem; color: var(--text3); line-height: 1.4; }
-    .rf-placeholder-inner { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem; text-align: center; padding: 1.5rem 1rem; }
-    .rf-placeholder-glyph { font-family: var(--serif); font-size: 2rem; font-weight: 300; color: var(--text3); }
-    .rf-placeholder-inner p { font-size: 0.75rem; color: var(--text3); line-height: 1.5; max-width: 160px; }
-
-    /* ══ CTA BANNER ══ */
-    .cta-banner {
-      background: var(--text); color: white; padding: 2.5rem; margin-top: 3.5rem;
-      display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
-    }
-    .cta-banner h2 {
-      font-family: var(--serif); font-size: 1.8rem; font-weight: 300; line-height: 1.2; margin-bottom: 0.6rem;
-    }
-    .cta-banner h2 em { font-style: italic; }
-    .cta-banner p { font-size: 0.85rem; color: rgba(255,255,255,0.5); line-height: 1.65; max-width: 440px; }
-    .cta-link {
-      display: inline-flex; align-items: center; gap: 0.55rem;
-      font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase;
-      color: white; border: 1px solid rgba(255,255,255,0.25);
-      padding: 0.85rem 1.5rem; transition: all 0.2s; white-space: nowrap;
-    }
-    .cta-link:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.65); }
-
-    /* ══ FOOTER ══ */
-    .privacy-bar-foot { margin-left: var(--sidebar); background: var(--surface); border-top: 1px solid var(--border-l); padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem; }
-    .privacy-bar-foot span { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-right: auto; }
-    .privacy-bar-foot a { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); transition: color 0.18s; }
-    .privacy-bar-foot a:hover { color: var(--text); }
-    
-  </style>
-</head>
+  </head>
 <body>
 
   <!-- ══ NAV ══ -->
-  <nav class="nav">
-    <div class="nav-identity">
-      <div class="nav-id-mark">D</div>
-      <div class="nav-id-text">
-        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
-        <div class="nav-id-role" data-i18n="nav_role">Urbanista · Planificador Territorial</div>
-      </div>
-    </div>
-    <div class="nav-links-slot">
-      <div class="nav-links">
-        <a href="index.html"         data-i18n="nav_projects">Proyectos</a>
-        <a href="sobre-mi.html"      data-i18n="nav_about">Sobre mí</a>
-        <a href="servicios.html"     data-i18n="nav_services">Servicios</a>
-        <a href="publicaciones.html" data-i18n="nav_publications">Publicaciones</a>
-        <a href="premios.html"       class="active" data-i18n="nav_awards">Reconocimientos</a>
-        <a href="blog.html"          data-i18n="nav_blog">Blog</a>
-        <a href="contacto.html"      data-i18n="nav_contact">Contacto</a>
-      </div>
-      <button class="lang-toggle" id="lang-toggle">EN</button>
-    </div>
-  </nav>
+  <div id="nav-root" data-active="premios"></div>
+  <link rel="stylesheet" href="css/styles.css">
 
   <!-- ══ LEFT SIDEBAR ══ -->
   <aside class="sidebar">
     <div class="sb-identity">
       <div class="sb-big-num">05</div>
-      <div class="sb-name"><em>Reconocimientos</em></div>
+      <div class="sb-name" data-i18n-html="sb_name_premios"><em>Reconocimientos</em></div>
       <div class="sb-rule"></div>
-      <div class="sb-role" data-i18n="sb_role">Aprobaciones · Hitos · Informes</div>
-      <p class="sb-desc" data-i18n="pg_desc">Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados.</p>
+      <div class="sb-role" data-i18n="sb_role_premios">Aprobaciones · Hitos · Informes</div>
+      <p class="sb-desc" data-i18n="pg_desc_premios">Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados.</p>
     </div>
-    <div class="sb-scroll">
-      <div class="sb-section">
-        <div class="sb-section-title">Highlights</div>
-        <div class="sb-highlights">
-          <div class="sb-highlight-item">
-            <div class="sb-highlight-num">2</div>
-            <div class="sb-highlight-lbl">Planes aprobados definitivamente</div>
-          </div>
-          <div class="sb-highlight-item">
-            <div class="sb-highlight-num">144</div>
-            <div class="sb-highlight-lbl">Informes sectoriales favorables (PGE Jávea)</div>
-          </div>
-          <div class="sb-highlight-item">
-            <div class="sb-highlight-num">6</div>
-            <div class="sb-highlight-lbl">Instrumentos en tramitación o aprobados</div>
-          </div>
-          <div class="sb-highlight-item">
-            <div class="sb-highlight-num">2026</div>
-            <div class="sb-highlight-lbl">Obras previstas Parque Empresarial Elche</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    
   </aside>
 
   <!-- ══ MAIN CONTENT ══ -->
@@ -404,229 +31,162 @@
     <main class="main-content">
 
       <header class="page-header">
-        <h1>Planes aprobados <br><em>en los que he participado</em></h1>
+        <h1 data-i18n-html="pg_title_premios">Hitos y <br><em>Reconocimientos</em></h1>
       </header>
-      <!-- ══ APPROVAL GRID ══ -->
-      <h2 class="section-title" data-i18n="sec_plans">Planes aprobados <em>&amp; en tramitación</em></h2>
+
+      <h2 class="section-title" data-i18n-html="sec_quotes">El Aval de la <em>Administración</em></h2>
+      
+      <div class="quotes-carousel-wrapper">
+        <button class="quote-arrow prev" id="quote-prev" aria-label="Anterior">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        
+        <div class="quotes-viewport">
+          <div class="quotes-track" id="quotes-track">
+            
+            <div class="report-fragment active">
+              <div class="rf-header">
+                <div class="rf-source" data-i18n="q1_source">Concejalía de Urbanismo — Ayuntamiento de Elche</div>
+                <div class="rf-date" data-i18n="q1_date">2021 · Elche</div>
+              </div>
+              <blockquote class="rf-quote" data-i18n="q1_text">
+                «El Ayuntamiento culmina una iniciativa en la que ha venido trabajando con determinación y constancia. Una buena noticia que nos debe hacer reflexionar sobre la agilidad de los procedimientos urbanísticos para la reactivación de la economía.»
+              </blockquote>
+              <div class="rf-context" data-i18n="q1_ctx">Aprobación unánime en Pleno — Mod. Estructural PGOU Elche</div>
+            </div>
+
+            <div class="report-fragment">
+              <div class="rf-header">
+                <div class="rf-source" data-i18n="q3_source">Dirección General de Medio Natural y Evaluación Ambiental</div>
+                <div class="rf-date" data-i18n="q3_date">2020 · Elche</div>
+              </div>
+              <blockquote class="rf-quote" data-i18n="q3_text">
+                «Se valora positivamente la documentación presentada, tanto por el contenido como por la organización y la claridad expositiva. También es destacable el proceso de participación pública desarrollado.»
+              </blockquote>
+              <div class="rf-context" data-i18n="q3_ctx">Declaración Ambiental y Territorial Estratégica (DATE) — Exp. 062-2016-EAE</div>
+            </div>
+
+            <div class="report-fragment">
+              <div class="rf-header">
+                <div class="rf-source" data-i18n="q2_source">Conselleria de Política Territorial</div>
+                <div class="rf-date" data-i18n="q2_date">2022 · Llocnou de Sant Jeroni</div>
+              </div>
+              <blockquote class="rf-quote" data-i18n="q2_text">
+                «El documento técnico da respuesta satisfactoria a las complejas exigencias sectoriales y resuelve con excepcional rigor la identificación del Núcleo Histórico Tradicional y la catalogación de su patrimonio.»
+              </blockquote>
+              <div class="rf-context" data-i18n="q2_ctx">Aprobación Definitiva — PGE y Catálogo Llocnou de Sant Jeroni</div>
+            </div>
+
+            <div class="report-fragment">
+              <div class="rf-header">
+                <div class="rf-source" data-i18n="q4_source">Comunicación Institucional — Ayuntamiento de Xàbia</div>
+                <div class="rf-date" data-i18n="q4_date">2023 · Jávea</div>
+              </div>
+              <blockquote class="rf-quote" data-i18n="q4_text">
+                «El nuevo Plan General culmina su fase final avalado por 144 informes sectoriales favorables. Una acción que protege 10 millones de metros cuadrados de suelo urbanizable, paralizando el crecimiento horizontal.»
+              </blockquote>
+              <div class="rf-context" data-i18n="q4_ctx">Pleno de Aprobación del Documento Final — PGE Xàbia</div>
+            </div>
+
+          </div>
+        </div>
+
+        <button class="quote-arrow next" id="quote-next" aria-label="Siguiente">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+
+      <div class="divider"></div>
+      <h2 class="section-title" data-i18n="sec_milestones">Hitos de <em>Gestión Técnica</em></h2>
+
+      <div class="recog-timeline">
+        <div class="recog-item key">
+          <div class="recog-year">2022</div>
+          <h3 data-i18n="t1_title">Aprobación Definitiva CTU — PGE Llocnou de Sant Jeroni</h3>
+          <div class="recog-org" data-i18n="t1_org">Comisión Territorial de Urbanismo de Valencia</div>
+          <p data-i18n="t1_desc">Resolución de junio de 2022 que otorga la Aprobación Definitiva al PGE. El documento técnico dio respuesta satisfactoria a los complejos requerimientos de carreteras, hidrografía y educación, superando la parálisis administrativa.</p>
+        </div>
+
+        <div class="recog-item key">
+          <div class="recog-year">2021</div>
+          <h3 data-i18n="t2_title">Informe Favorable y Felicitación Técnica — Sector E-49 Elche</h3>
+          <div class="recog-org" data-i18n="t2_org">Generalitat Valenciana</div>
+          <p data-i18n="t2_desc">Obtención de informe sectorial favorable sin condicionantes. La administración autonómica incluyó un reconocimiento expreso al equipo redactor por la excepcional claridad del documento y la precisa resolución del riesgo de inundabilidad.</p>
+        </div>
+
+        <div class="recog-item key">
+          <div class="recog-year">2021</div>
+          <h3 data-i18n="t3_title">144 informes sectoriales favorables — PGE Jávea</h3>
+          <div class="recog-org" data-i18n="t3_org">Administración Estatal y Autonómica</div>
+          <p data-i18n="t3_desc">Hito de gestión técnica: obtención de más de 140 informes sectoriales favorables. Este trabajo validó la desclasificación de 10 millones de m² de suelo urbanizable, blindando el modelo proteccionista previo a la Declaración Ambiental.</p>
+        </div>
+
+        <div class="recog-item key">
+          <div class="recog-year">2022</div>
+          <h3 data-i18n="t4_title">Aprobación de la Modificación de Normas — Polígono El Maigmó</h3>
+          <div class="recog-org" data-i18n="t4_org">IVACE / Ayuntamiento de Tibi</div>
+          <p data-i18n="t4_desc">Aprobación en 2022 de la ampliación de 160.000 m² de suelo industrial. La ordenación escalonada y la definición de corredores ecológicos permitieron una tramitación ágil, resolviendo con eficacia la integración paisajística junto a la A-7.</p>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <h2 class="section-title" data-i18n="sec_plans">Aprobaciones <em>Definitivas</em></h2>
       <div class="approval-grid">
 
         <div class="approval-card approved">
           <div class="ac-header">
-            <h3 data-i18n="a1_title">Plan General Estructural de Llocnou de Sant Jeroni</h3>
+            <h3 data-i18n="rec1_title">Plan General Estructural de Llocnou de Sant Jeroni</h3>
             <span class="ac-badge approved" data-i18n="badge_ok">Aprobado</span>
           </div>
           <div class="ac-meta">
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_municipio">Municipio</span>
-              <span class="ac-val" data-i18n="a1_muni">Llocnou de Sant Jeroni (Valencia)</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_year">Año</span>
-              <span class="ac-val">2021 – 2024</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_organ">Órgano</span>
-              <span class="ac-val" data-i18n="a1_organ">la administración competente — GVA</span>
-            </div>
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_municipio">Municipio</span><span class="ac-val" data-i18n="rec1_muni">Llocnou de Sant Jeroni (Valencia)</span></div>
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_year">Año</span><span class="ac-val">2022</span></div>
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_organ">Órgano</span><span class="ac-val" data-i18n="rec1_organ">Comisión Territorial de Urbanismo — GVA</span></div>
           </div>
-          <p data-i18n="a1_desc">Plan General Estructural redactado íntegramente y aprobado definitivamente por la la comunidad autónoma, adaptado a la LOTUP. Incluye Catálogo de Protecciones aprobado simultáneamente.</p>
+          <p data-i18n="rec1_desc">Hito urbanístico excepcional: Aprobación Definitiva en junio de 2022. La redacción íntegra del Plan y la resolución técnica de los informes sectoriales bloqueantes permitieron culminar la adaptación a la LOTUP y dotar al municipio de seguridad jurídica total.</p>
         </div>
 
         <div class="approval-card approved">
           <div class="ac-header">
-            <h3 data-i18n="a2_title">Catálogo de Protecciones de Llocnou de Sant Jeroni</h3>
+            <h3 data-i18n="rec2_title">Catálogo de Protecciones de Llocnou de Sant Jeroni</h3>
             <span class="ac-badge approved" data-i18n="badge_ok">Aprobado</span>
           </div>
           <div class="ac-meta">
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_municipio">Municipio</span>
-              <span class="ac-val" data-i18n="a2_muni">Llocnou de Sant Jeroni (Valencia)</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_year">Año</span>
-              <span class="ac-val">2024</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_content">Contenido</span>
-              <span class="ac-val" data-i18n="a2_content">Patrimonio arquitectónico, etnológico y paisajístico</span>
-            </div>
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_municipio">Municipio</span><span class="ac-val" data-i18n="rec2_muni">Llocnou de Sant Jeroni (Valencia)</span></div>
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_content">Contenido</span><span class="ac-val" data-i18n="rec2_content">Patrimonio arquitectónico, etnológico y paisajístico</span></div>
           </div>
-          <p data-i18n="a2_desc">Catálogo de Protecciones redactado íntegramente con fichas individualizadas para cada elemento catalogado. Aprobado junto con el Plan General Estructural del municipio.</p>
+          <p data-i18n="rec2_desc">Documento clave redactado íntegramente desde cero. Su profundidad investigadora permitió identificar el Núcleo Histórico Tradicional e individualizar el patrimonio etnológico, logrando su aprobación definitiva por la Conselleria de Cultura.</p>
         </div>
 
         <div class="approval-card approved">
           <div class="ac-header">
-            <h3 data-i18n="a3_title">Ampliación del Parque Empresarial de Elche · Sector E-49</h3>
+            <h3 data-i18n="rec4_title">Modificación Estructural PGOU Elche · Sector E-49</h3>
+            <span class="ac-badge approved" data-i18n="badge_ctu">Aprobado CTU 2021</span>
+          </div>
+          <div class="ac-meta">
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_municipio">Municipio</span><span class="ac-val" data-i18n="rec4_muni">Elche (Alicante)</span></div>
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_organ">Órgano</span><span class="ac-val" data-i18n="rec4_organ">Comisión Territorial de Urbanismo — GVA</span></div>
+          </div>
+          <p data-i18n="rec4_desc">Aprobación Definitiva unánime por la CTU en julio de 2021. El informe autonómico felicitó expresamente la calidad documental, la precisión de la ordenación de la Infraestructura Verde y la viabilidad ambiental de los parques inundables propuestos.</p>
+        </div>
+
+        <div class="approval-card approved">
+          <div class="ac-header">
+            <h3 data-i18n="rec3_title">Ampliación del Parque Empresarial de Elche · Sector E-49</h3>
             <span class="ac-badge approved" data-i18n="badge_complete">Tramitación completa</span>
           </div>
           <div class="ac-meta">
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_municipio">Municipio</span>
-              <span class="ac-val" data-i18n="a3_muni">Elche (Alicante)</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_years">Años</span>
-              <span class="ac-val">2019 – 2025</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_surface">Superficie</span>
-              <span class="ac-val" data-i18n="a3_surface">~600.000 m² · Incremento 25%</span>
-            </div>
+            <div class="ac-meta-row"><span class="ac-lbl" data-i18n="ac_surface">Superficie</span><span class="ac-val" data-i18n="rec3_surface">~600.000 m² · Inversión de 40M€</span></div>
           </div>
-          <p data-i18n="a3_desc">Modificación Estructural del PGOU aprobada por la CTU (2021), Plan Parcial y Plan de Ordenación Pormenorizada aprobados. Tramitación administrativa íntegra concluida en 2025. Obras previstas para 2026.</p>
-        </div>
-
-        <div class="approval-card approved">
-          <div class="ac-header">
-            <h3 data-i18n="a4_title">Modificación Estructural PGOU Elche · Suelo Productivo</h3>
-            <span class="ac-badge approved" data-i18n="badge_ctu">Aprobada CTU 2021</span>
-          </div>
-          <div class="ac-meta">
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_municipio">Municipio</span>
-              <span class="ac-val" data-i18n="a4_muni">Elche (Alicante)</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_year">Año</span>
-              <span class="ac-val">2021</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_organ">Órgano</span>
-              <span class="ac-val" data-i18n="a4_organ">Comisión Territorial de Urbanismo — GVA</span>
-            </div>
-          </div>
-          <p data-i18n="a4_desc">Aprobación de la transformación de suelo no urbanizable común en suelo urbanizable sectorizado para actividades económicas, en el marco de la Estrategia Territorial .</p>
-        </div>
-
-        <div class="approval-card pending">
-          <div class="ac-header">
-            <h3 data-i18n="a5_title">Plan General Estructural de Segart</h3>
-            <span class="ac-badge pending" data-i18n="badge_pending">En tramitación</span>
-          </div>
-          <div class="ac-meta">
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_municipio">Municipio</span>
-              <span class="ac-val" data-i18n="a5_muni">Segart (Valencia)</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_years">Años</span>
-              <span class="ac-val">2020 – 2023</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_norm">Normativa</span>
-              <span class="ac-val">LOTUP · Plan General Estructural</span>
-            </div>
-          </div>
-          <p data-i18n="a5_desc">Redacción íntegra del Plan General Estructural adaptado a la LOTUP para el municipio de Segart (Camp de Morvedre). Tramitación en curso ante la la administración competente.</p>
-        </div>
-
-        <div class="approval-card pending">
-          <div class="ac-header">
-            <h3 data-i18n="a6_title">Plan General Estructural de Gilet</h3>
-            <span class="ac-badge pending" data-i18n="badge_pending">En tramitación</span>
-          </div>
-          <div class="ac-meta">
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_municipio">Municipio</span>
-              <span class="ac-val" data-i18n="a6_muni">Gilet (Valencia)</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_years">Años</span>
-              <span class="ac-val">2020 – 2023</span>
-            </div>
-            <div class="ac-meta-row">
-              <span class="ac-lbl" data-i18n="ac_norm">Normativa</span>
-              <span class="ac-val">LOTUP · Plan General Estructural</span>
-            </div>
-          </div>
-          <p data-i18n="a6_desc">Redacción íntegra del Plan General Estructural para el municipio de Gilet (Camp de Morvedre), con análisis ambiental, paisajístico y propuesta de ordenación estructural del suelo.</p>
+          <p data-i18n="rec3_desc">Expediente urbanístico íntegro resuelto de forma impecable. Aprobación del Plan Parcial y el Plan de Ordenación Pormenorizada (POP) con informes sectoriales favorables sin condicionantes, habilitando la mayor bolsa de suelo industrial de Alicante.</p>
         </div>
 
       </div>
 
-      <!-- ══ TIMELINE ══ -->
-      <div class="divider"></div>
-      <h2 class="section-title" data-i18n="sec_milestones">Hitos <em>administrativos</em></h2>
-
-      <div class="recog-timeline">
-
-        <div class="recog-item key">
-          <div class="recog-year">2025</div>
-          <h3 data-i18n="t1_title">Finalización de tramitación administrativa — Parque Empresarial Elche</h3>
-          <div class="recog-org" data-i18n="t1_org">Ayuntamiento de Elche / PIMESA</div>
-          <p data-i18n="t1_desc">Conclusión satisfactoria de la totalidad del expediente urbanístico del sector E-49: Modificación Estructural PGOU, Plan Parcial, Plan de Ordenación Pormenorizada y gestiones ambientales. Hito que habilita el inicio de las obras de urbanización previstas para 2026.</p>
-        </div>
-
-        <div class="recog-item key">
-          <div class="recog-year">2024</div>
-          <h3 data-i18n="t2_title">Aprobación definitiva del PGE y Catálogo — Llocnou de Sant Jeroni</h3>
-          <div class="recog-org" data-i18n="t2_org">la administración competente — la comunidad autónoma</div>
-          <p data-i18n="t2_desc">Aprobación definitiva del Plan General Estructural y del Catálogo de Protecciones, siendo uno de los pocos municipios de la comarca de la Safor en completar su adaptación al marco LOTUP con ambos documentos aprobados simultáneamente.</p>
-        </div>
-
-        <div class="recog-item">
-          <div class="recog-year">2021</div>
-          <h3 data-i18n="t3_title">144 informes sectoriales favorables — PGE Jávea</h3>
-          <div class="recog-org" data-i18n="t3_org">Comisión Territorial de Urbanismo</div>
-          <p data-i18n="t3_desc">El plan general estructural de Jávea incorporó 144 informes sectoriales favorables de organismos autonómicos y estatales, paso previo a la emisión de la Declaración Ambiental Territorial Estratégica (DATE) por parte de la la administración competente.</p>
-        </div>
-
-        <div class="recog-item">
-          <div class="recog-year">2021</div>
-          <h3 data-i18n="t4_title">Informe favorable CTU — Modificación Estructural PGOU Elche</h3>
-          <div class="recog-org" data-i18n="t4_org">Comisión Territorial de Urbanismo — la comunidad autónoma</div>
-          <p data-i18n="t4_desc">Aprobación de la modificación estructural del PGOU de Elche para la creación del sector industrial E-49, con informe técnico y jurídico favorable que permitió avanzar en la redacción del Plan Parcial y la Ordenación Pormenorizada.</p>
-        </div>
-
-      </div>
-
-      <!-- ══ UPDATE NOTE ══ -->
-      <div class="update-note">
-        <div class="update-note-label" data-i18n="note_label">Actualización pendiente</div>
-        <p data-i18n="note_text">Esta sección se actualiza a medida que avanzan los trámites. <strong>Añade aquí los informes favorables o aprobaciones de Náquera, Tibi, Massalfassar y Mislata</strong> cuando estén disponibles.</p>
-      </div>
-
-      <!-- ══ FRAGMENTOS DE INFORMES ══ -->
-      <div class="divider"></div>
-      <h2 class="section-title">Fragmentos de <em>informes técnicos</em></h2>
-      <div class="report-fragments">
-
-        <div class="report-fragment">
-          <div class="rf-header">
-            <div class="rf-source">CTU — Comisión Territorial de Urbanismo</div>
-            <div class="rf-date">2021 · Elche</div>
-          </div>
-          <blockquote class="rf-quote">
-            «La modificación estructural planteada se adecúa a los criterios de la Estrategia Territorial de la Comunitat Valenciana, siendo compatible con el modelo territorial propuesto…»
-          </blockquote>
-          <div class="rf-context">Informe técnico favorable — Modificación Estructural PGOU Elche · Sector E-49</div>
-        </div>
-
-        <div class="report-fragment">
-          <div class="rf-header">
-            <div class="rf-source">Conselleria — Administración competente GVA</div>
-            <div class="rf-date">2024 · Llocnou de Sant Jeroni</div>
-          </div>
-          <blockquote class="rf-quote">
-            «El Plan General Estructural incorpora de forma satisfactoria los criterios ambientales y paisajísticos exigidos por la normativa LOTUP, con una ordenación estructural coherente con la realidad territorial del municipio…»
-          </blockquote>
-          <div class="rf-context">Aprobación definitiva — PGE Llocnou de Sant Jeroni</div>
-        </div>
-
-        <div class="report-fragment report-fragment--placeholder">
-          <div class="rf-placeholder-inner">
-            <div class="rf-placeholder-glyph">+</div>
-            <p>Añade aquí fragmentos de informes favorables de nuevos expedientes</p>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ══ CTA BANNER ══ -->
       <div class="cta-banner">
         <div>
-          <h2 data-i18n-html="cta_title">¿Necesitas un plan que llegue <em>hasta la aprobación definitiva?</em></h2>
-          <p data-i18n="cta_desc">Tramitación íntegra ante la la administración competente — desde la redacción hasta la aprobación definitiva por la GVA.</p>
+          <h2 data-i18n-html="cta_title_premios">¿Necesitas un plan que llegue <em>hasta la Aprobación Definitiva?</em></h2>
+          <p data-i18n="cta_desc_premios">La diferencia entre un buen plano y un Plan General aprobado es la gestión técnica y la precisión documental. Hablemos.</p>
         </div>
         <a href="contacto.html" class="cta-link">
           <span data-i18n="cta_btn">Contactar</span>
@@ -637,171 +197,59 @@
     </main>
   </div>
 
-  <footer class="privacy-bar-foot">
-    <span>© 2025 Daniel Serra Font</span>
-    <a href="#">Política de privacidad</a>
-    <a href="#">Aviso legal</a>
-  </footer>
+  <div id="footer-root"></div>
 
+  <script src="js/main.js"></script>
   <script>
-    const T = {
-      es: {
-        nav_role: 'Urbanista · Planificador Territorial',
-        nav_projects: 'Proyectos', nav_about: 'Sobre mí', nav_services: 'Servicios',
-        nav_publications: 'Publicaciones', nav_awards: 'Reconocimientos',
-        nav_blog: 'Blog', nav_contact: 'Contacto',
-        sb_label: '05 — Reconocimientos',
-        sb_role: 'Aprobaciones · Hitos · Informes',
-        st_approved: 'Aprobados', st_pending: 'En tramitación',
-        st_reports: 'Informes favorables', st_milestones: 'Hitos clave',
-        sb_index_title: 'Estado de los instrumentos',
-        pl1: 'PGE Llocnou de Sant Jeroni', pl2: 'Catálogo Protecciones Llocnou',
-        pl3: 'Sector E-49 Elche', pl4: 'Mod. Estructural PGOU Elche',
-        pl5: 'PGE Segart', pl6: 'PGE Gilet',
-        badge_ok: 'Aprobado', badge_complete: 'Tramitación completa',
-        badge_ctu: 'CTU 2021', badge_pending: 'En tramitación',
-        sb_data_title: 'Datos destacados',
-        sb_lbl_javea: 'PGE Jávea', sb_lbl_elche: 'E-49 Elche',
-        sb_lbl_organ: 'Órgano aprobador', sb_lbl_normativa: 'Normativa',
-        sb_btn: 'Ver proyectos',
-        pg_num: '05 — Reconocimientos',
-        pg_desc: 'Planes aprobados, informes técnicos favorables e hitos administrativos relevantes en los proyectos redactados y tramitados ante la la comunidad autónoma.',
-        sec_plans: 'Planes aprobados & en tramitación',
-        ac_municipio: 'Municipio', ac_year: 'Año', ac_years: 'Años',
-        ac_organ: 'Órgano', ac_content: 'Contenido', ac_surface: 'Superficie', ac_norm: 'Normativa',
-        a1_title: 'Plan General Estructural de Llocnou de Sant Jeroni',
-        a1_muni: 'Llocnou de Sant Jeroni (Valencia)',
-        a1_organ: 'la administración competente — GVA',
-        a1_desc: 'Plan General Estructural redactado íntegramente y aprobado definitivamente por la la comunidad autónoma, adaptado a la LOTUP. Incluye Catálogo de Protecciones aprobado simultáneamente.',
-        a2_title: 'Catálogo de Protecciones de Llocnou de Sant Jeroni',
-        a2_muni: 'Llocnou de Sant Jeroni (Valencia)',
-        a2_content: 'Patrimonio arquitectónico, etnológico y paisajístico',
-        a2_desc: 'Catálogo de Protecciones redactado íntegramente con fichas individualizadas para cada elemento catalogado. Aprobado junto con el Plan General Estructural del municipio.',
-        a3_title: 'Ampliación del Parque Empresarial de Elche · Sector E-49',
-        a3_muni: 'Elche (Alicante)',
-        a3_surface: '~600.000 m² · Incremento 25%',
-        a3_desc: 'Modificación Estructural del PGOU aprobada por la CTU (2021), Plan Parcial y Plan de Ordenación Pormenorizada aprobados. Tramitación administrativa íntegra concluida en 2025. Obras previstas para 2026.',
-        a4_title: 'Modificación Estructural PGOU Elche · Suelo Productivo',
-        a4_muni: 'Elche (Alicante)',
-        a4_organ: 'Comisión Territorial de Urbanismo — GVA',
-        a4_desc: 'Aprobación de la transformación de suelo no urbanizable común en suelo urbanizable sectorizado para actividades económicas, en el marco de la Estrategia Territorial .',
-        a5_title: 'Plan General Estructural de Segart',
-        a5_muni: 'Segart (Valencia)',
-        a5_desc: 'Redacción íntegra del Plan General Estructural adaptado a la LOTUP para el municipio de Segart (Camp de Morvedre). Tramitación en curso ante la la administración competente.',
-        a6_title: 'Plan General Estructural de Gilet',
-        a6_muni: 'Gilet (Valencia)',
-        a6_desc: 'Redacción íntegra del Plan General Estructural para el municipio de Gilet (Camp de Morvedre), con análisis ambiental, paisajístico y propuesta de ordenación estructural del suelo.',
-        sec_milestones: 'Hitos administrativos',
-        t1_title: 'Finalización de tramitación administrativa — Parque Empresarial Elche',
-        t1_org: 'Ayuntamiento de Elche / PIMESA',
-        t1_desc: 'Conclusión satisfactoria de la totalidad del expediente urbanístico del sector E-49: Modificación Estructural PGOU, Plan Parcial, Plan de Ordenación Pormenorizada y gestiones ambientales. Hito que habilita el inicio de las obras de urbanización previstas para 2026.',
-        t2_title: 'Aprobación definitiva del PGE y Catálogo — Llocnou de Sant Jeroni',
-        t2_org: 'la administración competente — la comunidad autónoma',
-        t2_desc: 'Aprobación definitiva del Plan General Estructural y del Catálogo de Protecciones, siendo uno de los pocos municipios de la comarca de la Safor en completar su adaptación al marco LOTUP con ambos documentos aprobados simultáneamente.',
-        t3_title: '144 informes sectoriales favorables — PGE Jávea',
-        t3_org: 'Comisión Territorial de Urbanismo',
-        t3_desc: 'El plan general estructural de Jávea incorporó 144 informes sectoriales favorables de organismos autonómicos y estatales, paso previo a la emisión de la Declaración Ambiental Territorial Estratégica (DATE) por parte de la la administración competente.',
-        t4_title: 'Informe favorable CTU — Modificación Estructural PGOU Elche',
-        t4_org: 'Comisión Territorial de Urbanismo — la comunidad autónoma',
-        t4_desc: 'Aprobación de la modificación estructural del PGOU de Elche para la creación del sector industrial E-49, con informe técnico y jurídico favorable que permitió avanzar en la redacción del Plan Parcial y la Ordenación Pormenorizada.',
-        note_label: 'Actualización pendiente',
-        note_text: 'Esta sección se actualiza a medida que avanzan los trámites. Añade aquí los informes favorables o aprobaciones de Náquera, Tibi, Massalfassar y Mislata cuando estén disponibles.',
-        cta_title: '¿Necesitas un plan que llegue <em>hasta la aprobación definitiva?</em>',
-        cta_desc: 'Tramitación íntegra ante la la administración competente — desde la redacción hasta la aprobación definitiva por la GVA.',
-        cta_btn: 'Contactar',
-        foot_meta: 'Arquitecto · Urbanista · Director de Velat Studio',
-      },
-      en: {
-        nav_role: 'Architect · Urban Planner',
-        nav_projects: 'Projects', nav_about: 'About', nav_services: 'Services',
-        nav_publications: 'Publications', nav_awards: 'Recognition',
-        nav_blog: 'Blog', nav_contact: 'Contact',
-        sb_label: '05 — Recognition',
-        sb_role: 'Approvals · Milestones · Reports',
-        st_approved: 'Approved', st_pending: 'In progress',
-        st_reports: 'Favourable reports', st_milestones: 'Key milestones',
-        sb_index_title: 'Instrument status',
-        pl1: 'SGP Llocnou de Sant Jeroni', pl2: 'Heritage Catalogue Llocnou',
-        pl3: 'Sector E-49 Elche', pl4: 'Structural Mod. PGOU Elche',
-        pl5: 'SGP Segart', pl6: 'SGP Gilet',
-        badge_ok: 'Approved', badge_complete: 'Processing complete',
-        badge_ctu: 'CTU 2021', badge_pending: 'In progress',
-        sb_data_title: 'Key figures',
-        sb_lbl_javea: 'SGP Jávea', sb_lbl_elche: 'E-49 Elche',
-        sb_lbl_organ: 'Approving body', sb_lbl_normativa: 'Regulations',
-        sb_btn: 'View projects',
-        pg_num: '05 — Recognition',
-        pg_desc: 'Approved plans, favourable technical reports and key administrative milestones in projects drafted and processed before the Valencian Regional Government.',
-        sec_plans: 'Approved plans & in progress',
-        ac_municipio: 'Municipality', ac_year: 'Year', ac_years: 'Years',
-        ac_organ: 'Body', ac_content: 'Content', ac_surface: 'Area', ac_norm: 'Regulations',
-        a1_title: 'Structural General Plan of Llocnou de Sant Jeroni',
-        a1_muni: 'Llocnou de Sant Jeroni (Valencia)',
-        a1_organ: 'la administración competente — GVA',
-        a1_desc: 'Structural General Plan fully drafted and definitively approved by the Valencian Regional Government, adapted to LOTUP. Includes Heritage Protection Catalogue approved simultaneously.',
-        a2_title: 'Heritage Protection Catalogue of Llocnou de Sant Jeroni',
-        a2_muni: 'Llocnou de Sant Jeroni (Valencia)',
-        a2_content: 'Architectural, ethnological and landscape heritage',
-        a2_desc: 'Protection Catalogue fully drafted with individual sheets for each catalogued element. Approved together with the Structural General Plan of the municipality.',
-        a3_title: 'Expansion of Elche Business Park · Sector E-49',
-        a3_muni: 'Elche (Alicante)',
-        a3_surface: '~600,000 m² · 25% increase',
-        a3_desc: 'Structural Modification of the General Urban Plan approved by the CTU (2021), Partial Plan and Detailed Planning Order approved. Full administrative processing concluded in 2025. Works planned for 2026.',
-        a4_title: 'Structural Modification PGOU Elche · Productive Land',
-        a4_muni: 'Elche (Alicante)',
-        a4_organ: 'Territorial Urban Planning Commission — GVA',
-        a4_desc: 'Approval of the transformation of common non-developable land into sectorised developable land for economic activities, within the framework of the Territorial Strategy of the Valencian Community.',
-        a5_title: 'Structural General Plan of Segart',
-        a5_muni: 'Segart (Valencia)',
-        a5_desc: 'Full drafting of the Structural General Plan adapted to LOTUP for the municipality of Segart (Camp de Morvedre). Processing ongoing before the la administración competente.',
-        a6_title: 'Structural General Plan of Gilet',
-        a6_muni: 'Gilet (Valencia)',
-        a6_desc: 'Full drafting of the Structural General Plan for the municipality of Gilet (Camp de Morvedre), including environmental and landscape analysis and structural land planning proposal.',
-        sec_milestones: 'Administrative milestones',
-        t1_title: 'Completion of administrative processing — Elche Business Park',
-        t1_org: 'Elche City Council / PIMESA',
-        t1_desc: 'Successful completion of the entire urban planning file for sector E-49: Structural PGOU Modification, Partial Plan, Detailed Planning Order and environmental management. This milestone enables the start of urbanisation works planned for 2026.',
-        t2_title: 'Definitive approval of SGP and Catalogue — Llocnou de Sant Jeroni',
-        t2_org: 'la administración competente — Valencian Regional Government',
-        t2_desc: 'Definitive approval of the Structural General Plan and the Heritage Protection Catalogue, making it one of the few municipalities in the Safor region to complete its adaptation to the LOTUP framework with both documents approved simultaneously.',
-        t3_title: '144 favourable sectoral reports — SGP Jávea',
-        t3_org: 'Territorial Urban Planning Commission · Conselleria GVA',
-        t3_desc: 'The Structural General Plan of Jávea accumulated 144 favourable sectoral reports from regional and state bodies, as a prior step to the issuance of the Strategic Territorial Environmental Declaration (DATE) by the la administración competente.',
-        t4_title: 'Favourable CTU report — Structural Modification PGOU Elche',
-        t4_org: 'Territorial Urban Planning Commission — Valencian Regional Government',
-        t4_desc: 'Approval of the structural modification of the Elche General Urban Plan for the creation of industrial sector E-49, with a favourable technical and legal report that allowed progress on the drafting of the Partial Plan and Detailed Planning Order.',
-        note_label: 'Pending update',
-        note_text: 'This section is updated as procedures advance. Add favourable reports or approvals for Náquera, Tibi, Massalfassar and Mislata here when available.',
-        cta_title: 'Need a plan that reaches <em>definitive approval?</em>',
-        cta_desc: 'Full processing before the la administración competente — from drafting to definitive approval by the GVA.',
-        cta_btn: 'Get in touch',
-        foot_meta: 'Architect · Urban Planner · Director of Velat Studio',
+    document.addEventListener('DOMContentLoaded', () => {
+      const track = document.getElementById('quotes-track');
+      const quotes = document.querySelectorAll('.report-fragment');
+      const prevBtn = document.getElementById('quote-prev');
+      const nextBtn = document.getElementById('quote-next');
+      
+      if (quotes.length > 1 && track) {
+        let currentIndex = 0;
+        let intervalId;
+
+        // Función para mover el carrusel
+        const updateCarousel = () => {
+          track.style.transform = `translateX(-${currentIndex * 100}%)`;
+        };
+
+        const nextQuote = () => {
+          currentIndex = (currentIndex + 1) % quotes.length;
+          updateCarousel();
+        };
+
+        const prevQuote = () => {
+          currentIndex = (currentIndex - 1 + quotes.length) % quotes.length;
+          updateCarousel();
+        };
+
+        // Autoplay cada 5 segundos
+        const startAutoPlay = () => {
+          intervalId = setInterval(nextQuote, 5000); 
+        };
+
+        // Reiniciar el contador si el usuario hace clic manualmente
+        const resetAutoPlay = () => {
+          clearInterval(intervalId);
+          startAutoPlay();
+        };
+
+        nextBtn.addEventListener('click', () => {
+          nextQuote();
+          resetAutoPlay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+          prevQuote();
+          resetAutoPlay();
+        });
+
+        startAutoPlay();
       }
-    };
-
-    let lang = localStorage.getItem('dsf_lang') || 'es';
-
-    function applyLang(l) {
-      lang = l;
-      localStorage.setItem('dsf_lang', l);
-      const t = T[l];
-      document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.getAttribute('data-i18n');
-        if (t[k] !== undefined) el.textContent = t[k];
-      });
-      document.querySelectorAll('[data-i18n-html]').forEach(el => {
-        const k = el.getAttribute('data-i18n-html');
-        if (t[k] !== undefined) el.innerHTML = t[k];
-      });
-      document.getElementById('lang-toggle').textContent = l === 'es' ? 'EN' : 'ES';
-      document.documentElement.lang = l;
-    }
-
-    document.getElementById('lang-toggle').addEventListener('click', () => {
-      applyLang(lang === 'es' ? 'en' : 'es');
     });
-
-    applyLang(lang);
-  </script>
-</body>
+  </script> 
+ </body>
 </html>

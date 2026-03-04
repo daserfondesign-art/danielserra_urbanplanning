@@ -11,17 +11,17 @@
     :root {
       --bg:       #f5f4f0;
       --bg2:      #edecea;
-      --surf:     #ffffff;
+      --surface:     #ffffff;
       --border:   #0d0d0d;
       --border-l: rgba(13,13,13,0.1);
       --text:     #0d0d0d;
-      --text2:    rgba(13,13,13,0.5);
-      --text3:    rgba(13,13,13,0.28);
+      --text-2:    rgba(13,13,13,0.5);
+      --text-3:    rgba(13,13,13,0.28);
       --red:      #c44b2b;
       --serif:    'Spectral', Georgia, serif;
       --sans:     'Plus Jakarta Sans', sans-serif;
       --mono:     'DM Mono', monospace;
-      --topbar:   52px;
+      --nav-h:   52px;
     }
     html, body { width: 100%; min-height: 100%; background: var(--bg); }
     body { font-family: var(--sans); color: var(--text); -webkit-font-smoothing: antialiased; }
@@ -32,7 +32,7 @@
     /* ══ TOP NAV ══ */
     .nav {
       position: fixed; top: 0; left: 0; right: 0;
-      height: var(--topbar); z-index: 500;
+      height: var(--nav-h); z-index: 500;
       display: flex; align-items: stretch;
       background: var(--bg); border-bottom: 2px solid var(--border);
     }
@@ -61,14 +61,14 @@
       margin-left: auto; padding: 0 1.5rem;
       display: flex; align-items: center; gap: 0.45rem;
       font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3);
+      text-transform: uppercase; color: var(--text-3);
       transition: color 0.18s;
     }
     .nav-back:hover { color: var(--text); }
     .nav-back svg { flex-shrink: 0; }
 
     /* ══ CONTENT ══ */
-    .page-wrap { padding-top: var(--topbar); min-height: 100vh; }
+    .page-wrap { padding-top: var(--nav-h); min-height: 100vh; }
     .page-content { max-width: 720px; margin: 0 auto; padding: 4rem 2.5rem 6rem; }
 
     .page-header {
@@ -77,16 +77,16 @@
     }
     .page-kicker {
       font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--text3); margin-bottom: 0.6rem;
+      text-transform: uppercase; color: var(--text-3); margin-bottom: 0.6rem;
     }
     .page-header h1 {
       font-family: var(--serif); font-size: 2.8rem; font-weight: 300;
       letter-spacing: -0.02em; line-height: 1.1;
     }
-    .page-header h1 em { font-style: italic; color: var(--text2); }
+    .page-header h1 em { font-style: italic; color: var(--text-2); }
     .page-header p {
       margin-top: 0.85rem; font-size: 0.82rem;
-      color: var(--text3); font-family: var(--mono); letter-spacing: 0.04em;
+      color: var(--text-3); font-family: var(--mono); letter-spacing: 0.04em;
     }
 
     /* ══ LEGAL TEXT ══ */
@@ -97,7 +97,7 @@
       border-bottom: 1px solid var(--border-l);
     }
     .legal-section p {
-      font-size: 0.85rem; color: var(--text2); line-height: 1.8;
+      font-size: 0.85rem; color: var(--text-2); line-height: 1.8;
       margin-bottom: 0.65rem;
     }
     .legal-section p:last-child { margin-bottom: 0; }
@@ -106,49 +106,37 @@
       display: flex; flex-direction: column; gap: 0.35rem;
     }
     .legal-section ul li {
-      font-size: 0.85rem; color: var(--text2); line-height: 1.7;
+      font-size: 0.85rem; color: var(--text-2); line-height: 1.7;
     }
     .legal-contact {
       margin-top: 1.25rem; padding: 1.25rem 1.5rem;
-      background: var(--surf); border: 1px solid var(--border-l);
+      background: var(--surface); border: 1px solid var(--border-l);
     }
     .legal-contact p {
-      font-size: 0.82rem; color: var(--text2); line-height: 1.7; margin: 0;
+      font-size: 0.82rem; color: var(--text-2); line-height: 1.7; margin: 0;
     }
     .legal-contact a { color: var(--text); border-bottom: 1px solid var(--border-l); }
     .legal-contact a:hover { border-color: var(--red); color: var(--red); }
 
     /* ══ FOOTER ══ */
     .privacy-bar-foot {
-      background: var(--surf); border-top: 1px solid var(--border-l);
+      background: var(--surface); border-top: 1px solid var(--border-l);
       padding: 0.9rem 2.5rem; display: flex; align-items: center; gap: 2rem;
     }
     .privacy-bar-foot span {
       font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3); margin-right: auto;
+      text-transform: uppercase; color: var(--text-3); margin-right: auto;
     }
     .privacy-bar-foot a {
       font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text3); transition: color 0.18s;
+      text-transform: uppercase; color: var(--text-3); transition: color 0.18s;
     }
     .privacy-bar-foot a:hover { color: var(--text); }
   </style>
 </head>
 <body>
 
-  <nav class="nav">
-    <div class="nav-identity">
-      <div class="nav-id-mark">D</div>
-      <div class="nav-id-text">
-        <div class="nav-id-name">Daniel Serra <em>Font</em></div>
-        <div class="nav-id-role">Urbanista · Planificador Territorial</div>
-      </div>
-    </div>
-    <a href="index.html" class="nav-back">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-      Volver al portfolio
-    </a>
-  </nav>
+  <div id="nav-root" data-active="contacto"></div>
 
   <div class="page-wrap">
     <main class="page-content">
@@ -166,7 +154,7 @@
           <p><strong>Daniel Serra Font</strong><br>
           Profesional independiente — Urbanista y Planificador Territorial<br>
           Av. María Cristina 5, 46001 Valencia<br>
-          Email: <a href="mailto:daniel.serra.urb@gmail.com">daniel.serra.urb@gmail.com</a><br>
+          Email: <a href="/cdn-cgi/l/email-protection#fd999c93949891d38e988f8f9cd3888f9fbd9a909c9491d39e9290"><span class="__cf_email__" data-cfemail="4f2b2e21262a23613c2a3d3d2e613a3d2d0f28222e2623612c2022">[email&#160;protected]</span></a><br>
           Teléfono: <a href="tel:+34625893300">+34 625 893 300</a></p>
         </div>
       </div>
@@ -208,10 +196,3 @@
 
     <footer class="privacy-bar-foot">
       <span>© 2025 Daniel Serra Font</span>
-      <a href="privacidad.html">Política de privacidad</a>
-      <a href="aviso-legal.html">Aviso legal</a>
-    </footer>
-  </div>
-
-</body>
-</html>
