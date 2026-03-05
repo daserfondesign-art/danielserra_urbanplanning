@@ -181,7 +181,7 @@
       /* Init & lang listener */
       buildList();
       renderContent();
-      document.getElementById('btn-back-hero').innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> ${i18n[lang()].proj_back}`;
+      document.getElementById('btn-back-hero').innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> ${i18n[lang()].proj_back.replace(/^←\s*/, '')}`;
 
       const _origApply = applyI18n;
       window.applyI18n = function(newLang) {
@@ -189,7 +189,7 @@
         buildList();
         renderHero();
         renderContent();
-        document.getElementById('btn-back-hero').innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> ${i18n[newLang].proj_back}`;
+        document.getElementById('btn-back-hero').innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg> ${i18n[newLang].proj_back.replace(/^←\s*/, '')}`;
       };
     }
   </script>

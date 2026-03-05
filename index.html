@@ -65,6 +65,20 @@
     <span id="proj-count-bar"></span>
   </div>
 
+  <!-- FIX 2: Mobile project list FAB -->
+  <button class="mobile-proj-fab" id="mobile-proj-fab" aria-label="Ver proyectos">
+    <svg class="fab-icon-list" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1"/><circle cx="3" cy="12" r="1"/><circle cx="3" cy="18" r="1"/></svg>
+    <svg class="fab-icon-close" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    <span id="fab-label">Proyectos</span>
+  </button>
+  <div class="mobile-proj-panel" id="mobile-proj-panel">
+    <div class="mobile-proj-panel-header">
+      <span id="mobile-panel-label">Proyectos</span>
+      <span id="mobile-panel-count"></span>
+    </div>
+    <div id="mobile-proj-list"></div>
+  </div>
+
   <div class="lightbox" id="lightbox">
     <img id="lightbox-img" src="" alt="Vista ampliada">
   </div>
@@ -106,6 +120,7 @@
             <div class="detail-sec-lbl" id="det-lbl-press">Cobertura mediática</div>
             <div id="det-press"></div>
           </div>
+          <div class="detail-mobile-actions" id="det-mobile-actions"></div>
         </div>
       </div>
 
@@ -140,6 +155,27 @@
       document.getElementById('proj-count').textContent = PROJECTS.length;
       document.getElementById('proj-count-bar').textContent = `${PROJECTS.length} ${currentLang==='es'?'proyectos':'projects'}`;
       document.getElementById('btn-back-txt').textContent = currentLang === 'es' ? 'Volver al mapa' : 'Back to map';
+
+      /* Mobile project list */
+      const mList = document.getElementById('mobile-proj-list');
+      if (mList) {
+        mList.innerHTML = '';
+        PROJECTS.forEach((p, i) => {
+          const el = document.createElement('div');
+          el.className = 'proj-item' + (activeId === p.id ? ' active' : '');
+          const name = currentLang === 'es' ? p.name_es : p.name_en;
+          const tag  = currentLang === 'es' ? p.tag_es  : p.tag_en;
+          el.innerHTML = `<div class="proj-num">0${i + 1}</div><div class="proj-info"><div class="proj-title">${name}</div><div class="proj-meta"><span class="proj-year">${p.year}</span><span class="proj-tag-pill">${tag}</span></div></div>`;
+          el.addEventListener('click', () => { openDetail(p.id); closeMobilePanel(); });
+          mList.appendChild(el);
+        });
+        const panelLabel = document.getElementById('mobile-panel-label');
+        const panelCount = document.getElementById('mobile-panel-count');
+        if (panelLabel) panelLabel.textContent = currentLang === 'es' ? 'Proyectos' : 'Projects';
+        if (panelCount) panelCount.textContent = PROJECTS.length;
+      }
+      const fabLabel = document.getElementById('fab-label');
+      if (fabLabel) fabLabel.textContent = currentLang === 'es' ? 'Proyectos' : 'Projects';
     }
 
     PROJECTS.forEach(p => {
@@ -155,6 +191,9 @@
       document.getElementById('detail-overlay').classList.add('open');
       document.getElementById('map').classList.add('active-project');
       document.getElementById('map-legend').style.opacity = '0';
+      const fab = document.getElementById('mobile-proj-fab');
+      if (fab) fab.style.display = 'none';
+      closeMobilePanel();
       const p = PROJECTS.find(x => x.id === id);
       map.panTo([p.lat, p.lng], { animate: true, duration: 0.6 });
     }
@@ -162,7 +201,29 @@
       activeId = null; document.getElementById('detail-overlay').classList.remove('open');
       document.getElementById('map').classList.remove('active-project');
       document.getElementById('map-legend').style.opacity = '1'; buildList();
+      if (window.innerWidth <= 960) {
+        const fab = document.getElementById('mobile-proj-fab');
+        if (fab) fab.style.display = 'flex';
+      }
     }
+    function closeMobilePanel() {
+      const panel = document.getElementById('mobile-proj-panel');
+      const fab = document.getElementById('mobile-proj-fab');
+      if (panel) panel.classList.remove('open');
+      if (fab) fab.classList.remove('open');
+    }
+    /* Mobile FAB toggle */
+    (function(){
+      const fab = document.getElementById('mobile-proj-fab');
+      const panel = document.getElementById('mobile-proj-panel');
+      if (fab && panel) {
+        fab.addEventListener('click', () => {
+          const isOpen = panel.classList.contains('open');
+          if (isOpen) { closeMobilePanel(); }
+          else { panel.classList.add('open'); fab.classList.add('open'); }
+        });
+      }
+    })();
 
     const heroEl = document.getElementById('det-hero');
     heroEl.onclick = (e) => {
@@ -222,6 +283,18 @@
         document.getElementById('det-lbl-press').textContent = dict.proj_press;
         document.getElementById('det-press').innerHTML = p.press.map(pr => `<div class="press-item"><a href="${pr.url}" target="_blank" rel="noopener"><div class="press-src">${pr.source} · ${pr.date}</div><div class="press-ttl">${pr.title}</div></a></div>`).join('');
       } else { pressSection.style.display = 'none'; }
+
+      /* Mobile-only action buttons */
+      const mobileActions = document.getElementById('det-mobile-actions');
+      if (mobileActions) {
+        let docsHtml = '';
+        if (p.link) {
+          docsHtml += `<a href="${p.link}" target="_blank" rel="noopener" class="btn-ext" style="margin-bottom: 0.5rem;">${dict.proj_source}</a>`;
+        }
+        mobileActions.innerHTML = `
+          <a href="proyecto.html?id=${id}" class="btn-full" style="margin-bottom: 0.5rem;">Expediente completo <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></a>
+          ${docsHtml}`;
+      }
 
       document.getElementById('det-sidebar').innerHTML = `
         <div><div class="ds-label">Ficha del proyecto</div>
