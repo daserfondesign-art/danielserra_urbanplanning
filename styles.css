@@ -712,7 +712,7 @@ footer { border-top: 2px solid var(--border); padding: 1.5rem 2.5rem; display: f
   
   .privacy-bar-foot { flex-direction: column; gap: 1rem; text-align: center; }
   .pub-item { grid-template-columns: 60px 1fr; }
-  .pub-link { display: none; }
+  .pub-link { grid-column: 2; justify-self: start; margin-top: 0.35rem; }
   .form-row { grid-template-columns: 1fr; }
 }
 
@@ -862,4 +862,162 @@ footer { border-top: 2px solid var(--border); padding: 1.5rem 2.5rem; display: f
   width: 0%;
   background: #333; /* O tu color corporativo */
   transition: width 0.1s linear;
+}
+
+/* ══════════════════════════════════════════════════════
+   MOBILE FIXES
+═══════════════════════════════════════════════════════ */
+
+/* ── FIX 1: Botón "Expediente completo" en mobile (detail overlay, index.html) ── */
+.detail-mobile-actions { display: none; }
+
+@media (max-width: 960px) {
+  .detail-mobile-actions {
+    display: block;
+    padding: 1.25rem 2.5rem 0;
+  }
+}
+
+/* ── FIX 2: Botón desplegable de proyectos en mobile (index.html) ── */
+.mobile-proj-fab {
+  display: none;
+  position: fixed;
+  top: calc(var(--nav-h) + 0.75rem);
+  left: 1rem;
+  z-index: 300;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--surface);
+  color: var(--text-2);
+  border: 1.5px solid var(--border-l);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.48rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: all 0.2s;
+}
+.mobile-proj-fab:hover, .mobile-proj-fab.open { border-color: var(--border); color: var(--text); }
+.mobile-proj-fab .fab-icon-close { display: none; }
+.mobile-proj-fab.open .fab-icon-list { display: none; }
+.mobile-proj-fab.open .fab-icon-close { display: inline; }
+
+.mobile-proj-panel {
+  display: none;
+  position: fixed;
+  top: calc(var(--nav-h) + 3rem);
+  left: 1rem;
+  z-index: 300;
+  width: calc(100vw - 2rem);
+  max-width: 340px;
+  max-height: 55vh;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  transform: translateY(-10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.mobile-proj-panel.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.mobile-proj-panel-header {
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mobile-proj-panel-header span {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+@media (max-width: 960px) {
+  .mobile-proj-fab { display: flex; }
+  .mobile-proj-panel { display: block; }
+}
+
+/* ── FIX 3: Velat banner en sobre-mi.html mobile ── */
+@media (max-width: 640px) {
+  .velat-banner {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    padding: 2rem 1.5rem;
+    text-align: left;
+  }
+  .velat-banner h2 { font-size: 1.35rem; }
+  .velat-banner p { font-size: 0.82rem; }
+  .velat-link { align-self: flex-start; }
+}
+
+/* ── FIX 5: Quotes carousel en premios.html mobile ── */
+@media (max-width: 640px) {
+  .quotes-carousel-wrapper {
+    margin-bottom: 3rem;
+    touch-action: pan-y;
+  }
+  .quote-arrow { display: none; }
+  .quotes-viewport { margin: 0; overflow: hidden; }
+  .report-fragment {
+    padding: 0 0.75rem 0 1rem;
+    border-left-width: 3px;
+  }
+  .rf-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.65rem;
+  }
+  .rf-quote {
+    font-size: 1.05rem;
+    line-height: 1.45;
+    margin-bottom: 0.75rem;
+  }
+  .rf-context {
+    font-size: 0.72rem;
+  }
+}
+
+/* ── FIX 6: Contacto layout mobile ── */
+@media (max-width: 960px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+  .contact-info-panel {
+    border-right: 2px solid var(--border);
+  }
+}
+@media (max-width: 640px) {
+  .contact-layout {
+    border-left: none;
+    border-top: 2px solid var(--border);
+  }
+  .contact-info-panel {
+    padding: 1.5rem;
+    border-left: 2px solid var(--border);
+  }
+  .contact-form-panel {
+    padding: 1.5rem;
+    border-left: 2px solid var(--border);
+  }
+  .contact-form { gap: 0.85rem; }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 16px; /* Prevent iOS zoom */
+  }
 }
