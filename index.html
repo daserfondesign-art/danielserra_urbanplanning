@@ -228,7 +228,7 @@
     const heroEl = document.getElementById('det-hero');
     heroEl.onclick = (e) => {
       if(e.target.closest('.detail-carousel-ctrl')) return;
-      document.getElementById('lightbox-img').src = `assets/img/${activeId}-${carouselIdx + 1}.png`;
+      document.getElementById('lightbox-img').src = `assets/img/${activeId}-${carouselIdx + 1}.webp`;
       document.getElementById('lightbox').classList.add('active');
     };
     document.getElementById('lightbox').onclick = function() { this.classList.remove('active'); };
@@ -248,7 +248,7 @@
 
       const bgEl = document.getElementById('det-hero-bg');
       bgEl.style.backgroundColor = 'transparent';
-      bgEl.style.backgroundImage = `url('assets/img/${id}-${carouselIdx + 1}.png')`;
+      bgEl.style.backgroundImage = `url('assets/img/${id}-${carouselIdx + 1}.webp')`;
       bgEl.style.backgroundSize = 'contain';
       bgEl.style.backgroundRepeat = 'no-repeat';
       bgEl.style.backgroundPosition = 'center';

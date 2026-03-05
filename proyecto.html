@@ -101,7 +101,7 @@
       
       document.getElementById('proj-hero').addEventListener('click', (e) => {
         if(e.target.closest('button') || e.target.closest('.back-btn') || e.target.closest('.hero-dots')) return;
-        lightboxImg.src = `assets/img/${proj.id}-${carouselIdx+1}.png`;
+        lightboxImg.src = `assets/img/${proj.id}-${carouselIdx+1}.webp`;
         lightbox.classList.add('active');
       });
       lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
@@ -116,7 +116,7 @@
         document.getElementById('hero-title').textContent = lang()==='es' ? proj.name_es : proj.name_en;
         document.getElementById('hero-sub').textContent = lang()==='es' ? proj.subtitle_es : proj.subtitle_en;
 
-        const imgPath = `assets/img/${proj.id}-${carouselIdx+1}.png`;
+        const imgPath = `assets/img/${proj.id}-${carouselIdx+1}.webp`;
         const hero = document.getElementById('proj-hero');
         const img = new Image();
         img.onload = () => { hero.style.backgroundImage = `url(${imgPath})`; hero.style.backgroundSize = 'contain'; hero.style.backgroundPosition = 'center'; hero.style.backgroundRepeat = 'no-repeat'; };
