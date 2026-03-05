@@ -1021,3 +1021,63 @@ footer { border-top: 2px solid var(--border); padding: 1.5rem 2.5rem; display: f
     font-size: 16px; /* Prevent iOS zoom */
   }
 }
+
+/* ══ LINKEDIN FOOTER LINK ══ */
+.foot-linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.foot-linkedin svg { flex-shrink: 0; }
+.foot-linkedin:hover { color: var(--red); }
+
+/* ══ MOBILE MENU FOOTER ══ */
+.mobile-menu-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-l);
+}
+.mobile-linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mobile-linkedin:hover { color: var(--red); }
+.mobile-linkedin svg { flex-shrink: 0; }
+
+/* ══ BREADCRUMB (proyecto.html & artículos del blog) ══ */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 1.25rem;
+}
+.breadcrumb a {
+  color: var(--text-3);
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.breadcrumb a:hover { color: var(--red); }
+.breadcrumb .bc-sep {
+  color: var(--border-l);
+  font-size: 0.55rem;
+}
+.breadcrumb .bc-current {
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 280px;
+}

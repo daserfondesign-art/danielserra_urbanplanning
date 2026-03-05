@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://daserfondesign-art.github.io/danielserra_urbanplanning/sitemap.xml
+
+# Daniel Serra Font — Urbanista y Planificador Territorial
+# https://daserfondesign-art.github.io/danielserra_urbanplanning/
