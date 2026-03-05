@@ -184,11 +184,11 @@ a { color: inherit; text-decoration: none; }
 .ow-year { font-family: var(--mono); font-size: 0.56rem; letter-spacing: 0.06em; color: var(--text-3); padding-top: 0.2rem; }
 .ow-body h3 { font-size: 0.88rem; font-weight: 500; margin-bottom: 0.25rem; }
 .ow-body p { font-size: 0.8rem; color: var(--text-2); line-height: 1.55; }
-.clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; }
+.clients-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.8rem; margin-bottom: 3.5rem; }
 .client-card { background: var(--surface); border: 1px solid var(--border-l); padding: 0.85rem; display: flex; flex-direction: column; align-items: center; gap: 0.55rem; text-align: center; transition: border-color 0.18s; }
 .client-card:hover { border-color: var(--border); }
 .client-logo { width: 46px; height: 46px; border-radius: 50%; background: var(--bg2); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-.client-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+.client-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; filter: grayscale(100%); }
 .logo-fallback { font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--text-2); }
 .client-name { font-size: 0.72rem; font-weight: 600; line-height: 1.3; }
 .client-type { font-family: var(--mono); font-size: 0.5rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-3); }
