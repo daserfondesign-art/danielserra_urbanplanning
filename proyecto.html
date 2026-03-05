@@ -4,6 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Proyecto — Daniel Serra Font</title>
+  <meta name="description" content="Ficha técnica detallada de proyecto urbanístico. Daniel Serra Font — Urbanista y Planificador Territorial en Valencia.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://daserfondesign-art.github.io/danielserra_urbanplanning/proyecto.html">
+  <meta property="og:title" content="Proyecto — Daniel Serra Font">
+  <meta property="og:description" content="Ficha técnica detallada de proyecto urbanístico. Daniel Serra Font — Urbanista y Planificador Territorial en Valencia.">
+  <meta property="og:image" content="https://daserfondesign-art.github.io/danielserra_urbanplanning/assets/img/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Proyecto — Daniel Serra Font">
+  <meta name="twitter:description" content="Ficha técnica detallada de proyecto urbanístico. Daniel Serra Font — Urbanista y Planificador Territorial en Valencia.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
@@ -43,6 +52,11 @@
       </div>
 
       <main class="proj-content">
+        <nav class="breadcrumb" aria-label="Breadcrumb" id="proj-breadcrumb">
+          <a href="index.html" data-i18n="nav_projects">Proyectos</a>
+          <span class="bc-sep">›</span>
+          <span class="bc-current" id="bc-proj-name"></span>
+        </nav>
         <div style="margin-bottom: 3rem;">
           <div class="proj-hero-tag" id="hero-tag"></div>
           <h1 id="hero-title" style="font-family: var(--serif); font-size: 2.8rem; font-weight: 400; line-height: 1.1; color: var(--text); margin-bottom: 0.4rem;"></h1>
@@ -115,6 +129,8 @@
 
         document.getElementById('hero-title').textContent = lang()==='es' ? proj.name_es : proj.name_en;
         document.getElementById('hero-sub').textContent = lang()==='es' ? proj.subtitle_es : proj.subtitle_en;
+        const bcName = document.getElementById('bc-proj-name');
+        if (bcName) bcName.textContent = lang()==='es' ? proj.name_es : proj.name_en;
 
         const imgPath = `assets/img/${proj.id}-${carouselIdx+1}.webp`;
         const hero = document.getElementById('proj-hero');
@@ -193,5 +209,6 @@
       };
     }
   </script>
+<script src="js/analytics.js"></script>
 </body>
 </html>
