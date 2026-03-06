@@ -1078,6 +1078,12 @@ footer { border-top: 2px solid var(--border); padding: 1.5rem 2.5rem; display: f
   color: var(--text-2);
   overflow: hidden;
   text-overflow: ellipsis;
+
+/* ══ HIDE BLOG HERO BACK-BTN ON DESKTOP (sidebar has its own) ══ */
+}
+@media (min-width: 961px) {
+  .proj-hero .back-btn[href="blog.html"] { display: none; }
+}
   white-space: nowrap;
   max-width: 280px;
 }
