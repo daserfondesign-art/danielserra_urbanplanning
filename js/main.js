@@ -431,7 +431,7 @@ const i18n = {
     sp_land: 'Estudios Paisaje', sp_vis: 'Sim. visuales', sp_cat: 'Catálogos', sp_sus: 'Urb. sostenible', sp_int: 'Interiorismo',
     sec_feat: 'Proyectos destacados', hc1_label: 'Suelo Productivo · Aprobado', hc1_name: 'Ampliación del Parque Empresarial de Elche · Sector E-49',
     hc2_label: 'Planeamiento General · En tramitación', hc2_name: 'Plan General Estructural de Jávea / Xàbia',
-    hc3_label: 'Planeamiento General · En tramitación', hc3_name: 'Plan General de Torrent',
+    hc3_label: 'Planeamiento General · Aprobado', hc3_name: 'Plan General Estructural de Llocnou de Sant Jeroni',
     sec_other: 'Otros trabajos', 
     ow1_title: 'Identidad Gráfica y Tutorización de TFM — Matrícula de Honor',
     ow1_desc: 'Tutorización y desarrollo de la identidad gráfica para el TFM \"Ordenación Territorial de Curiñanco, Chile\" de Tomás Martínez. Una propuesta integral para equilibrar dinámicas neorrurales y patrimonio natural en un contexto costero.',
@@ -448,6 +448,7 @@ const i18n = {
     ow4_desc: 'Elaboración de Estudios de Paisaje para municipios valencianos con simulaciones visuales de integración paisajística mediante SketchUp, 3ds Max y Corona Render.',
     ow4_tag: 'Paisaje', velat_title: 'También dirijo Velat Studio',
     velat_desc: 'Velat Studio es un estudio de arquitectura e interiorismo con sede en Valencia. Aunamos arquitectura, interiorismo y diseño para dar respuesta integral a proyectos de reforma, interiorismo comercial y residencial, y branding espacial.',
+    btn_cv: 'Descargar CV',
     
     /* ── Servicios ── */
     fi_badge: 'Consultoría Técnica Independiente',
@@ -665,7 +666,7 @@ const i18n = {
     sp_land: 'Landscape Studies', sp_vis: 'Visual sims.', sp_cat: 'Catalogues', sp_sus: 'Sust. urbanism', sp_int: 'Interior design',
     sec_feat: 'Featured projects', hc1_label: 'Productive Land · Approved', hc1_name: 'Expansion of Elche Business Park · Sector E-49',
     hc2_label: 'General Planning · In progress', hc2_name: 'Structural General Plan of Jávea / Xàbia',
-    hc3_label: 'General Planning · In progress', hc3_name: 'General Plan of Torrent',
+    hc3_label: 'General Planning · Approved', hc3_name: 'Structural General Plan of Llocnou de Sant Jeroni',
     sec_other: 'Other work',
     ow1_title: 'Graphic Identity and TFM Tutoring — Honors (Distinction)',
     ow1_desc: 'Tutoring and development of the graphic identity for the Master\'s Thesis \"Territorial Planning of Curiñanco, Chile\" by Tomás Martínez. An integrated proposal to balance neo-rural dynamics and natural heritage in a coastal context.',
@@ -682,6 +683,7 @@ const i18n = {
     ow4_desc: 'Landscape Studies for Valencian municipalities with visual landscape integration simulations using SketchUp, 3ds Max and Corona Render.',
     ow4_tag: 'Landscape', velat_title: 'I also run Velat Studio',
     velat_desc: 'Velat Studio is an architecture and interior design studio based in Valencia. We combine architecture, interior design and branding to deliver comprehensive responses to renovation, commercial interiors and spatial branding projects.',
+    btn_cv: 'Download CV',
     
     /* ── Servicios ── */
     fi_badge: 'Independent Technical Consultancy',
@@ -886,6 +888,17 @@ function applyI18n(lang) {
   const btn = document.getElementById('lang-toggle');
   if (btn) btn.textContent = lang === 'es' ? 'EN' : 'ES';
 
+  const cvBtn = document.getElementById('cv-btn');
+  if (cvBtn) {
+    if (lang === 'en') {
+      cvBtn.href = 'assets/documents/Daniel Serra Font-CV-EN.pdf';
+      cvBtn.download = 'Daniel Serra Font-CV-EN.pdf';
+    } else {
+      cvBtn.href = 'assets/documents/Daniel Serra Font-CV-ES.pdf';
+      cvBtn.download = 'Daniel Serra Font-CV-ES.pdf';
+    }
+  }
+
   document.documentElement.lang = lang;
 }
 
@@ -970,3 +983,5 @@ document.addEventListener('DOMContentLoaded', () => {
   animateElements.forEach(el => scrollObserver.observe(el));
 
 });
+
+
